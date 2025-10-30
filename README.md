@@ -1,9 +1,9 @@
-# jagoTeknik
+# Jago Teknik Critical Design Review
 
 <img width="757" height="425" alt="image" src="https://github.com/user-attachments/assets/f77d6d60-9569-4b74-8c2c-8b6413befddd" />
 
-1.	Overall Description
-1.1	Product Description 
+##Overall Description
+###Product Description 
 Mahasiswa teknik sering menghadapi tantangan dalam proses pembelajaran yang kompleks, mulai dari padatnya materi kuliah, jadwal yang berlapis, hingga keterbatasan akses terhadap tutor. Penggunaan akses Jago Teknik sebelumnya masih menimbulkan berbagai kendala, seperti materi dan rekaman kuliah yang tersebar di berbagai platform sehingga sulit diakses secara cepat, jadwal belajar yang tidak terstruktur sehingga sering terjadi benturan kelas maupun keterlambatan hadir, minimnya komunikasi langsung dengan tutor yang membuat mahasiswa enggan bertanya atau berkonsultasi, serta platform pembelajaran yang terpisah sehingga memaksa mahasiswa berpindah aplikasi untuk mengakses materi, jadwal, maupun konsultasi. Kondisi ini menyebabkan mahasiswa kurang efisien dalam mengatur waktu, kesulitan menjaga konsistensi belajar, dan berpotensi menurunkan pemahaman terhadap materi.
 Untuk menjawab tantangan tersebut, dikembangkanlah Jago Teknik, sebuah platform terpadu yang dirancang khusus untuk mendukung mahasiswa teknik dalam menghadapi beban kuliah yang padat. Aplikasi ini bertujuan untuk mengonsolidasikan materi perkuliahan dalam satu sistem yang terorganisir, menyediakan penjadwalan cerdas agar mahasiswa dapat mengatur waktu belajar serta menghadiri kelas secara lebih terstruktur, dan memfasilitasi layanan konsultasi dengan tutor secara mudah serta fleksibel. Dengan adanya fitur-fitur ini, Jago Teknik diharapkan dapat memberikan pengalaman belajar yang lebih terarah, praktis, dan kolaboratif.
 Pengembangan Jago Teknik juga diharapkan memberikan manfaat nyata bagi mahasiswa. Melalui sistem yang terintegrasi, mahasiswa dapat mengakses materi dan rekaman kuliah dengan cepat tanpa terhambat oleh pencarian di berbagai platform. Selain itu, penjadwalan terpadu membantu mahasiswa menghindari bentrok kelas serta mengatur aktivitas belajar secara lebih efektif melalui pengingat dan pengaturan otomatis. Dengan demikian, Jago Teknik diharapkan dapat menjadi solusi yang meningkatkan efisiensi belajar sekaligus kualitas pemahaman mahasiswa terhadap materi perkuliahan.
