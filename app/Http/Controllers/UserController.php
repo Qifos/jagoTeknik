@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Author : Sinta Dewi Rahmawati (NRP 5026231231)
+ * File   : app/Http/Controllers/UserController.php
+ * Desc   : user controller untuk register, OTP, login, logout
+ * Date   : 2025-11-04
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
