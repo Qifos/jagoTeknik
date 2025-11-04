@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Author : Sinta Dewi Rahmawati (NRP 5026231231)
+ * File   : app/Http/Controllers/UserController.php
+ * Desc   : user controller untuk register, OTP, login, logout
+ * Date   : 2025-11-04
+ */
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -10,35 +17,27 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    // Tabel & Primary Key kustom
+    protected $table = 'users';        // GANTI jika tabel kamu bukan "users"
+    protected $primaryKey = 'id_user';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // Timestamps kustom (kolommu "updated_")
+    const CREATED_AT = 'created_at';
+    const UPDATED_AT = 'updated_';
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'id_jurusan', 'nama', 'username', 'email',
+        'password_hash', 'no_hp', 'angkatan', 'tanggal_lahir',
+        'jenis_kelamin', 'foto_profil', 'otp_code', 'is_active',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password_hash', 'remember_token', 'otp_code'];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // Biar Auth::attempt() tetap bisa pakai 'password'
+    public function getAuthPassword()
+    {
+        return $this->password_hash;
+    }
 }
