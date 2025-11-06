@@ -39,3 +39,24 @@ Route::view('/otp-test', 'otpview'); // langsung render view tanpa controller
 
 //buat username view
 Route::view('/username-test', 'usernameview'); // langsung render view tanpa controller
+
+// Kelas pages (static views for design preview)
+Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+// materi/video pages are handled by MediaController to avoid overlapping controller methods
+Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
+Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
+
+// Serve CSS from resources during development (not recommended for production)
+Route::get('/resources/css/app.css', function () {
+	$path = resource_path('css/app.css');
+	if (!file_exists($path)) {
+		abort(404);
+	}
+	return response()->file($path, [
+		'Content-Type' => 'text/css'
+	]);
+});
+
+// Media routes (image and video)
+Route::get('/media/image/{id}', [MediaController::class, 'showImage'])->name('media.image');
+Route::get('/media/video/{id}', [MediaController::class, 'showVideo'])->name('media.video');
