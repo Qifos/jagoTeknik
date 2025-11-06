@@ -1,0 +1,199 @@
+/**
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * File   : jagoteknik\public\css\livechat.css
+ * Desc   : live chat css
+ * Date   : 2025-11-06
+ */
+
+/* pastikan di atas segalanya */
+#jtClipMenu { position: fixed !important; z-index: 99999 !important; }
+
+
+:root{
+  --bg:#0B0A0F; --bg2:#13121B; --rail:#5B357C; --panel:#171629;
+  --text:#F5F1FA; --muted:#CFC7E6; --muted2:#9F95B9; --border:#2A2740;
+  --left:#3E3366; --right:#8E74C2;
+  --topA:#6E3C8A; --topB:#53306F;
+  --accent:#9E67D8; --success:#36D27B; --danger:#FF4D4F;
+  --r:18px; --r-lg:26px;
+  --shadow: 0 8px 30px rgba(0,0,0,.35);
+}
+
+
+*{box-sizing:border-box}
+.jt-body{background:var(--bg); color:var(--text); font-family:Roboto}
+
+
+/* topbar */
+.jt-topbar{background:transparent; padding:14px 0}
+.jt-logo{height:36px}
+/* Flex wrapper */
+.jt-topbar .container-fluid{display:flex; align-items:center;}
+/* Matikan efek dorong-kanan dari Bootstrap (.ms-auto) di area kanan */
+.jt-topbar .ms-auto{ margin-left:0 !important; }
+/* NAV: dorong ke kanan & beri jarak kecil ke search */
+.jt-nav{margin-left:auto; margin-right: clamp(12px, 1.5vw, 20px); display:flex; align-items:center;}
+.jt-nav a{color:var(--text); text-decoration:none; margin:0 14px; opacity:.8}
+.jt-nav a.active,.jt-nav a:hover{opacity:1}
+.jt-search{display:flex; align-items:center; gap:10px; background:#1D1A29; padding:8px 12px; border-radius:14px; border:1px solid var(--border)}
+.jt-search input{background:transparent; border:0; outline:0; color:var(--text)}
+.jt-profile{display:flex; align-items:center; gap:8px}
+.jt-profile img{width:32px;height:32px;border-radius:50%}
+
+
+/* layout */
+.jt-app{height:calc(100vh - 72px); display:flex; overflow:hidden}
+.jt-rail{width:84px; background:linear-gradient(180deg,var(--rail),#6A2E88 65%,#452B5E); padding:18px 12px; display:flex; flex-direction:column; align-items:center; gap:10px}
+.jt-rail-back{width:42px;height:42px;border:0;border-radius:12px;background:rgba(255,255,255,.12);color:#fff}
+.jt-rail-item{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;color:#EADCFB;text-decoration:none}
+.jt-rail-item:hover,.jt-rail-item.active{background:rgba(255,255,255,.12); color:#fff}
+.jt-rail-spacer{flex:1}
+.jt-rail-avatar img{width:40px;height:40px;border-radius:50%; border:2px solid rgba(255,255,255,.25)}
+
+
+.jt-list{width:380px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column}
+.jt-list-head{padding:16px 18px; display:flex; align-items:center; border-bottom:1px solid var(--border)}
+.jt-badge{background:#D93C62}
+.jt-filter-btn{border:1px solid var(--border); color:var(--text); border-radius:10px; padding:8px 10px}
+
+
+.jt-search-left{padding:12px 18px}
+.jt-search-pill{display:flex;align-items:center;gap:10px;background:#2A1F44;padding:10px 14px;border-radius:18px}
+.jt-search-pill input{background:transparent;border:0;outline:0;color:var(--text)}
+.jt-search-pill input::placeholder{color:var(--muted2)}
+
+
+.jt-list-scroll{overflow:auto}
+.jt-list-scroll::-webkit-scrollbar{width:10px}
+.jt-list-scroll::-webkit-scrollbar-thumb{background:#2D2644;border-radius:16px}
+
+
+.jt-item{display:flex;gap:12px;align-items:center; padding:12px 16px; border-bottom:1px solid rgba(255,255,255,.06); cursor:pointer}
+.jt-item:hover{background:#1A1827}
+.jt-item.active{background:#221C36}
+.jt-item .avatar{width:44px;height:44px;border-radius:50%;overflow:hidden}
+.jt-item .avatar img{width:100%;height:100%;object-fit:cover}
+.jt-item .meta{flex:1;min-width:0}
+.jt-item .name{font-weight:600;margin:0}
+.jt-item .snippet{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jt-item .time{color:var(--muted);opacity:.8}
+.jt-dot-red{width:10px;height:10px;border-radius:50%;background:#D94B4B;display:inline-block}
+.jt-check{color:#84B7FF;font-size:16px}
+
+
+/* room */
+.jt-room{flex:1;display:flex;flex-direction:column;position:relative;min-width:0}
+.jt-room-head{padding:14px 20px;background:linear-gradient(90deg,var(--topA),var(--topB)); border-radius:0 0 var(--r-lg) var(--r-lg); box-shadow:var(--shadow); display:flex;align-items:center;justify-content:space-between}
+.jt-room-name{font-weight:700;font-size:18px}
+.jt-room-status{color:#EADCFB}
+.jt-dot{width:10px;height:10px;border-radius:50%;background:var(--success);display:inline-block;box-shadow:0 0 0 3px rgba(54,210,123,.15)}
+.jt-icon{color:#ffffff}
+
+
+.jt-room-body{flex:1;overflow:auto;padding:18px 22px 120px}
+.jt-room-body::-webkit-scrollbar{width:10px}
+.jt-room-body::-webkit-scrollbar-thumb{background:#2D2644;border-radius:16px}
+.jt-day-sep{background:#fff;color:#000;font-weight:600;font-size:13px;border-radius:999px;padding:6px 12px;width:max-content;margin:10px auto}
+
+
+.jt-msg{margin:8px 0}
+.jt-msg .jt-bubble{display:inline-block;max-width:72%;padding:10px 14px;border-radius:16px;line-height:1.5}
+.jt-msg.left .jt-bubble{background:var(--left);color:#fff;border-bottom-left-radius:6px}
+.jt-msg.right{text-align:right}
+.jt-msg.right .jt-bubble{background:var(--right);color:#ffffff;border-bottom-right-radius:6px}
+.jt-time{display:block;color:#BDAEDD;font-size:12px;margin-top:6px}
+.jt-img{width:180px;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.jt-img img{display:block;width:100%;height:auto}
+.jt-read{color:#7FB4FF;font-size:14px}
+
+
+/* ===== COMPOSER (tanpa ubah warna) ===== */
+.jt-composer{
+  position:absolute; left:0; right:0; bottom:0;
+  background:#60376B;                 /* tetap */
+  display:flex; align-items:flex-end;
+  padding:12px 0px 12px 68px;        /* <-- sisakan ruang kiri utk attach (44px + gap) */
+  box-sizing:border-box;
+  overflow-x:hidden;
+}
+/* Bar input (tetap putih), jadikan anchor utk attach */
+.jt-composer-bar{
+  position:relative;                  /* <-- anchor absolute */
+  flex:1; display:flex; align-items:center; gap:10px;
+  background:#ffffff;                 /* tetap */
+  border:1px solid var(--border);     /* tetap */
+  border-radius:18px; padding:10px 10px;
+}
+
+
+/* ATTACH: keluar bar, TANPA background */
+.jt-btn-attach{
+  position:absolute;
+  left:-56px;                         /* keluarkan ke kiri bar */
+  top:50%; transform:translateY(-50%);
+  width:44px; height:44px; border-radius:12px;
+  background:transparent;             /* tetap transparan */
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; flex-shrink:0;
+}
+
+
+/* Paperclip di dalam bar (tetap) */
+.jt-icon{
+  width:40px; height:40px; border-radius:14px;
+  color:#ffffff;                      /* tetap */
+  display:flex; align-items:center; justify-content:center;
+}
+
+
+.jt-btn-send{width:46px;height:46px;border-radius:14px;background:#6256AC;color:#ffffff;font-weight:800}
+#jtInput{flex:1;background:transparent;border:0;outline:0;color:var(--text);resize:none;max-height:120px}
+.jt-preview{display:flex;gap:8px;flex-wrap:wrap;margin:0 22px 18px}
+.jt-previmg{width:88px;height:72px;border-radius:10px;border:1px solid var(--border);overflow:hidden}
+.jt-previmg img{width:100%;height:100%;object-fit:cover}
+
+
+@media (max-width:1366px){ .jt-list{width:340px} }
+@media (max-width:992px){
+  .jt-topbar{display:none}
+  .jt-rail{display:none}
+  .jt-composer{left:0}
+  .jt-list{width:100%;height:42vh}
+  .jt-app{height:100vh;flex-direction:column}
+}
+
+
+.jt-btn-send:hover,
+.jt-btn-send:focus,
+.jt-btn-send:active {
+  background: #6256AC !important;
+  color: #fff !important;
+  border-color: #6256AC !important;
+  box-shadow: none !important;
+}
+
+
+/* === CLIP MENU === */
+.jt-composer{ overflow-y:visible; } /* biar menu bisa keluar ke atas */
+.jt-clip-menu{
+  position:absolute; right:70px; bottom:72px;
+  background:#1e1e26; border:1px solid #2A2740; border-radius:12px;
+  padding:6px; box-shadow:0 12px 36px rgba(0,0,0,.45);
+  min-width:190px; display:none; z-index:50;
+}
+.jt-clip-menu.show{ display:block; }
+
+
+.jt-clip-item{
+  display:flex; align-items:center; gap:10px;
+  padding:8px 10px; border-radius:10px; color:#F5F1FA; text-decoration:none;
+}
+.jt-clip-item:hover{ background:#2a223d; }
+
+
+.jt-clip-item i{ font-size:18px; opacity:.95; width:22px; text-align:center; }
+.jt-clip-sep{ height:1px; background:#2A2740; margin:4px 0; opacity:.7; }
+
+
+/* chip kecil buat dokumen/preview nama file */
+.jt-prevdoc{ font-size:12px; padding:6px 10px; border:1px solid var(--border); border-radius:10px; opacity:.9 }

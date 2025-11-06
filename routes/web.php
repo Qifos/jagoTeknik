@@ -60,3 +60,12 @@ Route::get('/resources/css/app.css', function () {
 // Media routes (image and video)
 Route::get('/media/image/{id}', [MediaController::class, 'showImage'])->name('media.image');
 Route::get('/media/video/{id}', [MediaController::class, 'showVideo'])->name('media.video');
+
+//chat
+Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
+
+
+/* API JSON untuk chat */
+Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
+Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
+Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
