@@ -3,34 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Kelas;
+use App\Models\History;
+use App\Models\Wishlist;
 
 class KelasController extends Controller
 {
-    /**
-     * Show the main kelas page (Kalkulus 2)
-     */
-    public function index()
+    public function index(Request $request)
     {
-        // Pass mock data to the view
-        $materiItems = [
-            ['id' => 1, 'thumb' => 'https://placehold.co/600x400/0284c7/white?text=Fungsi', 'tag' => 'Teori', 'title' => 'Fungsi Transeden', 'instructor' => 'Nabila Rahadatul', 'progress' => 100, 'progress_text' => 'Finished'],
-            ['id' => 2, 'thumb' => 'https://placehold.co/600x400/c026d3/white?text=Integrasi', 'tag' => 'Praktik', 'title' => 'Teknik Integrasi', 'instructor' => 'Nabila Rahadatul', 'progress' => 100, 'progress_text' => 'Finished'],
-            ['id' => 3, 'thumb' => null, 'tag' => 'Praktik', 'title' => 'Integrasi Numerik', 'instructor' => 'Nabila Rahadatul', 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-            ['id' => 4, 'thumb' => 'https://placehold.co/600x400/16a34a/white?text=Aplikasi', 'tag' => 'Praktik', 'title' => 'Aplikasi Integrasi Tertentu', 'instructor' => 'Nabila Rahadatul', 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-            ['id' => 5, 'thumb' => 'https://placehold.co/600x400/d97706/white?text=Deret', 'tag' => 'Teori', 'title' => 'Deret Tak Terhingga', 'instructor' => 'Dr. Strange', 'progress' => 0, 'progress_text' => 'Lesson 0 of 5'],
-            ['id' => 6, 'thumb' => null, 'tag' => 'Praktik', 'title' => 'Koordinat Kutub', 'instructor' => 'Tony Stark', 'progress' => 20, 'progress_text' => 'Lesson 1 of 5'],
-        ];
+        $userId = auth()->id();              // id user yang login
 
-        $videoItems = [
-            ['id' => 1, 'thumb' => 'https://placehold.co/600x400/e11d48/white?text=QUIZ+1', 'title' => 'Video 1', 'instructor' => 'Ikhwanul Hafidz', 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-            ['id' => 2, 'thumb' => 'https://placehold.co/600x400/f43f5e/white?text=QUIZ+2', 'title' => 'Video 2', 'instructor' => 'Nabila Rahadatul', 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-            ['id' => 3, 'thumb' => null, 'title' => 'Video 3', 'instructor' => 'Muhammad Ridho', 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-            ['id' => 4, 'thumb' => 'https://placehold.co/600x400/f97316/white?text=QUIZ+4', 'title' => 'Video 4', 'instructor' => 'Peter Parker', 'progress' => 0, 'progress_text' => 'Lesson 0 of 7'],
-        ];
+        // ===== 1) SEMUA =====
+        $semua = Kelas::orderByDesc('updated_at')->get();
 
-        return view('kelas', [
-            'materiItems' => $materiItems,
-            'videoItems' => $videoItems
-        ]);
+        // ===== 2) DIAKUTI =====
+        // Asumsi: tabel histori punya kolom user_id & kelas_id
+        $diikuti = Kelas::whereHas('histories', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })->get();
+
+        // ===== 3) SELESAI =====
+        // Selesai jika progress 100% ATAU status_materi = 1
+        $selesai = Kelas::whereHas('histories', function ($q) use ($userId) {
+            $q->where('user_id', $userId)
+              ->where(function ($qq) {
+                  $qq->where('progres_precentage', 100)
+                     ->orWhere('status_materi', 1);
+              });
+        })->get();
+
+        // ===== 4) WISHLIST =====
+        // Kalau kamu SUDAH punya tabel wishlists (user_id, kelas_id):
+        $wishlist = Kelas::whereHas('wishlists', function ($q) use ($userId) {
+            $q->where('user_id', $userId);
+        })->get();
+
+        // ---- Jika BELUM punya tabel wishlists dan (sementara) simpan di kolom kelas.id_wishlist_kelas,
+        // ganti baris $wishlist di atas dengan ini:
+        // $wishlist = Kelas::whereNotNull('id_wishlist_kelas')->get();
+
+        return view('kelas', compact('semua', 'diikuti', 'selesai', 'wishlist'));
     }
 }

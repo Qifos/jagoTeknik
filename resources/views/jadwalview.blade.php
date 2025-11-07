@@ -1,3 +1,8 @@
+<!--
+ * Author : Akhtar Zia Faizarrobbi (NRP 5026231095)
+ * Desc   : Jadwal View
+ * Date   : 2025-11-04
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
