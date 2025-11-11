@@ -57,12 +57,6 @@ Route::get('/resources/css/app.css', function () {
 	]);
 });
 
-// Route Jadwal
-Route::get('/jadwal', fn() => redirect()->route('jadwalview'));
-Route::resource('jadwal', JadwalController::class)->parameters(['jadwal' => 'jadwal:id_jadwal']);
-Route::get('/api/jadwal/bulan', [JadwalController::class, 'byMonth'])->name('jadwal.byMonth');
-
-
 // Media routes (image and video)
 Route::get('/media/image/{id}', [MediaController::class, 'showImage'])->name('media.image');
 Route::get('/media/video/{id}', [MediaController::class, 'showVideo'])->name('media.video');
@@ -75,19 +69,3 @@ Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
 Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
 Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
 Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
-
-// Route Kelas
-Route::middleware('auth')->group(function () {
-    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
-});
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-
-// AuthController
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
-});

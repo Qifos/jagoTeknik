@@ -1,47 +1,47 @@
 /* --- Navbar --- */
 .navbar-jagoteknik {
-  background: transparent;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-.navbar-jagoteknik .navbar-brand {
-  font-weight: 700;
-  color: var(--text-light);
-}
-.navbar-jagoteknik .nav-link {
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 500;
-}
-.navbar-jagoteknik .nav-link:hover,
-.navbar-jagoteknik .nav-link.active {
-  color: var(--text-light);
-}
-.search-input {
-  background-color: #222;
-  border: 1px solid #444;
-  color: #fff;
-  border-radius: 8px;
-  width: 250px;
-}
-.search-input::placeholder {
-  color: #888;
-}
-.profile-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-/* From app.blade.php */
-.footer-logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #6b2fa0, #ff6aa6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 8px;
-  color: white;
-  font-weight: 700;
-  text-decoration: none;
-}
+    background: transparent;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .navbar-jagoteknik .navbar-brand {
+    font-weight: 700;
+    color: var(--text-light);
+  }
+  .navbar-jagoteknik .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+  }
+  .navbar-jagoteknik .nav-link:hover,
+  .navbar-jagoteknik .nav-link.active {
+    color: var(--text-light);
+  }
+  .search-input {
+    background-color: #222;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 8px;
+    width: 250px;
+  }
+  .search-input::placeholder {
+    color: #888;
+  }
+  .profile-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  /* From app.blade.php */
+  .footer-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #6b2fa0, #ff6aa6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+  }

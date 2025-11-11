@@ -1,73 +1,73 @@
 /* --- Materi Page Styling (from PDF) --- */
 .content-card {
-  background: linear-gradient(180deg, rgba(107, 47, 160, 0.9), rgba(107, 47, 160, 0.8));
-  padding: 2rem;
-  border-radius: 18px;
-  color: #f6f5f8;
-  max-width: 900px;
-  margin: 1rem auto 0 auto;
-}
-.content-card h2 {
-  font-weight: 700;
-}
-.content-card ul {
-  list-style: none;
-  padding-left: 0;
-}
-.content-card ul li {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-.formula-box {
-  background: rgba(0, 0, 0, 0.25);
-  padding: 1.5rem;
-  border-radius: 10px;
-  overflow-x: auto;
-  font-family: monospace;
-  font-size: 1.1rem;
-}
+    background: linear-gradient(180deg, rgba(107, 47, 160, 0.9), rgba(107, 47, 160, 0.8));
+    padding: 2rem;
+    border-radius: 18px;
+    color: #f6f5f8;
+    max-width: 900px;
+    margin: 1rem auto 0 auto;
+  }
+  .content-card h2 {
+    font-weight: 700;
+  }
+  .content-card ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  .content-card ul li {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  .formula-box {
+    background: rgba(0, 0, 0, 0.25);
+    padding: 1.5rem;
+    border-radius: 10px;
+    overflow-x: auto;
+    font-family: monospace;
+    font-size: 1.1rem;
+  }
 
-/* Teaser Card (for video inside Materi page) */
-.teaser-card {
-  max-width: 700px; /* Max width inside the content card */
-  margin: 2rem auto 1rem auto;
-  border-radius: 16px;
-  overflow: hidden;
-  background: linear-gradient(180deg, #7a2fb0, #6b4fa0);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-  padding: 1.5rem;
-  position: relative;
-}
-.teaser-card .thumb {
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-}
-.teaser-card .play-large {
-  width: 72px;
-  height: 72px;
-  opacity: 0.95;
-  background: #fff;
-  color: #000;
-  border-radius: 50%;
-  border: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.teaser-card .play-large:hover {
-  background: #eee;
-}
-.teaser-card .instructor {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-}
-.teaser-card .instructor img {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-}
+  /* Teaser Card (for video inside Materi page) */
+  .teaser-card {
+    max-width: 700px; /* Max width inside the content card */
+    margin: 2rem auto 1rem auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(180deg, #7a2fb0, #6b4fa0);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    padding: 1.5rem;
+    position: relative;
+  }
+  .teaser-card .thumb {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+  .teaser-card .play-large {
+    width: 72px;
+    height: 72px;
+    opacity: 0.95;
+    background: #fff;
+    color: #000;
+    border-radius: 50%;
+    border: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .teaser-card .play-large:hover {
+    background: #eee;
+  }
+  .teaser-card .instructor {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  .teaser-card .instructor img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }

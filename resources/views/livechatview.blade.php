@@ -53,7 +53,7 @@
   <header class="jt-topbar d-none d-lg-flex">
     <div class="container-fluid px-4 d-flex align-items-center">
       <div class="d-flex align-items-center gap-2 me-4">
-        <img src="/logojagoteknik.png" class="jt-logo" alt="JagoTeknik">
+        <img src="image/jagoteknik.jpg" class="jt-logo" alt="JagoTeknik">
       </div>
       <nav class="jt-nav">
         <a href="#">Beranda</a>
@@ -180,7 +180,7 @@
 
 
         <!-- input tersembunyi untuk menu -->
-        <input id="jtPickGallery" type="file" accept="image/*,video/*" multiple hidden>
+        <input id="jtPickGallery" type="file" accept="image/,video/" multiple hidden>
         <input id="jtPickCamera"  type="file" accept="image/*" capture="environment" hidden>
         <input id="jtPickDoc"     type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt" hidden>
         <input id="jtPickVcf"     type="file" accept=".vcf" hidden>
@@ -236,7 +236,7 @@ const esc   = s => s?.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt
 /* ---------- Fetch rooms & hydrate UI ---------- */
 async function loadRooms(){
   try{
-    const res  = await fetch(`{{ route('chat.rooms') }}`);
+    const res  = await fetch({{ route('chat.rooms') }});
     const data = await res.json();
     ROOMS   = data.rooms || [];
     ME      = data.me || ME;
@@ -301,7 +301,7 @@ function openRoom(roomId){
   if(!found) return;
   CURRENT = found;
   document.querySelectorAll('.jt-item').forEach(x=>x.classList.remove('active'));
-  document.querySelector(`.jt-item[data-id="${roomId}"]`)?.classList.add('active');
+  document.querySelector(.jt-item[data-id="${roomId}"])?.classList.add('active');
   renderCurrent();
 }
 
@@ -311,9 +311,9 @@ function appendMsg(side='right', type='text', text='', src='', time='', animate=
   wrap.className = 'jt-msg ' + side;
   let html = '';
   if (type === 'image'){
-    html = `<div class="jt-bubble"><div class="jt-img"><img src="${src}" alt=""></div><span class="jt-time">${time||clock()}</span></div>`;
+    html = <div class="jt-bubble"><div class="jt-img"><img src="${src}" alt=""></div><span class="jt-time">${time||clock()}</span></div>;
   } else {
-    html = `<div class="jt-bubble">${esc(text)}<span class="jt-time">${time||clock()}${side==='right'?' <i class="bi bi-check2-all jt-read"></i>':''}</span></div>`;
+    html = <div class="jt-bubble">${esc(text)}<span class="jt-time">${time||clock()}${side==='right'?' <i class="bi bi-check2-all jt-read"></i>':''}</span></div>;
   }
   wrap.innerHTML = html;
   if (animate) wrap.style.opacity = 0;
@@ -352,7 +352,7 @@ async function sendMessage(){
 
 
   try{
-    const res  = await fetch(`{{ route('chat.send') }}`, { method:'POST', headers:{'X-CSRF-TOKEN': CSRF}, body:form });
+    const res  = await fetch({{ route('chat.send') }}, { method:'POST', headers:{'X-CSRF-TOKEN': CSRF}, body:form });
     const data = await res.json();
     if (!data?.ok){ console.error('send failed', data); return; }
     CURRENT.messages = CURRENT.messages || [];
@@ -370,7 +370,7 @@ async function sendMessage(){
 async function markRead(roomId){
   if (!roomId) return;
   try{
-    await fetch(`{{ route('chat.markRead') }}`, {
+    await fetch({{ route('chat.markRead') }}, {
       method: 'POST',
       headers: {'Content-Type':'application/json','X-CSRF-TOKEN': CSRF},
       body: JSON.stringify({ room_id: roomId })
@@ -390,7 +390,7 @@ $file?.addEventListener('change', e=>{
   r.onload = ()=>{
     const box = document.createElement('div');
     box.className='jt-previmg';
-    box.innerHTML=`<img src="${r.result}">`;
+    box.innerHTML=<img src="${r.result}">;
     $preview.appendChild(box);
   };
   r.readAsDataURL(f);
@@ -489,7 +489,7 @@ function addDocChip(name){
     r.onload = ()=>{
       const box = document.createElement('div');
       box.className='jt-previmg';
-      box.innerHTML=`<img src="${r.result}">`;
+      box.innerHTML=<img src="${r.result}">;
       $preview.appendChild(box);
     };
     r.readAsDataURL(f);

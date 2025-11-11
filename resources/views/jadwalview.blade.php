@@ -13,15 +13,54 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-  <!-- App CSS -->
-  <link rel="stylesheet" href="{{ asset('css/jadwal.css') }}">
+  <style>
+    :root{
+      --bg:#0b0b10;        /* page background */
+      --surface:#111116;   /* cards/nav surface */
+      --muted:#8c7b92;     /* muted lavender */
+      --primary:#a78bdc;   /* title lavender */
+      --accent:#4f46e5;    /* indigo selection */
+      --text:#f4f4f7;      /* main text */
+      --text-dim:#c2c2cc;  /* secondary text */
+    }
+    html,body{background:var(--bg); color:var(--text);}
+    .navbar{background:var(--surface);}
+    .navbar .nav-link, .navbar-brand{color:var(--text)}
+    .navbar .nav-link.active, .navbar .nav-link:hover{color:var(--primary)}
+    .form-control::placeholder{color:#9aa}
+
+    /* Section titles */
+    .headline{color:var(--primary); font-weight:700; letter-spacing:.3px}
+
+    /* Left upcoming class card */
+    .class-pill{width:92px; height:92px; border-radius:50%; background:#2a2430; display:flex; align-items:center; justify-content:center; margin-inline:auto}
+    .class-pill i{font-size:2rem; color:#ffb3b3}
+
+    /* Calendar card */
+    .calendar{background:var(--surface); border-radius:1rem; padding:1rem}
+    .calendar .cal-top{display:flex; align-items:center; justify-content:space-between;}
+    .calendar .month-chip{background:#1a1a22; border-radius:.6rem; padding:.35rem .8rem; font-weight:600}
+    .calendar .grid{display:grid; grid-template-columns:repeat(7,1fr); gap:.5rem}
+    .calendar .cell{background:#1a1a22; border:1px solid #1f1f29; border-radius:.6rem; text-align:center; padding:.6rem 0; color:var(--text)}
+    .calendar .cell.muted{opacity:.45}
+    .calendar .cell.head{background:transparent; border:none; color:var(--text-dim); font-weight:600}
+    .calendar .cell.active{background:var(--accent); border-color:var(--accent); font-weight:700}
+    .calendar .navbtn{width:40px; height:40px; border-radius:50%; background:#1a1a22; display:flex; align-items:center; justify-content:center; border:1px solid #1f1f29}
+
+    /* Course cards */
+    .course-card{background:linear-gradient(180deg,#6c35ff22,#6c35ff11), var(--surface); border:1px solid #252535; border-radius:1rem; overflow:hidden}
+    .course-card .thumb{width:84px; height:84px; border-radius:1rem; background:#2a2430; display:flex; align-items:center; justify-content:center}
+    .badge-cat{background:#2b2b38; color:var(--text-dim)}
+
+    .btn-outline-light{--bs-btn-color:#e7e7f0; --bs-btn-border-color:#3b3b49; --bs-btn-hover-bg:#232331; --bs-btn-hover-border-color:#4a4a5f}
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
     <div class="container py-2">
       <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
-        <span class="brand-mark d-inline-flex align-items-center justify-content-center">
+        <span class="rounded-circle bg-dark-subtle d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px;">
           <i class="bi bi-journal-code text-dark"></i>
         </span>
         Jago<span class="text-primary">Teknik</span>
@@ -36,7 +75,7 @@
           <li class="nav-item"><a class="nav-link active" href="#">Jadwal</a></li>
           <li class="nav-item"><a class="nav-link" href="#">Chat</a></li>
         </ul>
-        <form class="d-none d-lg-flex search-wide" role="search">
+        <form class="d-none d-lg-flex" role="search" style="min-width:320px">
           <div class="input-group">
             <span class="input-group-text bg-dark-subtle border-0"><i class="bi bi-search"></i></span>
             <input class="form-control bg-dark-subtle border-0" type="search" placeholder="Cari di JagoTeknik" aria-label="Search">
@@ -61,7 +100,7 @@
     <div class="row g-4 align-items-stretch">
       <!-- Left: Upcoming class details -->
       <div class="col-lg-5">
-        <div class="panel-surface h-100 d-flex flex-column align-items-center justify-content-center text-center p-4 p-lg-5">
+        <div class="h-100 d-flex flex-column align-items-center justify-content-center text-center p-4 p-lg-5" style="background:var(--surface); border-radius:1rem; border:1px solid #26263a;">
           <div class="class-pill mb-3">
             <i class="bi bi-alarm"></i>
           </div>

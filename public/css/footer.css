@@ -1,24 +1,24 @@
 /* --- Footer Styling --- */
 .site-footer {
-  border-top: 1px solid #333;
-  padding: 3rem 0;
-  color: var(--text-muted);
-}
-.site-footer h5 {
-  color: var(--text-light);
-  font-weight: 700;
-}
-/* Re-using navbar.css .footer-logo */
-.site-footer a {
-  color: var(--text-muted);
-  text-decoration: none;
-}
-.site-footer a:hover {
-  color: var(--text-light);
-  text-decoration: underline;
-}
-.site-footer .list-unstyled {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+    border-top: 1px solid #333;
+    padding: 3rem 0;
+    color: var(--text-muted);
+  }
+  .site-footer h5 {
+    color: var(--text-light);
+    font-weight: 700;
+  }
+  /* Re-using navbar.css .footer-logo */
+  .site-footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+  .site-footer a:hover {
+    color: var(--text-light);
+    text-decoration: underline;
+  }
+  .site-footer .list-unstyled {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
