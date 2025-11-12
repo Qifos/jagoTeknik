@@ -1,0 +1,338 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #000000;
+    color: #fff;
+    min-height: 100vh;
+}
+
+.page-title { text-align: center; }
+
+/* Paksa baris tabs tetap di tengah di semua breakpoint */
+.custom-tabs {
+  display: flex;
+  justify-content: center;
+}
+.custom-tabs .nav-item { margin: 0 .25rem; }
+
+/* Navbar Styles */
+.navbar {
+  background-color: rgba(0,0,0,0.9) !important;
+  padding: 1rem 0;
+  border-bottom: 1px solid #1a1a1a;
+
+  /* bikin selalu nempel di atas */
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  backdrop-filter: saturate(160%) blur(6px);
+}
+
+
+.navbar-brand img {
+  height: 52px;          /* sebelumnya 40px */
+  width: auto;
+}
+
+.navbar-nav .nav-link {
+    color: #fff !important;
+    padding: 0.5rem 1rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #8b5cf6 !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: #8b5cf6 !important;
+    font-weight: 500;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    background-color: transparent;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border-radius: 8px;
+    width: 250px;
+}
+
+.search-box input::placeholder {
+    color: #888;
+}
+
+.search-box input:focus {
+    background-color: #1a1a1a;
+    border-color: #666;
+    outline: none;
+    box-shadow: none;
+}
+
+.search-box i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #fff;
+}
+
+/* Main Section */
+.main-section {
+    background-color: #000000;
+    min-height: calc(100vh - 70px);
+    padding-top: 2rem;
+}
+
+/* Back Button */
+.btn-back {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #f0f0f0;
+    transform: translateX(-3px);
+}
+
+.btn-back i {
+    font-size: 1rem;
+}
+
+/* Page Title */
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+/* Custom Tabs */
+.custom-tabs {
+    border-bottom: 1px solid #333;
+}
+
+.custom-tabs .nav-link {
+    background-color: transparent;
+    border: none;
+    color: #888;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.custom-tabs .nav-link:hover {
+    color: #fff;
+    border-bottom-color: #555;
+}
+
+.custom-tabs .nav-link.active {
+    color: #fff;
+    background-color: transparent;
+    border-bottom-color: #fff;
+}
+
+/* Section Header */
+.section-header {
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    font-size: 0.95rem;
+    color: #888;
+    margin: 0;
+}
+
+/* Course Cards */
+.course-card {
+    background-color: transparent;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+.course-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 200px;
+}
+
+.course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.course-card:hover .course-image img {
+    transform: scale(1.05);
+}
+
+.course-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    background-color: rgba(139, 92, 246, 0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.course-badge.completed {
+    background-color: rgba(139, 92, 246, 0.9);
+}
+
+.course-badge.add {
+    background-color: rgba(139, 92, 246, 0.9);
+}
+
+.course-info {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c5ab8 100%);
+    padding: 1rem;
+    border-radius: 0 0 12px 12px;
+    margin-top: -5px;
+}
+
+.course-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.3rem;
+}
+
+.course-progress {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    .search-box input {
+        width: 200px;
+    }
+
+    .course-image {
+        height: 180px;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .custom-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .course-image {
+        height: 160px;
+    }
+
+    .btn-back {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .course-image {
+        height: 200px;
+    }
+
+    .custom-tabs .nav-link {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+}
+@media (min-width: 992px) {
+  .navbar-brand { margin-left: 8px; }
+}
+.footer-custom {
+            background-color: #000;
+            color: #fff;
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid #333;
+        }
+
+        .footer-link {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-purple);
+        }
+
+        .social-icon {
+            color: #888;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--primary-purple);
+        }
+
+        h6 {
+            color: #fff;
+        }
+
+        .text-muted {
+            color: #888 !important;
+        }

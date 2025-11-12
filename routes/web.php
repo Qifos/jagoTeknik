@@ -45,6 +45,7 @@ Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 // materi/video pages are handled by MediaController to avoid overlapping controller methods
 Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
 Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
+Route::view('/semuakelas', 'semuakelas'); // langsung render view tanpa controller
 
 // Serve CSS from resources during development (not recommended for production)
 Route::get('/resources/css/app.css', function () {
@@ -69,3 +70,5 @@ Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
 Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
 Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
 Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
+
+Route::view('/personalisasi', 'personalisasi'); // langsung render view tanpa controller
