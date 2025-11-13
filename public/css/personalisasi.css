@@ -401,3 +401,55 @@ body {
             color: #888 !important;
         }
 
+/* Styling untuk password field */
+#privasi .custom-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #444; /* Menjaga garis bawah tetap ada */
+    color: #fff;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s ease;
+}
+
+#privasi .custom-input:focus {
+    border-bottom-color: #8b5cf6;
+    color: #fff;
+}
+
+#privasi .custom-input::placeholder {
+    color: #555;
+}
+
+/* Styling untuk Password Field */
+#privasi .password-field {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #444; /* Menjaga garis bawah tetap ada */
+    color: #fff;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#privasi .password-field:focus {
+    border-bottom-color: #8b5cf6;
+    outline: none;
+    box-shadow: none;
+}
+
+#privasi .password-field::-webkit-input-placeholder {
+    color: #555;
+}
+
+/* Styling untuk Icon Mata */
+.toggle-password {
+    font-size: 1.2rem;
+    color: #888;
+}
+
+.toggle-password:hover {
+    color: #8b5cf6;
+}

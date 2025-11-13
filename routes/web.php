@@ -17,7 +17,6 @@ Route::redirect('/', '/landingpage');
 // Landing (sudah ada)
 Route::view('/landingpage', 'landingpageview')->name('landing');
 
-
 // Register page (Blade kamu yang ini)
 Route::get('/register', fn () => view('registerview'))->name('register.view');
 Route::get('/login', fn () => view('loginview'))->name('login.view');
@@ -30,45 +29,58 @@ Route::post('/otp/resend', [UserController::class, 'resendOtp'])->name('otp.rese
 Route::post('/login', [UserController::class, 'login'])->name('user.login.perform');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-// Dashboard contoh
-Route::get('/dashboard', fn () => view('dashboard'))->name('dashboard');
-
-
-//ini buat coba otp view doang si
+// Ini buat coba otp view doang si
 Route::view('/otp-test', 'otpview'); // langsung render view tanpa controller
-
-//buat username view
 Route::view('/username-test', 'usernameview'); // langsung render view tanpa controller
+Route::view('/personalisasi-test', 'personalisasi'); // langsung render view tanpa controller
+
+// Buat username view
+Route::get('/username', [UserController::class, 'showUsernameView'])->name('username.view');
+Route::post('/username', [UserController::class, 'setUsername'])->name('username.set');
+
+// Dashboard contoh
+Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
 
 // Kelas pages (static views for design preview)
 Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
-// materi/video pages are handled by MediaController to avoid overlapping controller methods
+
+// Materi/video pages are handled by MediaController to avoid overlapping controller methods
 Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
 Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
-Route::view('/semuakelas', 'semuakelas'); // langsung render view tanpa controller
+Route::get('/personalisasi', [UserController::class, 'showPersonalisasi'])->name('personalisasi.view');
 
 // Serve CSS from resources during development (not recommended for production)
 Route::get('/resources/css/app.css', function () {
-	$path = resource_path('css/app.css');
-	if (!file_exists($path)) {
-		abort(404);
-	}
-	return response()->file($path, [
-		'Content-Type' => 'text/css'
-	]);
+    $path = resource_path('css/app.css');
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    return response()->file($path, [
+        'Content-Type' => 'text/css'
+    ]);
 });
+
+// Route Jadwal
+Route::get('/jadwal', fn () => redirect()->route('jadwalview'));
+Route::resource('jadwal', JadwalController::class)->parameters(['jadwal' => 'jadwal:id_jadwal']);
+Route::get('/api/jadwal/bulan', [JadwalController::class, 'byMonth'])->name('jadwal.byMonth');
 
 // Media routes (image and video)
 Route::get('/media/image/{id}', [MediaController::class, 'showImage'])->name('media.image');
 Route::get('/media/video/{id}', [MediaController::class, 'showVideo'])->name('media.video');
 
-//chat
+// Chat
 Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
 
-
-/* API JSON untuk chat */
+// API JSON untuk chat
 Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
 Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
 Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
 
-Route::view('/personalisasi', 'personalisasi'); // langsung render view tanpa controller
+// Route Kelas
+Route::middleware('auth')->group(function () {
+    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+});
+
+Route::view('/personalisasi', 'personalisasi')->name('personalisasi.view');
+// Route untuk menampilkan halaman password

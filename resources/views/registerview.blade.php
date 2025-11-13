@@ -53,9 +53,9 @@
 
         <div class="mb-3">
             <label class="form-label">Nama</label>
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                placeholder="Masukkan nama anda" value="{{ old('name') }}" required>
-            @error('name') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror"
+                placeholder="Masukkan nama anda" value="{{ old('nama') }}" required>
+            @error('nama') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
         <div class="mb-3">
@@ -66,20 +66,22 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Password</label>
-            <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                placeholder="Masukkan password anda" required>
-            @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
-            <small class="text-secondary d-block mt-2">
-            Minimal 8 karakter, kombinasi huruf besar-kecil, angka, dan simbol.
-            </small>
-        </div>
+    <label class="form-label">Password</label>
+    <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
+           placeholder="Masukkan password anda" value="{{ old('password') }}" required>
+    @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    <small class="text-secondary d-block mt-2">
+    Minimal 8 karakter, kombinasi huruf besar-kecil, angka, dan simbol.
+    </small>
+</div>
 
-        <div class="mb-4">
-            <label class="form-label">Verifikasi password</label>
-            <input type="password" name="password_confirmation" class="form-control"
-                placeholder="Verifikasi password anda" required>
-        </div>
+<div class="mb-4">
+    <label class="form-label">Verifikasi password</label>
+    <input type="password" name="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror"
+           placeholder="Verifikasi password anda" value="{{ old('password_confirmation') }}" required>
+    @error('password_confirmation') <div class="invalid-feedback">{{ $message }}</div> @enderror
+</div>
+
 
         <div class="d-flex align-items-start gap-2 mb-3">
             <input class="form-check-input mt-1" type="checkbox"
@@ -99,6 +101,11 @@
       </div>
     </main>
   </div>
+
+  @error('password')
+    <div class="invalid-feedback">{{ $message }}</div>
+@enderror
+
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

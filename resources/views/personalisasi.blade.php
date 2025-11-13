@@ -16,21 +16,21 @@
 </head>
 <body>
     <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-                <div class="container-fluid px-4">
-                    <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                        <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Beranda</a>
+                        <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('kelas.index') }}">Kelas</a>
+                        <a class="nav-link" href="{{ route('kelas.index') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Jadwal</a>
@@ -47,7 +47,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
+                        <a class="nav-link active d-flex align-items-center" href="{{ route('personalisasi.view') }}">
                             <img src="profile.jpg" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -59,7 +59,7 @@
 
     <!-- Main Content -->
     <section class="main-section">
-        <div class="container py-4">
+        <div class="container py-1">
             <!-- Back Button -->
             <button class="btn btn-back mb-4">
                 <i class="bi bi-chevron-left"></i> Back
@@ -69,7 +69,7 @@
             <h1 class="page-title text-center mb-4">My Account</h1>
 
             <!-- Tabs Navigation -->
-            <ul class="nav nav-tabs custom-tabs justify-content-center mb-5" id="accountTabs" role="tablist">
+            <ul class="nav nav-tabs custom-tabs justify-content-center mb-1" id="accountTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="profil-tab" data-bs-toggle="tab"
                             data-bs-target="#profil" type="button" role="tab">
@@ -208,13 +208,53 @@
                 <div class="tab-pane fade" id="privasi" role="tabpanel">
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
-                            <p class="text-white text-center">Pengaturan privasi akan ditampilkan di sini.</p>
+                            <div class="profile-form">
+                                <!-- Password Hash Field with Eye Icon -->
+                                <div class="mb-1 position-relative">
+                                    <label for="password" class="form-label">Password</label>
+                                    <input type="password" class="form-control custom-input password-field" id="password" value="********" readonly>
+                                    <i class="bi bi-eye-slash toggle-password" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
+                                </div>
+                                <!-- Privacy Settings -->
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="share-browser-data">
+                                        <label class="form-check-label" for="share-browser-data">
+                                            Bagikan data browser untuk personalisasi yang lebih baik
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="disable-read" checked>
+                                        <label class="form-check-label" for="disable-read">
+                                            Matikan Read dalam chat
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="hide-status">
+                                        <label class="form-check-label" for="hide-status">
+                                            Sembunyikan status saat online
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Save Button -->
+                                <div class="text-center mt-5">
+                                    <button type="button" class="btn btn-save" onclick="redirectToHome()">Save</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
     <!-- Footer -->
     <footer class="footer-custom">
         <div class="container">
@@ -280,5 +320,51 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // ====== TOGGLE PASSWORD ======
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordField = document.getElementById('password');
+
+        if (togglePassword && passwordField) {
+            togglePassword.addEventListener('click', function() {
+                const type = passwordField.type === 'password' ? 'text' : 'password';
+                passwordField.type = type;
+
+                this.classList.toggle('bi-eye');
+                this.classList.toggle('bi-eye-slash');
+            });
+        }
+
+        // ====== SAVE / LOAD CHECKBOX STATES (LOCALSTORAGE) ======
+        const checkboxIds = ['share-browser-data', 'disable-read', 'hide-status'];
+
+        checkboxIds.forEach(id => {
+            const checkbox = document.getElementById(id);
+            if (!checkbox) return;
+
+            const storageKey = 'privacy_' + id;
+
+            // Load nilai awal dari localStorage
+            const savedValue = localStorage.getItem(storageKey);
+            if (savedValue !== null) {
+                checkbox.checked = savedValue === 'true';
+            }
+
+            // Simpan tiap kali dicentang / di-uncheck
+            checkbox.addEventListener('change', function () {
+                localStorage.setItem(storageKey, this.checked);
+            });
+        });
+    });
+
+    // Redirect tombol Save (kalau mau tetap dipakai)
+    function redirectToHome() {
+        window.location.href = "{{ route('homepage') }}";
+    }
+    </script>
+
 </body>
 </html>
+
