@@ -44,6 +44,23 @@ Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
 // Kelas pages (static views for design preview)
 Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 
+// --- JADWAL ROUTES ---
+Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+Route::get('/jadwal/preview/{id}', [JadwalController::class, 'showPreview'])->name('jadwal.preview');
+
+// --- NEW PEMBAYARAN (BUY CLASS) ROUTES ---
+// Show the initial buy page (Beli kelas.jpg)
+Route::get('/beli/{id}', [PembayaranController::class, 'showBeliKelas'])->name('pembayaran.show');
+// Show the checkout page (Bayar kelas.png)
+Route::get('/checkout/{id}', [PembayaranController::class, 'showCheckout'])->name('pembayaran.checkout')->middleware('auth'); // Must be logged in
+// Process the payment
+Route::post('/checkout/{id}', [PembayaranController::class, 'processPayment'])->name('pembayaran.process')->middleware('auth'); // Must be logged in
+// Show the loading page
+Route::get('/loading/{id}', [PembayaranController::class, 'showLoading'])->name('pembayaran.loading')->middleware('auth'); // Must be logged in
+// Show the success page (bayar sukses.jpg)
+Route::get('/sukses/{id}', [PembayaranController::class, 'showSukses'])->name('pembayaran.sukses')->middleware('auth'); // Must be logged in
+// --- END NEW PEMBAYARAN ROUTES ---
+
 // Materi/video pages are handled by MediaController to avoid overlapping controller methods
 Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
 Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
