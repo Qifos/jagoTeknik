@@ -249,10 +249,153 @@
                 <div class="tab-pane fade" id="selesai" role="tabpanel">
                     <p class="text-white">Konten kelas yang sudah selesai akan ditampilkan di sini.</p>
                 </div>
+                <!--Adelia Paramita (5026231196)-->
+                <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
 
-                <div class="tab-pane fade" id="wishlist" role="tabpanel">
-                    <p class="text-white">Konten wishlist akan ditampilkan di sini.</p>
+                    @php
+                        use Illuminate\Support\Facades\Auth;
+                        use Illuminate\Support\Facades\DB;
+
+                        $user = Auth::user();
+                        $wishlistItems = collect();
+
+                        if ($user) {
+                            $userId = $user->id_user ?? $user->id;
+
+                            // Ambil wishlist user + filter agar kelas yang sudah dibeli tidak muncul
+                            $wishlistItems = DB::table('wishlist_kelas as w')
+                                ->join('kelas as k', 'w.id_kelas', '=', 'k.id_kelas')
+                                ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+                                ->leftJoin('beli_matkul as b', function ($join) use ($userId) {
+                                    $join->on('b.id_matkul', '=', 'm.id_matkul')
+                                        ->where('b.id_user', '=', $userId);
+                                })
+                                ->where('w.id_user', $userId)
+                                ->whereNull('b.id_beli_matkul')
+                                ->select('k.id_kelas', 'm.nama_matkul')
+                                ->get();
+                        }
+
+                        // fallback kalau belum login ATAU wishlist kosong → tampilkan contoh default
+                        $showDefault = !$user || $wishlistItems->isEmpty();
+                    @endphp
+
+                    <div class="section-header mb-3">
+                        <h2 class="section-title">Kelas yang mau diikut</h2>
+                        <p class="section-subtitle">
+                            @if($showDefault)
+                                Lihat daftar kelas yang bisa kamu masukkan ke wishlist di JagoTeknik.
+                            @else
+                                Kelas yang kamu masukkan ke wishlist.
+                            @endif
+                        </p>
+                    </div>
+
+                    <div class="row g-4">
+
+                        {{-- ====================== FALLBACK DEFAULT KETIKA BELUM LOGIN ====================== --}}
+                        @if($showDefault)
+
+                            {{-- CARD 1 --}}
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="{{ asset('kalkulus2.jpg') }}" alt="Kalkulus 2">
+                                        <div class="course-badge add">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Kalkulus 2</h3>
+                                        <p class="course-progress">Daftar kelas ini</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- CARD 2 --}}
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="{{ asset('fisika.jpg') }}" alt="Fisika">
+                                        <div class="course-badge add">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Fisika</h3>
+                                        <p class="course-progress">Daftar kelas ini</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- CARD 3 --}}
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="{{ asset('kimia.jpg') }}" alt="Kimia">
+                                        <div class="course-badge add">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Kimia</h3>
+                                        <p class="course-progress">Daftar kelas ini</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- CARD 4 --}}
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="{{ asset('pemrograman.jpg') }}" alt="Pemrograman">
+                                        <div class="course-badge add">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Pemrograman</h3>
+                                        <p class="course-progress">Daftar kelas ini</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        @else
+
+                        {{-- ====================== DATA DINAMIS WISHLIST USER ====================== --}}
+                            @foreach($wishlistItems as $item)
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <div class="course-card">
+
+                                        <div class="course-image">
+                                            {{-- NOTE: Gambar placeholder, bisa ganti sesuai DB --}}
+                                            <img src="{{ asset('kalkulus2.jpg') }}" alt="{{ $item->nama_matkul }}">
+
+                                            {{-- TOGGLE WISHLIST --}}
+                                            <form action="{{ route('wishlist.toggle', ['id_kelas' => $item->id_kelas]) }}"
+                                                method="POST"
+                                                class="course-badge add">
+                                                @csrf
+                                                <button type="submit" style="all: unset; cursor: pointer;">
+                                                    <i class="bi bi-plus-circle-fill"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        <div class="course-info">
+                                            <h3 class="course-title">{{ $item->nama_matkul }}</h3>
+                                            <p class="course-progress">Daftar kelas ini</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        @endif
+
+                    </div>
                 </div>
+                <!--batas adel-->
             </div>
         </div>
     </section>

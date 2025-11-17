@@ -64,6 +64,8 @@ Route::get('/sukses/{id}', [PembayaranController::class, 'showSukses'])->name('p
 // Materi/video pages are handled by MediaController to avoid overlapping controller methods
 Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
 Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
+Route::view('/semuakelas', 'semuakelas'); // langsung render view tanpa controller
+
 Route::get('/personalisasi', [UserController::class, 'showPersonalisasi'])->name('personalisasi.view');
 
 // Serve CSS from resources during development (not recommended for production)
@@ -101,3 +103,8 @@ Route::middleware('auth')->group(function () {
 
 Route::view('/personalisasi', 'personalisasi')->name('personalisasi.view');
 // Route untuk menampilkan halaman password
+
+Route::middleware('auth')->group(function () {
+    Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])
+        ->name('wishlist.toggle');
+});
