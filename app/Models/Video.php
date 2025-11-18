@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Video extends Model
 {
-    use HasFactory;
+    protected $table = 'video';
+    protected $primaryKey = 'id_video';
+    public $timestamps = true;
 }

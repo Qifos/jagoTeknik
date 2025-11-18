@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mentor extends Model
 {
-    use HasFactory;
+    protected $table = 'mentor';
+    protected $primaryKey = 'id_mentor';
+    public $timestamps = true;
 }

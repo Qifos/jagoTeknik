@@ -22,4 +22,9 @@ class Kelas extends Model
     {
         return $this->hasMany(Wishlist::class, 'kelas_id', 'id_kelas');
     }
+    protected $fillable = ['id_matkul','id_jadwal','id_materi','id_wishlist_kelas','deskripsi','preview','rating_kelas','rating_review','tempat'];
+
+    public function matkul() { return $this->belongsTo(Matkul::class,'id_matkul','id_matkul'); }
+    public function jadwal() { return $this->belongsTo(Jadwal::class,'id_jadwal','id_jadwal'); }
+    public function materi() { return $this->hasMany(Materi::class,'id_kelas','id_kelas'); }
 }

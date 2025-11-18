@@ -1,0 +1,455 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #000000;
+    color: #fff;
+    min-height: 100vh;
+}
+
+/* Navbar Styles */
+.navbar {
+    background-color: #000000 !important;
+    padding: 1rem 0;
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar-nav .nav-link {
+    color: #fff !important;
+    padding: 0.5rem 1rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #8b5cf6 !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: #8b5cf6 !important;
+    font-weight: 500;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    background-color: transparent;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 0.5rem 2.5rem 0.5rem 1rem;
+    border-radius: 8px;
+    width: 250px;
+}
+
+.search-box input::placeholder {
+    color: #888;
+}
+
+.search-box input:focus {
+    background-color: #1a1a1a;
+    border-color: #666;
+    outline: none;
+    box-shadow: none;
+}
+
+.search-box i {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.profile-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #fff;
+}
+
+/* Main Section */
+.main-section {
+    background-color: #000000;
+    min-height: calc(100vh - 70px);
+    padding-top: 2rem;
+}
+
+/* Back Button */
+.btn-back {
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #f0f0f0;
+    transform: translateX(-3px);
+}
+
+.btn-back i {
+    font-size: 1rem;
+}
+
+/* Page Title */
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Custom Tabs */
+.custom-tabs {
+    border-bottom: 1px solid #333;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.custom-tabs .nav-link {
+    background-color: transparent;
+    border: none;
+    color: #888;
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.custom-tabs .nav-link:hover {
+    color: #fff;
+    border-bottom-color: #555;
+}
+
+.custom-tabs .nav-link.active {
+    color: #fff;
+    background-color: transparent;
+    border-bottom-color: #fff;
+}
+
+/* Profile Form */
+.profile-form {
+    padding: 2rem 0;
+}
+
+/* Profile Photo */
+.profile-photo-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #333;
+}
+
+.btn-edit-photo {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: #8b5cf6;
+    border: 2px solid #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit-photo:hover {
+    background-color: #7c3aed;
+    transform: scale(1.05);
+}
+
+.btn-edit-photo i {
+    font-size: 1rem;
+}
+
+/* Form Labels */
+.form-label {
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* Custom Input */
+.custom-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #444;
+    border-radius: 0;
+    color: #fff;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.custom-input:focus {
+    background-color: transparent;
+    border-bottom-color: #8b5cf6;
+    outline: none;
+    box-shadow: none;
+    color: #fff;
+}
+
+.custom-input::placeholder {
+    color: #555;
+}
+
+/* Custom Select */
+.custom-select {
+    background-color: #000000;
+    border: none;
+    border-bottom: 2px solid #444;
+    border-radius: 0;
+    color: #888;
+    padding: 0.75rem 0;
+    padding-right: 2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 12px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.custom-select:focus {
+    background-color: #000000;
+    border-bottom-color: #8b5cf6;
+    outline: none;
+    box-shadow: none;
+    color: #fff;
+}
+
+.custom-select option {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 0.5rem;
+}
+
+.custom-select option:hover {
+    background-color: #2a2a2a;
+}
+
+.custom-select option:first-child {
+    color: #888;
+}
+
+/* Date Input Styling */
+.custom-input[type="date"] {
+    color: #888;
+}
+
+.custom-input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.custom-input[type="date"]:focus {
+    color: #fff;
+}
+
+/* Save Button */
+.btn-save {
+    background-color: #c4b5fd;
+    color: #000;
+    border: none;
+    padding: 0.75rem 3rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.btn-save:hover {
+    background-color: #a78bfa;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(196, 181, 253, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+    .page-title {
+        font-size: 1.75rem;
+    }
+
+    .search-box input {
+        width: 200px;
+    }
+
+    .custom-tabs .nav-link {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .custom-tabs .nav-link {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .btn-back {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .profile-photo {
+        width: 100px;
+        height: 100px;
+    }
+
+    .btn-edit-photo {
+        width: 30px;
+        height: 30px;
+    }
+
+    .btn-edit-photo i {
+        font-size: 0.85rem;
+    }
+
+    .btn-save {
+        padding: 0.65rem 2.5rem;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .custom-tabs {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .custom-tabs .nav-item {
+        display: inline-block;
+    }
+
+    .custom-tabs .nav-link {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .profile-form {
+        padding: 1rem 0;
+    }
+}
+
+.footer-custom {
+            background-color: #000;
+            color: #fff;
+            padding: 3rem 0 1.5rem;
+            border-top: 1px solid #333;
+        }
+
+        .footer-link {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-purple);
+        }
+
+        .social-icon {
+            color: #888;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icon:hover {
+            color: var(--primary-purple);
+        }
+
+        h6 {
+            color: #fff;
+        }
+
+        .text-muted {
+            color: #888 !important;
+        }
+
+/* Styling untuk password field */
+#privasi .custom-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #444; /* Menjaga garis bawah tetap ada */
+    color: #fff;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.3s ease;
+}
+
+#privasi .custom-input:focus {
+    border-bottom-color: #8b5cf6;
+    color: #fff;
+}
+
+#privasi .custom-input::placeholder {
+    color: #555;
+}
+
+/* Styling untuk Password Field */
+#privasi .password-field {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #444; /* Menjaga garis bawah tetap ada */
+    color: #fff;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+#privasi .password-field:focus {
+    border-bottom-color: #8b5cf6;
+    outline: none;
+    box-shadow: none;
+}
+
+#privasi .password-field::-webkit-input-placeholder {
+    color: #555;
+}
+
+/* Styling untuk Icon Mata */
+.toggle-password {
+    font-size: 1.2rem;
+    color: #888;
+}
+
+.toggle-password:hover {
+    color: #8b5cf6;
+}
