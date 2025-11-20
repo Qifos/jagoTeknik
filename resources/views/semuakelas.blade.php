@@ -35,7 +35,7 @@
                         <a class="nav-link" href="#">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('kelas.index') }}">Kelas</a>
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Jadwal</a>
@@ -110,152 +110,291 @@
                         <p class="section-subtitle">Lihat semua kelas yang ada di jagoteknik</p>
                     </div>
 
+                     <!-- Course Cards Grid -->
+
                     <!-- Course Cards Grid -->
                     <div class="row g-4">
-                        <!-- Card 1 - Kalkulus 2 -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="kalkulus2.jpg" alt="Kalkulus 2">
-                                    <div class="course-badge">
-                                        <i class="bi bi-play-circle-fill"></i>
-                                    </div>
-                                </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Kalkulus 2</h3>
-                                    <p class="course-progress">Lesson 5 of 7</p>
-                                </div>
-                            </div>
-                        </div>
+                        @php
+                            use Illuminate\Support\Facades\Auth;
+                            use Illuminate\Support\Facades\DB;
 
-                        <!-- Card 2 - Fisika -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="fisika.jpg" alt="Fisika">
-                                    <div class="course-badge">
-                                        <i class="bi bi-play-circle-fill"></i>
-                                    </div>
-                                </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Fisika</h3>
-                                    <p class="course-progress">Lesson 5 of 7</p>
-                                </div>
-                            </div>
-                        </div>
+                            $user = Auth::user();
 
-                        <!-- Card 3 - Kimia -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="kimia.jpg" alt="Kimia">
-                                    <div class="course-badge completed">
-                                        <i class="bi bi-check-circle-fill"></i>
-                                    </div>
-                                </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Kimia</h3>
-                                    <p class="course-progress">Daftar kelas ini</p>
-                                </div>
-                            </div>
-                        </div>
+                            // Ambil semua kelas dengan informasi terkait
+                            $semuaKelas = DB::table('kelas as k')
+                                ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+                                ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
+                                ->leftJoin('beli_matkul as bm', function($join) use ($user) {
+                                    $join->on('m.id_matkul', '=', 'bm.id_matkul')
+                                         ->where('bm.id_user', '=', $user ? $user->id_user : null);
+                                })
+                                ->leftJoin('wishlist_kelas as wl', function($join) use ($user) {
+                                    $join->on('k.id_kelas', '=', 'wl.id_kelas')
+                                         ->where('wl.id_user', '=', $user ? $user->id_user : null);
+                                })
+                                ->select(
+                                    'k.id_kelas',
+                                    'm.id_matkul',
+                                    'm.nama_matkul',
+                                    'm.deskripsi',
+                                    'k.deskripsi as deskripsi_kelas',
+                                    'k.preview',
+                                    'k.rating_kelas',
+                                    'k.harga_asli',
+                                    'ment.nama as nama_mentor',
+                                    'bm.id_beli_matkul',
+                                    'wl.id_wishlist_kelas',
+                                    DB::raw('CASE
+                                        WHEN bm.id_beli_matkul IS NOT NULL THEN "completed"
+                                        WHEN wl.id_wishlist_kelas IS NOT NULL THEN "wishlist"
+                                        ELSE "available"
+                                    END as status_kelas')
+                                )
+                                ->get();
 
-                        <!-- Card 4 - Pemrograman -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="pemrograman.jpg" alt="Pemrograman">
-                                    <div class="course-badge add">
-                                        <i class="bi bi-plus-circle-fill"></i>
-                                    </div>
-                                </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Pemrograman</h3>
-                                    <p class="course-progress">Lesson 5 of 7</p>
-                                </div>
-                            </div>
-                        </div>
+                            // Fallback jika tidak ada data dari database
+                            $showDefault = $semuaKelas->isEmpty();
+                        @endphp
 
-                        <!-- Card 5 - Database -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="database.jpg" alt="Database">
-                                    <div class="course-badge">
-                                        <i class="bi bi-play-circle-fill"></i>
+                        @if($showDefault)
+                            <!-- Default cards jika tidak ada data dari database -->
+                            <!-- Card 1 - Kalkulus 2 -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="kalkulus2.jpg" alt="Kalkulus 2">
+                                        <div class="course-badge">
+                                            <i class="bi bi-play-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Kalkulus 2</h3>
+                                        <p class="course-progress">Rp 125.000</p>
                                     </div>
                                 </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Database</h3>
-                                    <p class="course-progress">Lesson 5 of 7</p>
-                                </div>
                             </div>
-                        </div>
 
-                        <!-- Card 6 - Sistem Elektrik -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="elektrik.jpg" alt="Sistem Elektrik">
-                                    <div class="course-badge">
-                                        <i class="bi bi-play-circle-fill"></i>
+                            <!-- Card 2 - Fisika -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="fisika.jpg" alt="Fisika">
+                                        <div class="course-badge">
+                                            <i class="bi bi-play-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Fisika</h3>
+                                        <p class="course-progress">Rp 150.000</p>
                                     </div>
                                 </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Sistem Elektrik</h3>
-                                    <p class="course-progress">Daftar kelas ini</p>
-                                </div>
                             </div>
-                        </div>
 
-                        <!-- Card 7 - Jaringan Komputer -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="jaringan.jpg" alt="Jaringan Komputer">
-                                    <div class="course-badge completed">
-                                        <i class="bi bi-check-circle-fill"></i>
+                            <!-- Card 3 - Kimia -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="kimia.jpg" alt="Kimia">
+                                        <div class="course-badge completed">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Kimia</h3>
+                                        <p class="course-progress">Progress: 75%</p>
                                     </div>
                                 </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Jaringan Komputer</h3>
-                                    <p class="course-progress">Completed</p>
-                                </div>
                             </div>
-                        </div>
 
-                        <!-- Card 8 - Biologi -->
-                        <div class="col-lg-3 col-md-4 col-sm-6">
-                            <div class="course-card">
-                                <div class="course-image">
-                                    <img src="biologi.jpg" alt="Biologi">
-                                    <div class="course-badge add">
-                                        <i class="bi bi-plus-circle-fill"></i>
+                            <!-- Card 4 - Pemrograman -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="course-card">
+                                    <div class="course-image">
+                                        <img src="pemrograman.jpg" alt="Pemrograman">
+                                        <div class="course-badge add">
+                                            <i class="bi bi-plus-circle-fill"></i>
+                                        </div>
+                                    </div>
+                                    <div class="course-info">
+                                        <h3 class="course-title">Pemrograman</h3>
+                                        <p class="course-progress">Dalam wishlist</p>
                                     </div>
                                 </div>
-                                <div class="course-info">
-                                    <h3 class="course-title">Biologi</h3>
-                                    <p class="course-progress">Daftar kelas ini</p>
-                                </div>
                             </div>
-                        </div>
+                        @else
+                            <!-- Data dinamis dari database -->
+                            @foreach($semuaKelas as $item)
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <!-- Link berbeda berdasarkan status kelas -->
+                                    @if($item->status_kelas === 'completed')
+                                        <!-- Jika sudah dibeli, link ke halaman belajar -->
+                                        <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
+                                    @else
+                                        <!-- Jika belum dibeli, link ke halaman detail/pembelian -->
+                                        <a href="{{ route('kelas.beli', $item->id_kelas) }}" class="text-decoration-none">
+                                    @endif
+
+                                        <div class="course-card">
+                                            <div class="course-image">
+                                                <img src="{{ asset('images/kelas/' . strtolower(str_replace(' ', '_', $item->nama_matkul)) . '.jpg') }}"
+                                                     alt="{{ $item->nama_matkul }}"
+                                                     onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                                <div class="course-badge {{ $item->status_kelas === 'completed' ? 'completed' : ($item->status_kelas === 'wishlist' ? 'add' : '') }}">
+                                                    @if($item->status_kelas === 'completed')
+                                                        <i class="bi bi-check-circle-fill"></i>
+                                                    @elseif($item->status_kelas === 'wishlist')
+                                                        <form action="{{ route('wishlist.toggle', $item->id_kelas) }}" method="POST" style="all: unset; cursor: pointer;">
+                                                            @csrf
+                                                            <i class="bi bi-plus-circle-fill"></i>
+                                                        </form>
+                                                    @else
+                                                        <i class="bi bi-play-circle-fill"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="course-info">
+                                                <h3 class="course-title">{{ $item->nama_matkul }}</h3>
+                                                <p class="course-instructor">Oleh: {{ $item->nama_mentor ?? 'Instruktur' }}</p>
+                                                <p class="course-progress">
+                                                    @if($item->status_kelas === 'completed')
+                                                        <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
+                                                        @php
+                                                            $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
+                                                        @endphp
+                                                        Progress: {{ $progress }}%
+                                                    @elseif($item->status_kelas === 'wishlist')
+                                                        <!-- Tampilkan status wishlist -->
+                                                        Dalam wishlist
+                                                    @else
+                                                        <!-- Tampilkan harga untuk kelas yang belum dibeli -->
+                                                        Rp {{ number_format($item->harga_asli, 0, ',', '.') }}
+                                                    @endif
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
+                <!-- TAB DIIKUTI -->
                 <div class="tab-pane fade" id="diikuti" role="tabpanel">
-                    <p class="text-white">Konten kelas yang sedang diikuti akan ditampilkan di sini.</p>
+                    @php
+                        // Ambil kelas yang sedang diikuti (status completed)
+                        $kelasDiikuti = $semuaKelas->where('status_kelas', 'completed');
+                    @endphp
+
+                    <div class="section-header mb-3">
+                        <h2 class="section-title">Kelas yang Diikuti</h2>
+                        <p class="section-subtitle">
+                            @if($kelasDiikuti->count() > 0)
+                                Kelas yang sedang Anda ikuti
+                            @else
+                                Belum ada kelas yang sedang diikuti
+                            @endif
+                        </p>
+                    </div>
+
+                    @if($kelasDiikuti->count() > 0)
+                        <div class="row g-4">
+                            @foreach($kelasDiikuti as $item)
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <!-- Link ke halaman belajar untuk kelas yang sudah dibeli -->
+                                    <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
+                                        <div class="course-card">
+                                            <div class="course-image">
+                                                <img src="{{ asset('images/kelas/' . strtolower(str_replace(' ', '_', $item->nama_matkul)) . '.jpg') }}"
+                                                     alt="{{ $item->nama_matkul }}"
+                                                     onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                                <div class="course-badge completed">
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                </div>
+                                            </div>
+                                            <div class="course-info">
+                                                <h3 class="course-title">{{ $item->nama_matkul }}</h3>
+                                                <p class="course-instructor">Oleh: {{ $item->nama_mentor ?? 'Instruktur' }}</p>
+                                                @php
+                                                    $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
+                                                @endphp
+                                                <!-- Di tab Diikuti, selalu tampilkan progress -->
+                                                <p class="course-progress">Progress: {{ $progress }}%</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-5">
+                            <i class="bi bi-book" style="font-size: 3rem; color: #6c757d;"></i>
+                            <p class="text-muted mt-3">Belum ada kelas yang sedang diikuti</p>
+                            <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-2">Jelajahi Kelas</a>
+                        </div>
+                    @endif
                 </div>
 
+                <!-- TAB SELESAI -->
                 <div class="tab-pane fade" id="selesai" role="tabpanel">
-                    <p class="text-white">Konten kelas yang sudah selesai akan ditampilkan di sini.</p>
+                    @php
+                        // Ambil kelas yang sudah selesai (progress 100%)
+                        $kelasSelesai = $semuaKelas->where('status_kelas', 'completed')
+                            ->filter(function($item) {
+                                $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
+                                return $progress == 100;
+                            });
+                    @endphp
+
+                    <div class="section-header mb-3">
+                        <h2 class="section-title">Kelas yang Selesai</h2>
+                        <p class="section-subtitle">
+                            @if($kelasSelesai->count() > 0)
+                                Kelas yang sudah Anda selesaikan
+                            @else
+                                Belum ada kelas yang diselesaikan
+                            @endif
+                        </p>
+                    </div>
+
+                    @if($kelasSelesai->count() > 0)
+                        <div class="row g-4">
+                            @foreach($kelasSelesai as $item)
+                                <div class="col-lg-3 col-md-4 col-sm-6">
+                                    <!-- Link ke halaman belajar untuk kelas yang sudah selesai -->
+                                    <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
+                                        <div class="course-card">
+                                            <div class="course-image">
+                                                <img src="{{ asset('images/kelas/' . strtolower(str_replace(' ', '_', $item->nama_matkul)) . '.jpg') }}"
+                                                     alt="{{ $item->nama_matkul }}"
+                                                     onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                                <div class="course-badge completed">
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                </div>
+                                            </div>
+                                            <div class="course-info">
+                                                <h3 class="course-title">{{ $item->nama_matkul }}</h3>
+                                                <p class="course-instructor">Oleh: {{ $item->nama_mentor ?? 'Instruktur' }}</p>
+                                                <!-- Di tab Selesai, tampilkan status selesai -->
+                                                <p class="course-progress">Selesai</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-5">
+                            <i class="bi bi-flag" style="font-size: 3rem; color: #6c757d;"></i>
+                            <p class="text-muted mt-3">Belum ada kelas yang diselesaikan</p>
+                            <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-2">Lanjutkan Belajar</a>
+                        </div>
+                    @endif
                 </div>
                 <!--Adelia Paramita (5026231196)-->
                 <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
 
                     @php
-                        use Illuminate\Support\Facades\Auth;
-                        use Illuminate\Support\Facades\DB;
-
                         $user = Auth::user();
                         $wishlistItems = collect();
 
@@ -399,7 +538,8 @@
             </div>
         </div>
     </section>
- <!-- Footer -->
+
+    <!-- Footer -->
     <footer class="footer-custom">
         <div class="container">
             <div class="row">
@@ -461,7 +601,34 @@
             </div>
         </div>
     </footer>
+
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SweetAlert untuk notifikasi -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // Notifikasi untuk wishlist
+        @if(session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil',
+                text: '{{ session('success') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+
+        @if(session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal',
+                text: '{{ session('error') }}',
+                timer: 2000,
+                showConfirmButton: false
+            });
+        @endif
+    </script>
 </body>
 </html>
