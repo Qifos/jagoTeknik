@@ -41,6 +41,8 @@ Route::post('/username', [UserController::class, 'setUsername'])->name('username
 // Dashboard contoh
 Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
 
+
+
 // Kelas pages (static views for design preview)
 Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 
