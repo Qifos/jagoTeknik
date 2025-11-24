@@ -10,7 +10,6 @@ class AuthController extends Controller
     // GET /login
     public function showLoginForm()
     {
-        // ganti 'loginview' jika nama blade-mu berbeda
         return view('loginview');
     }
 
@@ -24,7 +23,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/'); // atau route('kelas.index')
+            return redirect()->intended('/');
         }
 
         return back()->withErrors([

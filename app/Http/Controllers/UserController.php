@@ -12,7 +12,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\Jurusan; // <-- WAJIB: import model Jurusan!
+use App\Models\Jurusan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules\Password as Pwd;
@@ -129,14 +129,6 @@ class UserController extends Controller
         return redirect()->to('/');
     }
 
-// Menampilkan form untuk melihat password
-public function showPasswordView()
-{
-    // Mengambil data user yang sedang login
-    $user = Auth::user();
-    // Mengirimkan data user ke view
-    return view('personalisasi', ['user' => $user]);
-}
 
 public function showPersonalisasi()
 {
