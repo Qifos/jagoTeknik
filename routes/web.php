@@ -50,7 +50,7 @@ Route::get('/jadwal/preview/{id}', [JadwalController::class, 'showPreview'])->na
 
 // --- NEW PEMBAYARAN (BUY CLASS) ROUTES ---
 // Show the initial buy page (Beli kelas.jpg)
-// Route::get('/beli/{id}', [PembayaranController::class, 'showBeliKelas'])->name('pembayaran.show');
+Route::get('/beli/{id}', [PembayaranController::class, 'showBeliKelas'])->name('pembayaran.show');
 // Show the checkout page (Bayar kelas.png)
 Route::get('/checkout/{id}', [PembayaranController::class, 'showCheckout'])->name('pembayaran.checkout')->middleware('auth'); // Must be logged in
 // Process the payment
@@ -64,33 +64,7 @@ Route::get('/sukses/{id}', [PembayaranController::class, 'showSukses'])->name('p
 // Materi/video pages are handled by MediaController to avoid overlapping controller methods
 Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
 Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
-
-// Route untuk API progress (dipanggil dari view)
-Route::get('/api/progress-kelas/{id_kelas}', [KelasController::class, 'getProgressKelas'])->name('api.kelas.progress');
-
-// Halaman list semua kelas untuk browsing (view template saja)
-Route::get('/semuakelas', [KelasController::class, 'semuaKelas'])->name('kelas.semua');
-
-// Halaman detail kelas default (Kalkulus 2) - mock data untuk demo
-Route::get('/kelas/default', [KelasController::class, 'index'])->name('kelas.index');
-
-/**
- * HALAMAN PEMBELIAN KELAS
- * Alternatif halaman beli kelas (menggunakan model Matkul)
- */
-Route::get('/kelas/{id}/beli', [KelasController::class, 'showBeliKelas'])->name('kelas.beli');
-
-/**
- * HALAMAN BELAJAR - SUDAH DIBELI
- * Untuk user yang SUDAH membeli kelas, menampilkan materi & video pembelajaran
- */
-Route::get('/kelas/{id}/belajar', [KelasController::class, 'showKelasDetail'])->name('kelas.detail.beli');
-
-/**
- * WISHLIST MANAGEMENT
- * Untuk menambah/menghapus kelas dari wishlist user
- */
-Route::post('/wishlist/{id_kelas}', [KelasController::class, 'toggleWishlist'])->name('wishlist.toggle');
+Route::view('/semuakelas', 'semuakelas'); // langsung render view tanpa controller
 
 Route::get('/personalisasi', [UserController::class, 'showPersonalisasi'])->name('personalisasi.view');
 
