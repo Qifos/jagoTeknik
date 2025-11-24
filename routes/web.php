@@ -39,7 +39,10 @@ Route::get('/username', [UserController::class, 'showUsernameView'])->name('user
 Route::post('/username', [UserController::class, 'setUsername'])->name('username.set');
 
 // Dashboard contoh
-Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
+//Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
+
+// Dashboard + rekomendasi kelas
+Route::get('/homepage', [RekomendasiController::class, 'showHomepage'])->name('homepage');
 
 // Kelas pages (static views for design preview)
 Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');

@@ -101,3 +101,106 @@ body{background:var(--dark-bg);color:#fff;font-family:'Segoe UI',Tahoma,Geneva,V
 
 /* 3) Section "Jelajahi kelas kamu" agak kebawah */
 .section-courses { margin-top: 60px; }                /* dorong seluruh section turun */
+
+/* Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+/* =========================================================
+   Section: Kelas yang cocok buat kamu
+   ====================================================== */
+
+.section-match {
+  margin-top: 100px;
+}
+
+.match-card {
+  background: linear-gradient(0deg,#60376B 0%, #AB00C1 100%);
+  border-radius: 24px;
+  padding: 1.5rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
+}
+
+.match-card__top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-bottom: 0.75rem;
+}
+
+.match-card__image-wrapper {
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  background: rgba(0, 0, 0, 0.25);
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.match-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+.match-card__body {
+  margin-bottom: 1rem;
+}
+
+.match-card__title {
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+}
+
+.match-card__desc {
+  font-size: 0.85rem;
+  color: #f9fafb;
+  opacity: 0.85;
+}
+
+.match-card__footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.match-card__mentor {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.match-card__mentor-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.match-card__price {
+  font-weight: 600;
+}
+
+@media (max-width: 767.98px) {
+  .section-match {
+    margin-top: 48px;
+  }
+}
