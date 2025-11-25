@@ -57,7 +57,7 @@
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">
             <div class="mb-3">
-                <a href="#" onclick="if(history.length > 1) { history.back(); return false; } else { window.location = '{{ route('kelas.index') }}'; }" class="back-btn">&lt; Back</a>
+                <a href="{{ route('media.materi', ['id' => $materi->id_materi]) }}" class="back-btn">&lt; Back</a>
             </div>
 
             <div class="row g-4">
@@ -65,29 +65,48 @@
                 <div class="col-lg-4">
                     <div class="video-sidebar">
                         <div class="position-relative mb-3">
-                            <img src="https://placehold.co/600x340/000/fff?text=L+I+M+I+T" class="img-fluid rounded" alt="Limit Thumbnail">
-                            <span class="time-badge">01 hr 2 mins</span>
+                            <img src="https://placehold.co/600x340/000/fff?text={{ urlencode($video->nama_video ?? 'Video') }}" class="img-fluid rounded" alt="{{ $video->nama_video }}">
+                            <span class="time-badge">{{ $video->durasi ?? 'Video' }}</span>
                         </div>
 
-                        <p class="small text-muted mb-1">Video materi</p>
+                        <p class="small text-muted mb-1">{{ $materi->nama_materi }}</p>
                         <h2 class="h3 text-white fw-bold d-flex justify-content-between align-items-center">
-                            {{ $video['title'] ?? 'Limit' }}
+                            {{ $video->nama_video }}
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd" d="M5.172 10.172a.5.5 0 0 0 .707 0l4-4a.5.5 0 0 0 0-.707l-4-4a.5.5 0 0 0-.707.707L8.793 9.5H5.5a.5.5 0 0 0 0 1h3.293l-3.62 3.62a.5.5 0 0 0 0 .707z"/>
                                 <path fill-rule="evenodd" d="M10.828 5.828a.5.5 0 0 0-.707 0l-4 4a.5.5 0 0 0 0 .707l4 4a.5.5 0 0 0 .707-.707L7.207 6.5H10.5a.5.5 0 0 0 0-1H7.207l3.62-3.62a.5.5 0 0 0 0-.707z"/>
                             </svg>
                         </h2>
-                        <p class="text-muted">{{ $video['description'] ?? 'Belajar kalkulus untuk meraih perhitungan yang lebih akurat.' }}</p>
+                        <p class="text-muted">{{ $video->deskripsi ?? 'Deskripsi video tidak tersedia.' }}</p>
 
                         <hr class="border-secondary my-4">
 
                         <div class="d-flex align-items-center">
-                            <img src="https://placehold.co/40x40/888/white?text=MR" class="rounded-circle" alt="Muhammad Ridho">
+                            <img src="https://placehold.co/40x40/888/white?text={{ urlencode(substr($matkul->mentor->nama ?? 'Mentor', 0, 2)) }}" class="rounded-circle" alt="{{ $matkul->mentor->nama ?? 'Mentor' }}">
                             <div class="ms-3">
-                                <p class="text-white mb-0 fw-bold">{{ $video['instructor'] ?? 'Muhammad Ridho' }}</p>
-                                <small class="text-muted">Angkatan {{ $video['angkatan'] ?? 2023 }}</small>
+                                <p class="text-white mb-0 fw-bold">{{ $matkul->mentor->nama ?? 'Mentor' }}</p>
+                                <small class="text-muted">{{ $matkul->nama_matkul }}</small>
                             </div>
                         </div>
+
+                        <!-- Related Videos -->
+                        @if($relatedVideos && $relatedVideos->count() > 0)
+                            <hr class="border-secondary my-4">
+                            <h5 class="text-white mb-3">Video Lainnya</h5>
+                            <div class="related-videos">
+                                @foreach($relatedVideos as $relatedVideo)
+                                    @if($relatedVideo->id_video !== $video->id_video)
+                                        <a href="{{ route('media.video.detail', ['id' => $relatedVideo->id_video]) }}" class="related-video-item d-flex mb-2 text-decoration-none">
+                                            <img src="https://placehold.co/60x40/000/fff?text=V" class="rounded me-2" alt="{{ $relatedVideo->nama_video }}">
+                                            <div class="text-start flex-grow-1">
+                                                <p class="mb-1 small text-white fw-bold">{{ substr($relatedVideo->nama_video, 0, 20) }}...</p>
+                                                <small class="text-muted">{{ $relatedVideo->durasi ?? 'Video' }}</small>
+                                            </div>
+                                        </a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
 

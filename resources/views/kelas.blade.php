@@ -67,7 +67,19 @@
             </div>
 
             <header class="text-center">
-                <h1 class="display-5 title-hero">Kalkulus 2</h1>
+                <h1 class="display-5 title-hero">{{ $matkul->nama_matkul }}</h1>
+                <p class="text-muted">{{ $matkul->mentor->nama ?? 'Instruktur' }}</p>
+                <div class="mt-4">
+                    @if($sudahDibeli)
+                        <a href="{{ route('kelas.detail.beli', $matkul->id_matkul) }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-play-fill"></i> Mulai Belajar
+                        </a>
+                    @else
+                        <a href="{{ route('kelas.beli', $matkul->id_matkul) }}" class="btn btn-warning btn-lg">
+                            <i class="bi bi-cart-plus"></i> Beli Kelas
+                        </a>
+                    @endif
+                </div>
             </header>
 
             <div style="height: 30px;"></div>
@@ -85,7 +97,7 @@
                 <div class="h-scroll" id="materi-scroll">
                     @foreach($materiItems as $item)
                     <div class="card-item">
-                        <a href="{{ route('media.image', ['id' => $item['id']]) }}" class="text-decoration-none">
+                        <a href="{{ route('media.materi', ['id' => $item['id']]) }}" class="text-decoration-none">
                             <div class="custom-card">
                                 <div class="d-flex justify-content-between align-items-center mb-2">
                                     <span class="small-pill">{{ $item['tag'] }}</span>
@@ -131,7 +143,7 @@
                 <div class="h-scroll" id="video-scroll">
                     @foreach($videoItems as $video)
                     <div class="card-item">
-                        <a href="{{ route('media.video', ['id' => $video['id']]) }}" class="text-decoration-none">
+                        <a href="{{ route('media.video.detail', ['id' => $video['id']]) }}" class="text-decoration-none">
                             <div class="custom-video-card">
                                 <div class="media-container mb-3">
                                     @if(isset($video['thumb']) && $video['thumb'])

@@ -49,8 +49,12 @@ class User extends Authenticatable
     }
 
     public function jurusan()
-{
-    return $this->belongsTo(Jurusan::class, 'id_jurusan');
-}
+    {
+        return $this->belongsTo(Jurusan::class, 'id_jurusan', 'id_jurusan');
+    }
 
+    public function beliMatkul()
+    {
+        return $this->hasMany(BeliMatkul::class, 'id_user', 'id_user');
+    }
 }

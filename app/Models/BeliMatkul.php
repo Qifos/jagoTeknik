@@ -45,4 +45,8 @@ class BeliMatkul extends Model
         'total',
         'benefit',
     ];
+
+    public function matkul(){ return $this->belongsTo(Matkul::class,'id_matkul','id_matkul'); }
+
+    public function user(){ return $this->belongsTo(User::class,'id_user','id_user'); }
 }

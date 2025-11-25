@@ -57,64 +57,46 @@
     <main class="flex-grow-1">
         <div class="container py-4">
             <div class="mb-3">
-                <a href="#" onclick="if(history.length > 1) { history.back(); return false; } else { window.location = '{{ route('kelas.index') }}'; }" class="back-btn">&lt; Back</a>
+                <a href="{{ route('kelas.detail.beli', $matkul->id_matkul) }}" class="back-btn">&lt; Back</a>
             </div>
 
             <header class="text-center">
-                <h1 class="display-5 title-hero">Kalkulus 2</h1>
+                <h1 class="display-5 title-hero">{{ $matkul->nama_matkul }}</h1>
             </header>
 
             <div class="content-card">
-                <h2 class="h4 mb-3">{{ $materi['title'] ?? 'Kupas Tuntas Rumus Kalkulus Dasar: Limit' }}</h2>
+                <h2 class="h4 mb-3">{{ $materi->nama_materi ?? 'Materi Pembelajaran' }}</h2>
 
-                <p>Halo, Sobat Jago Teknik! Materi ini akan membahas tentang materi kalkulus dasar yaitu, limit, turunan, integral, dan beserta jenis-jenisnya. Yuk simak lebih lanjut!</p>
-                <p>Buat yang baru masuk ke Semester 2, sebelum belajar lebih lanjut tentang fisika, Kamu harus pahami dulu tentang kalkulus dasar. Alasan kenapa kita harus paham tentang kalkulus dasar, karena dengan belajar kalkulus, perhitungan dan analisa pada materi matematika atau fisika akan menjadi lebih mudah. Dalam fisika, materi yang menggunakan kalkulus adalah GLBB (gerak lurus berubah beraturan), momen inersia, titik berat, dan lainnya.</p>
+                <div>{!! $materi->isi_materi ?? '<p>Deskripsi materi tidak tersedia.</p>' !!}</div>
 
-                <h5 class="mt-4">Beberapa materi kalkulus yang dapat mempermudah perhitungan dan analisa antara lain:</h5>
-                <ul class="mt-3">
-                    <li>? Limit</li>
-                    <li>? Turunan</li>
-                    <li>? Integral</li>
-                </ul>
-
-                <p class="mt-3">Nilai limit artinya nilai yang mendekati nilai fungsi. Untuk mencari nilai limit, subtitusikan nilai limit. Jika hasilnya ada (bukan bentuk tak tentu), maka selesai. Jika hasilnya tak tentu, maka bentuk limit harus diubah dengan melihat bentuknya:</p>
-
-                <h5 class="mt-4">Bentuk Pangkat</h5>
-                <p>Jika terdapat bentuk pangkat pada persamaan limit, maka faktorkan. Contoh:</p>
-
-                <div class="formula-box my-3">
-                    lim(x→1) (2x-2)/(x²-5x+6) = lim(a→b) (2x-2)/((x-2)(x-3)) = lim(a→b) 2/(x-3) = 2/-2 = -1
-                </div>
-
-                <!-- Teaser Card (from PDF) -->
-                <div class="teaser-card" x-data="{}">
-                    <div class="thumb mb-3">
-                        <img src="https://placehold.co/600x340/000/fff?text=L+I+M+I+T" class="img-fluid" alt="Video Teaser">
-                        <button class="play-large" onclick="window.location='{{ route('media.video', ['id' => $materi['video_id'] ?? 1]) }}'">
-                            ▶
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="small text-white-75">Video Materi - Limit</div>
-                            <div class="fw-bold instructor">
-                                <img src="https://placehold.co/24x24/eee/333?text=IH" alt="instructor">
-                                <span>Ikhwanul Hafidz</span>
+                <!-- Video List -->
+                @if($videos && $videos->count() > 0)
+                    <h5 class="mt-4 mb-3">Video Pembelajaran</h5>
+                    <div class="row g-3">
+                        @foreach($videos as $video)
+                            <div class="col-md-6 col-lg-4">
+                                <div class="teaser-card" x-data="{}">
+                                    <div class="thumb mb-3">
+                                        <img src="https://placehold.co/400x225/000/fff?text={{ urlencode($video->nama_video ?? 'Video') }}" class="img-fluid" alt="{{ $video->nama_video }}">
+                                        <a href="{{ route('media.video.detail', ['id' => $video->id_video]) }}" class="play-large">▶</a>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <div>
+                                            <div class="small text-white-75">{{ $video->durasi ?? 'Video' }}</div>
+                                            <div class="fw-bold instructor">
+                                                <span>{{ $video->nama_video }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="fw-bold">15:00</div>
+                        @endforeach
                     </div>
-                </div>
-
-                <!-- Pagination -->
-                <div class="d-flex justify-content-center mt-4">
-                     <nav aria-label="Page navigation">
-                        <ul class="pagination pagination-lg">
-                            <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-                        </ul>
-                    </nav>
-                </div>
+                @else
+                    <div class="alert alert-info mt-4">
+                        <p>Belum ada video pembelajaran untuk materi ini.</p>
+                    </div>
+                @endif
             </div>
         </div>
     </main>

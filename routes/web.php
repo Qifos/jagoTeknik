@@ -14,27 +14,27 @@ use App\Http\Controllers\WishlistController;
 
 Route::redirect('/', '/landingpage');
 
-// Landing (sudah ada)
+// Landing page
 Route::view('/landingpage', 'landingpageview')->name('landing');
 
-// Register page (Blade kamu yang ini)
+// Authentication routes
 Route::get('/register', fn () => view('registerview'))->name('register.view');
 Route::get('/login', fn () => view('loginview'))->name('login.view');
 Route::get('/otp', [UserController::class, 'showOtp'])->name('otp.view');
 
-// Proses register → simpan user + OTP → redirect ke OTP
+// Auth processing
 Route::post('/register', [UserController::class, 'register'])->name('user.register.perform');
 Route::post('/otp/verify', [UserController::class, 'verifyOtp'])->name('otp.verify');
 Route::post('/otp/resend', [UserController::class, 'resendOtp'])->name('otp.resend');
 Route::post('/login', [UserController::class, 'login'])->name('user.login.perform');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-// Ini buat coba otp view doang si
-Route::view('/otp-test', 'otpview'); // langsung render view tanpa controller
-Route::view('/username-test', 'usernameview'); // langsung render view tanpa controller
-Route::view('/personalisasi-test', 'personalisasi'); // langsung render view tanpa controller
+// Test/demo views
+Route::view('/otp-test', 'otpview');
+Route::view('/username-test', 'usernameview');
+Route::view('/personalisasi-test', 'personalisasi');
 
-// Buat username view
+// Username view
 Route::get('/username', [UserController::class, 'showUsernameView'])->name('username.view');
 Route::post('/username', [UserController::class, 'setUsername'])->name('username.set');
 
@@ -44,12 +44,21 @@ Route::post('/username', [UserController::class, 'setUsername'])->name('username
 // Dashboard + rekomendasi kelas
 Route::get('/homepage', [RekomendasiController::class, 'showHomepage'])->name('homepage');
 
-// Kelas pages (static views for design preview)
+// ============================================
+// TASK 1: DYNAMIC CLASS ARCHITECTURE ROUTES
+// ============================================
+
+// Index/list all classes
 Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 
-// --- JADWAL ROUTES ---
-Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
-Route::get('/jadwal/preview/{id}', [JadwalController::class, 'showPreview'])->name('jadwal.preview');
+// GET /kelas/{id} -> Shows the dynamic class page
+Route::get('/kelas/{id}', [KelasController::class, 'showKelas'])->name('kelas.show');
+
+// GET /kelas/{id}/beli -> Shows the buy landing page
+Route::get('/kelas/{id}/beli', [KelasController::class, 'belikelas'])->name('kelas.beli');
+
+// GET /kelas/{id}/belajar -> Shows learning page for purchased classes
+Route::get('/kelas/{id}/belajar', [KelasController::class, 'showKelasDetail'])->name('kelas.detail.beli');
 
 // --- NEW PEMBAYARAN (BUY CLASS) ROUTES ---
 // Show the initial buy page (Beli kelas.jpg)
@@ -87,27 +96,35 @@ Route::get('/jadwal', fn () => redirect()->route('jadwalview'));
 Route::resource('jadwal', JadwalController::class)->parameters(['jadwal' => 'jadwal:id_jadwal']);
 Route::get('/api/jadwal/bulan', [JadwalController::class, 'byMonth'])->name('jadwal.byMonth');
 
-// Media routes (image and video)
-Route::get('/media/image/{id}', [MediaController::class, 'showImage'])->name('media.image');
-Route::get('/media/video/{id}', [MediaController::class, 'showVideo'])->name('media.video');
+// ============================================
+// CHAT ROUTES
+// ============================================
 
-// Chat
 Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
-
-// API JSON untuk chat
 Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
 Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
 Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
 
-// Route Kelas
-Route::middleware('auth')->group(function () {
-    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+// ============================================
+// USER/PROFILE ROUTES
+// ============================================
+
+Route::get('/personalisasi', [UserController::class, 'showPersonalisasi'])->name('personalisasi.view');
+
+// ============================================
+// UTILITY ROUTES
+// ============================================
+
+// Serve CSS from resources during development
+Route::get('/resources/css/app.css', function () {
+    $path = resource_path('css/app.css');
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    return response()->file($path, ['Content-Type' => 'text/css']);
 });
 
-Route::view('/personalisasi', 'personalisasi')->name('personalisasi.view');
-// Route untuk menampilkan halaman password
-
+// Alternative wishlist toggle (via auth middleware)
 Route::middleware('auth')->group(function () {
-    Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])
-        ->name('wishlist.toggle');
+    Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle.alt');
 });

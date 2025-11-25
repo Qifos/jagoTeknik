@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Matkul;
+use App\Models\Materi;
+use App\Models\Video;
+use App\Models\BeliMatkul;
 
 class KelasController extends Controller
 {
@@ -52,45 +55,98 @@ class KelasController extends Controller
     }
 
     /**
-     * Halaman pembelian kelas (menggunakan model Matkul)
-     * Untuk user yang belum membeli kelas
+     * TASK 1: Dynamic Class Display Page (One View, Many Data)
+     * Shows the main class page with materials, videos, and dynamic action button
+     * GET /kelas/{id} -> Shows the dynamic class page
      */
-        public function showBeliKelas($id_matkul)
+    public function showKelas($id)
+    {
+        $user = Auth::user();
+
+        // Fetch the Matkul (class) with its Mentor
+        $matkul = Matkul::with('mentor')->findOrFail($id);
+
+        // Check if user has purchased this class
+        $sudahDibeli = false;
+        if ($user) {
+            $sudahDibeli = BeliMatkul::where('id_user', $user->id_user)
+                ->where('id_matkul', $id)
+                ->exists();
+        }
+
+        // Fetch all Materi (materials) for this Matkul
+        $materiList = Materi::where('id_matkul', $id)->get();
+
+        // Build materials array with their videos
+        $materiItems = $materiList->map(function($materi, $index) use ($matkul) {
+            $videos = Video::where('id_materi', $materi->id_materi)->get();
+            return [
+                'id' => $materi->id_materi,
+                'title' => $materi->nama_materi,
+                'tag' => $index % 2 == 0 ? 'Teori' : 'Praktik',
+                'thumb' => $materi->thumbnail_path ?? 'https://placehold.co/600x400/0284c7/white?text=' . urlencode($materi->nama_materi),
+                'instructor' => $matkul->mentor->nama ?? 'Instruktur',
+                'progress' => rand(0, 100),
+                'progress_text' => 'Lesson ' . rand(1, 7) . ' of 7',
+                'videos_count' => $videos->count()
+            ];
+        });
+
+        // Fetch videos (get first video from each materi)
+        $videoItems = $materiList->map(function($materi) use ($matkul) {
+            $videos = Video::where('id_materi', $materi->id_materi)->first();
+            if (!$videos) return null;
+            return [
+                'id' => $videos->id_video,
+                'title' => $videos->nama_video ?? 'Video ' . $videos->id_video,
+                'thumb' => $videos->thumbnail_path ?? 'https://placehold.co/600x400/e11d48/white?text=Video',
+                'instructor' => $matkul->mentor->nama ?? 'Instruktur',
+                'progress' => rand(0, 100),
+                'progress_text' => 'Lesson ' . rand(1, 7) . ' of 7'
+            ];
+        })->filter()->values();
+
+        return view('kelas', [
+            'matkul' => $matkul,
+            'sudahDibeli' => $sudahDibeli,
+            'materiItems' => $materiItems,
+            'videoItems' => $videoItems
+        ]);
+    }
+
+    /**
+     * TASK 2: Buy Class Landing Page
+     * Display dynamic class details (Price, Description) from the matkul table
+     * GET /kelas/{id}/beli -> Shows the buy landing page
+     */
+    public function belikelas($id)
     {
         $user = Auth::user();
 
         if (!$user) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+            return redirect()->route('login.view')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        // Cek apakah user sudah membeli kelas ini
-        $sudahDibeli = DB::table('beli_matkul')
-            ->where('id_user', $user->id_user)
-            ->where('id_matkul', $id_matkul)
+        // Check if user already purchased this class
+        $sudahDibeli = BeliMatkul::where('id_user', $user->id_user)
+            ->where('id_matkul', $id)
             ->exists();
 
-        // Jika sudah dibeli, redirect ke halaman belajar
         if ($sudahDibeli) {
-            // Cari id_kelas untuk redirect
-            $kelas = DB::table('kelas')
-                ->where('id_matkul', $id_matkul)
-                ->first();
-
-            if ($kelas) {
-                return redirect()->route('kelas.detail.beli', $kelas->id_kelas)
-                    ->with('info', 'Anda sudah memiliki kelas ini.');
-            }
+            return redirect()->route('kelas.show', $id)
+                ->with('info', 'Anda sudah memiliki kelas ini.');
         }
 
-        // Fetch the class from the 'matkul' table using its ID
-        $kelas = Matkul::findOrFail($id_matkul);
+        // Fetch the Matkul with its Mentor
+        $kelas = Matkul::with('mentor')->findOrFail($id);
 
-        // Mock data for benefits as it's not in the DB
+        // Dynamic benefits based on materi count
+        $materiCount = Materi::where('id_matkul', $id)->count();
         $benefits = [
             'Bimbingan kelas offline',
-            'Akses video',
+            'Akses video pembelajaran',
             'Silabus & soal terbaru',
-            '32 Materi'
+            $materiCount . ' Materi pembelajaran'
         ];
 
         return view('belikelasview', [
@@ -100,85 +156,28 @@ class KelasController extends Controller
     }
 
     /**
-     * Halaman belajar - untuk kelas yang SUDAH dibeli
+     * Show the class detail page (for already purchased classes)
+     * This is an alias for showKelas to handle the /kelas/{id}/belajar route
      */
-    public function showKelasDetail($id_kelas)
+    public function showKelasDetail($id_matkul)
     {
         $user = Auth::user();
 
         if (!$user) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+            return redirect()->route('login.view')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        // Ambil detail kelas
-        $kelas = DB::table('kelas as k')
-            ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
-            ->leftJoin('materi as mt', 'k.id_materi', '=', 'mt.id_materi')
-            ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
-            ->where('k.id_kelas', $id_kelas)
-            ->select(
-                'k.*',
-                'm.id_matkul',
-                'm.nama_matkul',
-                'm.deskripsi',
-                'ment.nama as nama_mentor',
-                'ment.rating as rating_mentor',
-                'mt.nama_materi'
-            )
-            ->first();
-
-        if (!$kelas) {
-            abort(404, 'Kelas tidak ditemukan');
-        }
-
-        // Cek apakah user sudah membeli kelas ini
-        $sudahDibeli = DB::table('beli_matkul')
-            ->where('id_user', $user->id_user)
-            ->where('id_matkul', $kelas->id_matkul)
+        // Check if user purchased this class
+        $sudahDibeli = BeliMatkul::where('id_user', $user->id_user)
+            ->where('id_matkul', $id_matkul)
             ->exists();
 
-        // Jika belum dibeli, redirect ke halaman pembelian
         if (!$sudahDibeli) {
-            return redirect()->route('kelas.beli', $kelas->id_matkul)
+            return redirect()->route('kelas.beli', $id_matkul)
                 ->with('info', 'Silakan beli kelas terlebih dahulu untuk mengakses materi.');
         }
 
-        // Ambil materi untuk kelas ini
-        $materiItems = DB::table('materi as m')
-            ->where('m.id_kelas', $id_kelas)
-            ->select('m.*')
-            ->get()
-            ->map(function($item, $index) {
-                return [
-                    'id' => $item->id_materi,
-                    'thumb' => $index % 2 == 0 ? 'https://placehold.co/600x400/0284c7/white?text=Materi' . $item->id_materi : null,
-                    'tag' => $index % 2 == 0 ? 'Teori' : 'Praktik',
-                    'title' => $item->nama_materi,
-                    'instructor' => 'Instruktur Default',
-                    'progress' => rand(0, 100),
-                    'progress_text' => 'Lesson ' . rand(1, 7) . ' of 7'
-                ];
-            });
-
-        // Jika tidak ada materi, gunakan mock data
-        if ($materiItems->isEmpty()) {
-            $materiItems = collect([
-                ['id' => 1, 'thumb' => 'https://placehold.co/600x400/0284c7/white?text=Fungsi', 'tag' => 'Teori', 'title' => 'Pengenalan ' . $kelas->nama_matkul, 'instructor' => $kelas->nama_mentor, 'progress' => 100, 'progress_text' => 'Finished'],
-                ['id' => 2, 'thumb' => 'https://placehold.co/600x400/c026d3/white?text=Konsep', 'tag' => 'Praktik', 'title' => 'Konsep Dasar', 'instructor' => $kelas->nama_mentor, 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-            ]);
-        }
-
-        // Ambil video untuk kelas ini
-        $videoItems = [
-            ['id' => 1, 'thumb' => 'https://placehold.co/600x400/e11d48/white?text=QUIZ+1', 'title' => 'Video 1', 'instructor' => $kelas->nama_mentor, 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-            ['id' => 2, 'thumb' => 'https://placehold.co/600x400/f43f5e/white?text=QUIZ+2', 'title' => 'Video 2', 'instructor' => $kelas->nama_mentor, 'progress' => 71, 'progress_text' => 'Lesson 5 of 7'],
-        ];
-
-        return view('kelas', [
-            'kelas' => $kelas,
-            'materiItems' => $materiItems,
-            'videoItems' => $videoItems
-        ]);
+        return $this->showKelas($id_matkul);
     }
 
     /**
@@ -244,5 +243,13 @@ class KelasController extends Controller
             ->avg('h.progres_precentage');
 
         return $progress ? round($progress) : rand(0, 100);
+    }
+
+    /**
+     * Default index for compatibility with existing routes
+     */
+    public function index()
+    {
+        return $this->semuaKelas();
     }
 }
