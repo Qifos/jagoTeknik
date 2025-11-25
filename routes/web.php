@@ -12,119 +12,129 @@ use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 
+// ============================================
+// GLOBAL/PUBLIC ROUTES
+// ============================================
+
 Route::redirect('/', '/landingpage');
 
 // Landing page
 Route::view('/landingpage', 'landingpageview')->name('landing');
 
-// Authentication routes
+// Authentication View Routes
 Route::get('/register', fn () => view('registerview'))->name('register.view');
 Route::get('/login', fn () => view('loginview'))->name('login.view');
 Route::get('/otp', [UserController::class, 'showOtp'])->name('otp.view');
 
-// Auth processing
+// Authentication Logic Routes
 Route::post('/register', [UserController::class, 'register'])->name('user.register.perform');
 Route::post('/otp/verify', [UserController::class, 'verifyOtp'])->name('otp.verify');
 Route::post('/otp/resend', [UserController::class, 'resendOtp'])->name('otp.resend');
 Route::post('/login', [UserController::class, 'login'])->name('user.login.perform');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
-// Test/demo views
+// Username Setup
+Route::get('/username', [UserController::class, 'showUsernameView'])->name('username.view');
+Route::post('/username', [UserController::class, 'setUsername'])->name('username.set');
+
+// Testing/Dev Routes
 Route::view('/otp-test', 'otpview');
 Route::view('/username-test', 'usernameview');
 Route::view('/personalisasi-test', 'personalisasi');
 
-// Username view
-Route::get('/username', [UserController::class, 'showUsernameView'])->name('username.view');
-Route::post('/username', [UserController::class, 'setUsername'])->name('username.set');
+// ============================================
+// CORE APPLICATION ROUTES
+// ============================================
 
-// Dashboard contoh
-//Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
-
-// Dashboard + rekomendasi kelas
+// Dashboard / Homepage (Using Controller for Recommendations)
 Route::get('/homepage', [RekomendasiController::class, 'showHomepage'])->name('homepage');
 
-// ============================================
-// TASK 1: DYNAMIC CLASS ARCHITECTURE ROUTES
-// ============================================
-
-// Index/list all classes
-Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
-
-// GET /kelas/{id} -> Shows the dynamic class page
-Route::get('/kelas/{id}', [KelasController::class, 'showKelas'])->name('kelas.show');
-
-// GET /kelas/{id}/beli -> Shows the buy landing page
-Route::get('/kelas/{id}/beli', [KelasController::class, 'belikelas'])->name('kelas.beli');
-
-// GET /kelas/{id}/belajar -> Shows learning page for purchased classes
-Route::get('/kelas/{id}/belajar', [KelasController::class, 'showKelasDetail'])->name('kelas.detail.beli');
-
-// --- NEW PEMBAYARAN (BUY CLASS) ROUTES ---
-// Show the initial buy page (Beli kelas.jpg)
-Route::get('/beli/{id}', [PembayaranController::class, 'showBeliKelas'])->name('pembayaran.show');
-// Show the checkout page (Bayar kelas.png)
-Route::get('/checkout/{id}', [PembayaranController::class, 'showCheckout'])->name('pembayaran.checkout')->middleware('auth'); // Must be logged in
-// Process the payment
-Route::post('/checkout/{id}', [PembayaranController::class, 'processPayment'])->name('pembayaran.process')->middleware('auth'); // Must be logged in
-// Show the loading page
-Route::get('/loading/{id}', [PembayaranController::class, 'showLoading'])->name('pembayaran.loading')->middleware('auth'); // Must be logged in
-// Show the success page (bayar sukses.jpg)
-Route::get('/sukses/{id}', [PembayaranController::class, 'showSukses'])->name('pembayaran.sukses')->middleware('auth'); // Must be logged in
-// --- END NEW PEMBAYARAN ROUTES ---
-
-// Materi/video pages are handled by MediaController to avoid overlapping controller methods
-Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
-Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
-Route::view('/semuakelas', 'semuakelas'); // langsung render view tanpa controller
-
+// Personalisasi
 Route::get('/personalisasi', [UserController::class, 'showPersonalisasi'])->name('personalisasi.view');
 
-// Serve CSS from resources during development (not recommended for production)
-Route::get('/resources/css/app.css', function () {
-    $path = resource_path('css/app.css');
-    if (!file_exists($path)) {
-        abort(404);
-    }
-    return response()->file($path, [
-        'Content-Type' => 'text/css'
-    ]);
+// 1. KELAS ROUTES (Class Architecture)
+// --------------------------------------------
+// List all classes
+Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+Route::get('/semuakelas', [KelasController::class, 'semuaKelas'])->name('kelas.semua');
+
+// Single class details
+Route::get('/kelas/{id}', [KelasController::class, 'showKelas'])->name('kelas.show');
+
+// Buy Landing Page for a specific class
+Route::get('/kelas/{id}/beli', [KelasController::class, 'belikelas'])->name('kelas.beli');
+
+// Learning Page (Access content after purchase)
+Route::get('/kelas/{id}/belajar', [KelasController::class, 'showKelasDetail'])->name('kelas.detail.beli');
+
+// API for progress tracking
+Route::get('/api/progress-kelas/{id_kelas}', [KelasController::class, 'getProgressKelas'])->name('api.kelas.progress');
+
+
+// 2. PAYMENT / CHECKOUT ROUTES
+// --------------------------------------------
+Route::middleware('auth')->group(function () {
+    // Initial buy page
+    Route::get('/beli/{id}', [PembayaranController::class, 'showBeliKelas'])->name('pembayaran.show');
+
+    // Checkout page (Password validation/Confirm)
+    Route::get('/checkout/{id}', [PembayaranController::class, 'showCheckout'])->name('pembayaran.checkout');
+    Route::post('/checkout/{id}', [PembayaranController::class, 'processPayment'])->name('pembayaran.process');
+
+    // Payment Flow States
+    Route::get('/loading/{id}', [PembayaranController::class, 'showLoading'])->name('pembayaran.loading');
+    Route::get('/sukses/{id}', [PembayaranController::class, 'showSukses'])->name('pembayaran.sukses');
 });
 
-// Route Jadwal
-Route::get('/jadwal', fn () => redirect()->route('jadwalview'));
+
+// 3. MEDIA & CONTENT ROUTES
+// --------------------------------------------
+// Specific Content Views
+Route::get('/materi/{id}', [MediaController::class, 'showMateri'])->name('media.materi');
+Route::get('/video/{id}', [MediaController::class, 'showVideoDetail'])->name('media.video.detail');
+
+// Legacy/Fallback Routes (kept for compatibility)
+Route::get('/kelas/materi', [MediaController::class, 'materi'])->name('kelas.materi');
+Route::get('/kelas/video', [MediaController::class, 'video'])->name('kelas.video');
+
+// Media Serving Routes
+Route::get('/media/image/{id}', [MediaController::class, 'showImage'])->name('media.image');
+Route::get('/media/video/{id}', [MediaController::class, 'showVideo'])->name('media.video');
+
+
+// 4. JADWAL (SCHEDULE) ROUTES
+// --------------------------------------------
+Route::get('/jadwal', [JadwalController::class, 'index'])->name('jadwal.index');
+Route::get('/jadwal/preview/{id}', [JadwalController::class, 'showPreview'])->name('jadwal.preview');
 Route::resource('jadwal', JadwalController::class)->parameters(['jadwal' => 'jadwal:id_jadwal']);
 Route::get('/api/jadwal/bulan', [JadwalController::class, 'byMonth'])->name('jadwal.byMonth');
 
-// ============================================
-// CHAT ROUTES
-// ============================================
 
+// 5. CHAT ROUTES
+// --------------------------------------------
 Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
 Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
 Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
 Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
 
-// ============================================
-// USER/PROFILE ROUTES
-// ============================================
-
-Route::get('/personalisasi', [UserController::class, 'showPersonalisasi'])->name('personalisasi.view');
 
 // ============================================
-// UTILITY ROUTES
+// UTILITIES & ACTIONS
 // ============================================
 
-// Serve CSS from resources during development
+// Wishlist Logic (Auth required)
+Route::middleware('auth')->group(function () {
+    // Primary Toggle
+    Route::post('/wishlist/{id_kelas}', [KelasController::class, 'toggleWishlist'])->name('wishlist.toggle');
+    // Alternative Toggle (if needed by frontend)
+    Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle.alt');
+});
+
+// Serve CSS from resources (Development only)
 Route::get('/resources/css/app.css', function () {
     $path = resource_path('css/app.css');
     if (!file_exists($path)) {
         abort(404);
     }
     return response()->file($path, ['Content-Type' => 'text/css']);
-});
-
-// Alternative wishlist toggle (via auth middleware)
-Route::middleware('auth')->group(function () {
-    Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle.alt');
 });

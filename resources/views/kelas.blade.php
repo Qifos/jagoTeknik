@@ -1,7 +1,8 @@
 <!--
- * Author : Fiqih Soetam PuTra (NRP 5026231096)
- * Desc   : Kelas
- * Date   : 2025-11-04
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : resources/views/kelas.blade.php
+ * Desc   : view untuk halaman kelas
+ * Date   : 25-11-2025
 -->
 <!DOCTYPE html>
 <html lang="id">

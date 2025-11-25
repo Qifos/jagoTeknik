@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : app/Http/Controllers/MediaController.php
+ * Desc   : media controller untuk mengelola materi dan video
+ * Date   : 25-11-2025
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

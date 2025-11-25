@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : app/Http/Controllers/PembayaranController.php
+ * Desc   : pembayaran controller untuk mengelola proses pembayaran kelas
+ * Date   : 25-11-2025
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

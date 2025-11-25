@@ -1,3 +1,9 @@
+<!--
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : resources/views/materi.blade.php
+ * Desc   : view untuk halaman materi pembelajaran
+ * Date   : 25-11-2025
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>

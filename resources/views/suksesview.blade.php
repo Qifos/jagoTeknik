@@ -1,3 +1,9 @@
+<!--
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : resources/views/suksesview.blade.php
+ * Desc   : view untuk halaman sukses checkout pembayaran kelas
+ * Date   : 25-11-2025
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
