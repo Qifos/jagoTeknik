@@ -13,6 +13,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/personalisasi.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
     <!-- Navbar -->
@@ -30,13 +31,13 @@
                         <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('kelas.index') }}">Kelas</a>
+                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Jadwal</a>
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
                     <li class="nav-item">
                         <form class="d-flex mx-3">
@@ -204,7 +205,7 @@
                     </div>
                 </div>
 
-                <!-- Privasi Tab -->
+                <!-- Privasi Tab. Sinta Dewi Rahmawati (5026231231) -->
                 <div class="tab-pane fade" id="privasi" role="tabpanel">
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
@@ -256,63 +257,88 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer-custom">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 mb-4">
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="bi bi-mortarboard-fill me-2" style="font-size: 1.5rem; color: var(--primary-purple);"></i>
-                        <span class="fw-bold fs-5">Jago Teknik</span>
+    <!-- FOOTER -->
+    <footer class="py-5 border-top border-opacity-25" style="border-color:var(--border)!important;">
+        <div class="container text-left text-white">
+            <div class="row align-items-left">
+
+                <!-- Jago Teknik Logo and Tagline (Left side) -->
+                <div class="col-md-2 text-md-left">
+                    <div class="footer-logo">
+                        <img src="image/jagoteknik.png" alt="Jago Teknik Logo" class="footer-logo-img" />
+                        <p class="footer-tagline mt-2">Kuliah Teknik Jadi Easy</p>
                     </div>
-                    <p class="text-muted">Kuliah Teknik Jadi Easy</p>
                 </div>
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold mb-3">Jurusan</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">Umum</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Teknik</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Vokasi</a></li>
-                    </ul>
+
+                <!-- Jurusan, Ikuti Kami, Legal, Kontak Kami (Horizontal Row) -->
+                <div class="col-md-10">
+                    <div class="row text-md-left">
+                        <!-- Jurusan Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Jurusan</li>
+                                <li>Umum</li>
+                                <li>Teknik</li>
+                                <li>Vokasi</li>
+                            </ul>
+                        </div>
+
+                        <!-- Ikuti Kami Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Ikuti Kami</li>
+                                <li>X</li>
+                                <li>Instagram</li>
+                                <li>LinkedIn</li>
+                                <li>YouTube</li>
+                            </ul>
+                        </div>
+
+                        <!-- Legal Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Legal</li>
+                                <li>Terms</li>
+                                <li>Privacy</li>
+                                <li>Cookies</li>
+                                <li>Contact</li>
+                            </ul>
+                        </div>
+
+                        <!-- Kontak Kami Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Kontak Kami</li>
+                                <li>081234567890</li>
+                                <li>jagoteknikcourse@gmail.com</li>
+                                <li>Surabaya, Indonesia 60111</li>
+                                <li>News</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold mb-3">Ikuti Kami</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">X</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Instagram</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">LinkedIn</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">YouTube</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold mb-3">Legal</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">Terms</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Privacy</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Cookies</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <h6 class="fw-bold mb-3">Kontak Kami</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2 text-muted">081234567890</li>
-                        <li class="mb-2"><a href="mailto:jagoteknikcourse@gmail.com" class="footer-link">jagoteknikcourse@gmail.com</a></li>
-                        <li class="mb-2 text-muted">Surabaya, Indonesia 60111</li>
-                        <li class="mb-2"><a href="#" class="footer-link">News</a></li>
-                    </ul>
-                </div>
+
             </div>
-            <hr style="border-color: rgba(255, 255, 255, 0.1);">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="text-muted mb-0">&copy; 2025 Jago Teknik</p>
-                </div>
-                <div class="col-md-6 text-end">
-                    <a href="#" class="social-icon me-3"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="social-icon me-3"><i class="bi bi-linkedin"></i></a>
-                    <a href="#" class="social-icon me-3"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="social-icon me-3"><i class="bi bi-github"></i></a>
-                    <a href="#" class="social-icon"><i class="bi bi-dribbble"></i></a>
+
+            <div class="container mt-4">
+                <div class="row d-flex align-items-center justify-content-between">
+
+                    <!-- Left side: Copyright Text -->
+                    <div class="col-12 col-md-6 text-md-left">
+                        <p class="mb-0" style="text-align: left">© <span id="year"></span> Jago Teknik. All
+                            rights reserved.</p>
+                    </div>
+
+                    <!-- Right side: Social Media Icons -->
+                    <div class="col-12 col-md-6 text-md-right">
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-github"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-globe"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -323,7 +349,6 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // ====== TOGGLE PASSWORD ======
         const togglePassword = document.getElementById('togglePassword');
         const passwordField = document.getElementById('password');
 
@@ -336,30 +361,21 @@
                 this.classList.toggle('bi-eye-slash');
             });
         }
-
-        // ====== SAVE / LOAD CHECKBOX STATES (LOCALSTORAGE) ======
         const checkboxIds = ['share-browser-data', 'disable-read', 'hide-status'];
-
         checkboxIds.forEach(id => {
             const checkbox = document.getElementById(id);
             if (!checkbox) return;
 
             const storageKey = 'privacy_' + id;
-
-            // Load nilai awal dari localStorage
             const savedValue = localStorage.getItem(storageKey);
             if (savedValue !== null) {
                 checkbox.checked = savedValue === 'true';
             }
-
-            // Simpan tiap kali dicentang / di-uncheck
             checkbox.addEventListener('change', function () {
                 localStorage.setItem(storageKey, this.checked);
             });
         });
     });
-
-    // Redirect tombol Save (kalau mau tetap dipakai)
     function redirectToHome() {
         window.location.href = "{{ route('homepage') }}";
     }
@@ -367,4 +383,3 @@
 
 </body>
 </html>
-

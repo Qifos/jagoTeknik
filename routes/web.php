@@ -12,10 +12,6 @@ use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 
-// ============================================
-// GLOBAL/PUBLIC ROUTES
-// ============================================
-
 Route::redirect('/', '/landingpage');
 
 // Landing page

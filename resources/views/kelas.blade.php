@@ -19,7 +19,7 @@
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
                 <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
@@ -33,7 +33,7 @@
                         <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('kelas.index') }}">Kelas</a>
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
@@ -50,7 +50,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
                             <img src="profile.jpg" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>

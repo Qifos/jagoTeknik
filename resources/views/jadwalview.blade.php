@@ -1,7 +1,6 @@
 <!--
  * Author : Akhtar Zia Faizarrobbi (NRP 5026231095)
  * Desc   : Jadwal View
- * Date   : 2025-11-04
 -->
 <!DOCTYPE html>
 <html lang="id">
@@ -56,37 +55,48 @@
   </style>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg sticky-top shadow-sm">
-    <div class="container py-2">
-      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
-        <span class="rounded-circle bg-dark-subtle d-inline-flex align-items-center justify-content-center" style="width:36px;height:36px;">
-          <i class="bi bi-journal-code text-dark"></i>
-        </span>
-        Jago<span class="text-primary">Teknik</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav ms-3 me-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="#">Beranda</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Kelas</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#">Jadwal</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Chat</a></li>
-        </ul>
-        <form class="d-none d-lg-flex" role="search" style="min-width:320px">
-          <div class="input-group">
-            <span class="input-group-text bg-dark-subtle border-0"><i class="bi bi-search"></i></span>
-            <input class="form-control bg-dark-subtle border-0" type="search" placeholder="Cari di JagoTeknik" aria-label="Search">
-          </div>
-        </form>
-        <div class="ms-3">
-          <img src="https://i.pravatar.cc/40?img=12" class="rounded-circle" alt="Profil" width="36" height="36" />
+
+        <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{route('homepage')}}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="d-flex mx-3">
+                            <div class="search-box">
+                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
+                                <i class="bi bi-search"></i>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                            <img src="profile.jpg" alt="Profile" class="profile-img">
+                            <span class="ms-2">Profil</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 
   <main class="container py-4 py-lg-5">
     <!-- Back Button -->
