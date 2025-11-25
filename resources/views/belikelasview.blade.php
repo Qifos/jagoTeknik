@@ -6,60 +6,62 @@
     <title>Jago Teknik - Beli {{ $kelas->nama_matkul }}</title>
 
     <!-- CSS Links -->
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/pembayaran.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/belikelas.css') }}">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-        <nav class="navbar navbar-expand-lg navbar-jagoteknik">
-            <div class="container-fluid">
-                <!-- Left Side -->
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('landing') }}">
-                    <span class="footer-logo me-2">J</span>
-                    Jago Teknik
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('kelas.index') }}">Kelas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Chat</a>
-                        </li>
-                    </ul>
-
-                    <!-- Right Side -->
-                    <div class="d-flex align-items-center gap-3">
-                        <form class="d-flex" role="search">
-                            <input class="form-control search-input" type="search" placeholder="Cari di Jago Teknik" aria-label="Search">
+         <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+                <div class="container-fluid px-4">
+                    <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                        <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="d-flex mx-3">
+                            <div class="search-box">
+                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
+                                <i class="bi bi-search"></i>
+                            </div>
                         </form>
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none gap-2">
-                            <img src="https://placehold.co/40x40/6b2fa0/white?text=A" alt="Profil" class="profile-img">
-                            <span class="d-none d-lg-inline">Profil</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="#">
+                            <img src="profile.jpg" alt="Profile" class="profile-img">
+                            <span class="ms-2">Profil</span>
                         </a>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
     </header>
 
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">
             <div class="beli-header">
-                <a href="#" onclick="if(history.length > 1) { history.back(); return false; } else { window.location = '{{ route('kelas.index') }}'; }" class="back-btn">&lt; Back</a>
+                <a href="#" onclick="if(history.length > 1) { history.back(); return false; } else { window.location = '{{ route('kelas.semua') }}'; }" class="back-btn">&lt; Back</a>
                 <h1 class="title-hero mt-3">{{ $kelas->nama_matkul }}</h1>
             </div>
 
@@ -81,11 +83,11 @@
                     <div class="tab-content py-3" id="nav-tabContent">
                         <!-- Overview Tab -->
                         <div class="tab-pane fade show active" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
-                            <p>{{ $kelas->deskripsi }}</p>
+                            <p>{{ $kelas->deskripsi ?? $kelas->deskripsi_kelas ?? 'Deskripsi kelas tidak tersedia.' }}</p>
                         </div>
                         <!-- Rating Tab -->
                         <div class="tab-pane fade" id="nav-rating" role="tabpanel" aria-labelledby="nav-rating-tab">
-                            <h4 class="fw-bold">Rating: 4.5/5 (1,234 reviews)</h4>
+                            <h4 class="fw-bold">Rating: {{ $kelas->rating_kelas ?? '4.5' }}/5 (1,234 reviews)</h4>
                             <div class="rating-bar">
                                 <span>5 stars</span>
                                 <div class="progress"><div class="progress-bar" style="width: 70%"></div></div>
@@ -132,16 +134,20 @@
                         <img src="https://placehold.co/600x400/000/fff?text={{ urlencode($kelas->nama_matkul) }}" class="img-fluid sidebar-image" alt="{{ $kelas->nama_matkul }}">
 
                         <div class="d-flex align-items-center gap-3 mb-2">
-                            <!-- Mock prices, replace with DB data if available -->
-                            <span class="price-lg">Rp.45k</span>
-                            <span class="price-sm-strike">Rp.90k</span>
-                            <span class="price-discount">50% Off</span>
+                            <!-- Harga dari database -->
+                            <span class="price-lg">Rp {{ number_format($kelas->harga_asli, 0, ',', '.') }}</span>
                         </div>
-                        <p class="promo-text mb-3">11 jam tersisa untuk promo ini!</p>
+                        <p class="promo-text mb-3">Harga khusus untuk Anda!</p>
 
+                        <!-- Tombol Beli Sekarang -->
                         <a href="{{ route('pembayaran.checkout', ['id' => $kelas->id_matkul]) }}" class="btn btn-beli">
-                            Beli sekarang
+                            Beli sekarang - Rp {{ number_format($kelas->harga_asli, 0, ',', '.') }}
                         </a>
+
+                        <!-- Alternatif: Tombol untuk method showBeliKelas -->
+                        {{-- <a href="{{ route('kelas.beli', ['id' => $kelas->id_matkul]) }}" class="btn btn-beli">
+                            Beli sekarang - Rp {{ number_format($kelas->harga_asli, 0, ',', '.') }}
+                        </a> --}}
 
                         <h5 class="mt-4 mb-3">Anda Ini Akan Mendapatkan</h5>
                         <ul class="benefit-list">
@@ -170,54 +176,65 @@
         </div>
     </main>
 
-    <footer class="site-footer">
-        <div class="container-fluid px-lg-5">
-            <div class="row gy-4">
-                <div class="col-lg-3">
-                    <a class="navbar-brand d-flex align-items-center" href="#">
-                        <span class="footer-logo me-2">J</span>
-                        Jago Teknik
-                    </a>
-                    <p class="mt-2">Kuliah Teknik Jadi Easy</p>
+   <!-- Footer -->
+    <footer class="footer-custom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-mortarboard-fill me-2" style="font-size: 1.5rem; color: var(--primary-purple);"></i>
+                        <span class="fw-bold fs-5">Jago Teknik</span>
+                    </div>
+                    <p class="text-muted">Kuliah Teknik Jadi Easy</p>
                 </div>
-                <div class="col-6 col-lg-2">
-                    <h5>Jurusan</h5>
+                <div class="col-md-2 mb-4">
+                    <h6 class="fw-bold mb-3">Jurusan</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#">Umum</a></li>
-                        <li><a href="#">Teknik</a></li>
-                        <li><a href="#">Vokasi</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Umum</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Teknik</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Vokasi</a></li>
                     </ul>
                 </div>
-                <div class="col-6 col-lg-2">
-                    <h5>Ikuti Kami</h5>
+                <div class="col-md-2 mb-4">
+                    <h6 class="fw-bold mb-3">Ikuti Kami</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#">X</a></li>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">YouTube</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">X</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Instagram</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">LinkedIn</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">YouTube</a></li>
                     </ul>
                 </div>
-                <div class="col-6 col-lg-2">
-                    <h5>Legal</h5>
+                <div class="col-md-2 mb-4">
+                    <h6 class="fw-bold mb-3">Legal</h6>
                     <ul class="list-unstyled">
-                        <li><a href="#">Terms</a></li>
-                        <li><a href="#">Privacy</a></li>
-                        <li><a href="#">Cookies</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Terms</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Privacy</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Cookies</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Contact</a></li>
                     </ul>
                 </div>
-                <div class="col-lg-3">
-                    <h5>Kontak Kami</h5>
+                <div class="col-md-3 mb-4">
+                    <h6 class="fw-bold mb-3">Kontak Kami</h6>
                     <ul class="list-unstyled">
-                        <li>081234567890</li>
-                        <li>jagoteknikcourse@gmail.com</li>
-                        <li>Surabaya, Indonesia 60111</li>
-                        <li><a href="#">News</a></li>
+                        <li class="mb-2 text-muted">081234567890</li>
+                        <li class="mb-2"><a href="mailto:jagoteknikcourse@gmail.com" class="footer-link">jagoteknikcourse@gmail.com</a></li>
+                        <li class="mb-2 text-muted">Surabaya, Indonesia 60111</li>
+                        <li class="mb-2"><a href="#" class="footer-link">News</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center mt-4 border-top border-secondary-subtle pt-4">
-                <p class="mb-0">&copy; 2025 Jago Teknik</p>
+            <hr style="border-color: rgba(255, 255, 255, 0.1);">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">&copy; 2025 Jago Teknik</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="social-icon me-3"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="social-icon me-3"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="social-icon me-3"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="social-icon me-3"><i class="bi bi-github"></i></a>
+                    <a href="#" class="social-icon"><i class="bi bi-dribbble"></i></a>
+                </div>
             </div>
         </div>
     </footer>

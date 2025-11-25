@@ -18,44 +18,46 @@
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-        <nav class="navbar navbar-expand-lg navbar-jagoteknik">
-            <div class="container-fluid">
-                <!-- Left Side -->
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('landing') }}">
-                    <img src="image/jagoteknik.png" class="jt-logo" alt="JagoTeknik">
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('kelas.index') }}">Kelas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Jadwal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Chat</a>
-                        </li>
-                    </ul>
-
-                    <!-- Right Side -->
-                    <div class="d-flex align-items-center gap-3">
-                        <form class="d-flex" role="search">
-                            <input class="form-control search-input" type="search" placeholder="Cari di Jago Teknik" aria-label="Search">
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('kelas.index') }}">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="d-flex mx-3">
+                            <div class="search-box">
+                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
+                                <i class="bi bi-search"></i>
+                            </div>
                         </form>
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none gap-2">
-                            <img src="https://placehold.co/40x40/6b2fa0/white?text=A" alt="Profil" class="profile-img">
-                            <span class="d-none d-lg-inline">Profil</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                            <img src="profile.jpg" alt="Profile" class="profile-img">
+                            <span class="ms-2">Profil</span>
                         </a>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
     </header>
 
     <main class="flex-grow-1">
