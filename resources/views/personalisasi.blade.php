@@ -30,13 +30,13 @@
                         <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('kelas.index') }}">Kelas</a>
+                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Jadwal</a>
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
                     <li class="nav-item">
                         <form class="d-flex mx-3">

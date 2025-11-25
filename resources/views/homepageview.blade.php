@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
         <link rel="stylesheet" href="css/personalisasi.css">
-        <link rel="stylesheet" href="css/landingpage.css">
+        <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 
 </head>
 <body>

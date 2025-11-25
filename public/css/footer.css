@@ -22,3 +22,39 @@
     flex-direction: column;
     gap: 0.5rem;
   }
+
+
+footer {
+    background-color: #000;
+    color: #e9e9ee;
+}
+
+footer .social-icons {
+    text-align: right;
+}
+
+footer .social-icon {
+    font-size: 1.5rem;
+    color: #e9e9ee;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+footer .social-icon:hover {
+    color: var(--brand-3);
+}
+
+@media (max-width: 768px) {
+    footer .row {
+        text-align: left;
+    }
+
+    footer .col-md-6 {
+        text-align: left;
+        margin-bottom: 1rem;
+    }
+
+    footer .social-icons {
+        margin-top: 20px;
+    }
+}

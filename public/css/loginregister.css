@@ -1,200 +1,466 @@
 /**
  * Author : Sinta Dewi Rahmawati (NRP 5026231231)
  * Desc   : loginregister.css
- * Date   : 2025-11-04
- */
+*/
 
-:root{
-  /* brand */
-  --brand-1:#b784f5;
-  --brand-2:#6e41e2;
-  --brand-3:#d4c0ff;
+:root {
+    --brand-1: #b784f5;
+    --brand-2: #6e41e2;
+    --brand-3: #d4c0ff;
 
-  /* surfaces & text */
-  --bg:#0a0a12;
-  --panel:#0f0f15;
-  --surface:rgba(255,255,255,.04);
-  --glass:rgba(255,255,255,.06);
-  --border:#ffffff29;
-  --text:#e9e9ee;
-  --muted:#b6b6c6;
+    --bg: #0a0a12;
+    --panel: #0f0f15;
+    --surface: rgba(255, 255, 255, 0.04);
+    --glass: rgba(255, 255, 255, 0.06);
+    --border: #ffffff29;
+    --text: #e9e9ee;
+    --muted: #b6b6c6;
 
-  /* effects */
-  --ring:rgba(183,132,245,.15);
+    --ring: rgba(183, 132, 245, 0.15);
 
-  /* radius (atur di sini) */
-  --radius-input:999px;    /* input umum (angkatan/tgl/jurusan/HP/login) */
-  --radius-username:999px; /* input username (beda dari input lain) */
-  --radius-btn:12px;      /* tombol utama */
-  --radius-social:10px;   /* tombol Google/Facebook */
-  --radius-otp:14px;      /* kotak OTP */
-  --radius-pill:12px;    /* chip/badge/pill */
+    --radius-input: 999px;
+    --radius-username: 999px;
+    --radius-btn: 12px;
+    --radius-social: 10px;
+    --radius-otp: 14px;
+    --radius-pill: 12px;
 }
 
-html,body{height:100%;margin:0;padding:0}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-/* ------- Navbar (opsional) ------- */
-.navbar{
-  backdrop-filter:saturate(150%) blur(8px);
-  background:linear-gradient(180deg, rgba(10,10,18,.8), rgba(10,10,18,.4));
-  border-bottom:1px solid var(--border)
+.navbar {
+    backdrop-filter: saturate(150%) blur(8px);
+    background: linear-gradient(
+        180deg,
+        rgba(10, 10, 18, 0.8),
+        rgba(10, 10, 18, 0.4)
+    );
+    border-bottom: 1px solid var(--border);
 }
-.navbar .form-control{background:var(--surface);border-color:var(--border);color:var(--text)}
-.navbar .form-control::placeholder{color:var(--muted)}
-
-/* ------- Two-column auth layout ------- */
-.login-container{display:flex;height:100vh;background:var(--bg)}
-.login-left{flex:1;position:relative;overflow:hidden;background:#000;display:flex;align-items:center;justify-content:center;padding:3rem}
-.login-left img{width:100%;height:100vh;object-fit:cover;filter:brightness(.75)}
-.carousel{width:100%;height:100%}
-.carousel-item{height:100%;display:flex;align-items:center;justify-content:center}
-.carousel-item img{max-width:90%;max-height:85vh;object-fit:contain;filter:brightness(.85);border-radius:16px}
-.carousel-indicators{bottom:5%;left:8%;margin:0;justify-content:flex-start}
-.carousel-indicators [data-bs-target]{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.3);border:0;transition:.2s}
-.carousel-indicators .active{background:var(--brand-1);width:24px;border-radius:5px}
-
-.login-right{flex:0 0 500px;display:flex;align-items:center;justify-content:center;padding:28px}
-
-/* Panel container (pakai .auth-panel atau .panel — keduanya disupport) */
-.auth-panel,.panel{
-  width:100%;max-width:520px;margin:0 auto;background:var(--panel);
-  border-radius:var(--radius-panel);padding:28px;box-shadow:0 10px 30px rgba(0,0,0,.35)
+.navbar .form-control {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text);
+}
+.navbar .form-control::placeholder {
+    color: var(--muted);
 }
 
-/* ------- Headings ------- */
-.title{color:var(--brand-1);font-weight:800}
-.subtitle{color:#c9c8ff}
-.welcome-text{margin-bottom:2rem;text-align:center}
-.welcome-text h2{font-size:1.4rem;font-weight:700;margin:0;color:var(--text)}
-
-/* ------- Tabs (Login/Daftar) ------- */
-.tab-switcher{display:flex;gap:0;margin-bottom:2rem;background:rgba(110,65,226,.12);border-radius:12px;padding:4px;border:1px solid var(--border)}
-.tab-btn{flex:1;padding:.8rem;border:0;background:transparent;color:var(--muted);font-weight:600;font-size:1rem;border-radius:10px;transition:.2s;cursor:pointer;text-decoration:none}
-.tab-btn.active{background:linear-gradient(90deg,var(--brand-1),var(--brand-2));color:#fff;box-shadow:0 4px 16px rgba(110,65,226,.3)}
-
-/* ------- Form controls (umum) ------- */
-.form-label{font-size:.9rem;font-weight:500;color:var(--text);margin-bottom:.5rem}
-.form-control{
-  background:var(--surface);border:1px solid var(--border);color:var(--text);
-  padding:.9rem 1rem;border-radius:var(--radius-input);font-size:.95rem;transition:.2s
+.login-container {
+    display: flex;
+    height: 100vh;
+    background: var(--bg);
 }
-.form-control::placeholder{color:var(--muted)}
-.form-control:focus{
-  background:rgba(255,255,255,.08);border-color:var(--brand-1);
-  box-shadow:0 0 0 3px rgba(183,132,245,.12);color:var(--text);outline:0
+.login-left {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
 }
-
-/* Input custom profil (.ipt) */
-.ipt{
-  background:#0f0f15;border:1px solid var(--border);color:#e9e9ee;
-  border-radius:var(--radius-input);height:48px;padding:12px 16px
+.login-left img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    filter: brightness(0.75);
 }
-.ipt:focus{border-color:var(--brand-1);box-shadow:0 0 0 3px var(--ring);background:#101018}
-
-/* Label kecil di form profil */
-.label{color:#b6afff;font-weight:600;margin-bottom:6px}
-
-/* ------- Username field (bedain radius & ada prefix @) ------- */
-.username-wrap{position:relative}
-.username-prefix{
-  position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-weight:700
+.carousel {
+    width: 100%;
+    height: 100%;
 }
-/* username punya radius berbeda */
-.form-control.username-input{
-  background:#0f0f15;border:1px solid #2a2a39;color:#e9e9ee;
-  padding-left:42px;height:48px;border-radius:var(--radius-username)
+.carousel-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-.form-control.username-input:focus{border-color:var(--brand-1);box-shadow:0 0 0 3px var(--ring);background:#101018;color:#fff}
-.hint{color:var(--muted)}
-
-/* ------- Checkboxes ------- */
-.form-check{display:flex;align-items:center;gap:.5rem}
-.form-check-input{width:18px;height:18px;background:var(--surface);border:1px solid var(--border);cursor:pointer}
-.form-check-input:checked{background:var(--brand-2);border-color:var(--brand-2)}
-.form-check-input:focus{box-shadow:0 0 0 3px rgba(183,132,245,.12)}
-.form-check-label{font-size:.9rem;color:var(--muted);cursor:pointer}
-
-/* ------- Buttons ------- */
-.btn-login,.btn-main,.btn-verify,.btn-continue{
-  background:linear-gradient(90deg,var(--brand-1),var(--brand-2));
-  color:#fff;border:0;border-radius:var(--radius-btn);font-weight:700;
-  box-shadow:0 8px 24px rgba(110,65,226,.3);transition:transform .15s,filter .2s,box-shadow .2s
+.carousel-item img {
+    max-width: 90%;
+    max-height: 85vh;
+    object-fit: contain;
+    filter: brightness(0.85);
+    border-radius: 16px;
 }
-.btn-login{width:100%;padding:.9rem 2rem}
-.btn-main{height:44px;border-radius:var(--radius-pill)}      /* tombol “Selesaikan” bulat */
-.btn-continue{height:48px}
-.btn-verify{padding:.6rem 1.5rem;border-radius:var(--radius-pill)}
-.btn-login:hover,.btn-main:hover,.btn-verify:hover,.btn-continue:hover{filter:brightness(1.05);transform:translateY(-1px)}
-.btn-login:focus-visible{outline:2px solid var(--brand-3);outline-offset:2px}
-.btn-continue:disabled{opacity:.6;cursor:not-allowed;filter:grayscale(.2)}
-
-/* ------- Divider “Atau lanjut dengan” ------- */
-.divider{display:flex;align-items:center;margin:1.5rem 0;color:var(--muted);font-size:.9rem;gap:12px}
-.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--border)}
-
-/* ------- Social login buttons ------- */
-.social-login{display:flex;gap:1rem}
-.social-btn{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:.6rem;
-  height:44px;border-radius:var(--radius-social);
-  background:var(--surface);border:1px solid var(--border);color:var(--text);
-  font-weight:600;font-size:.95rem;transition:transform .15s,background .2s,box-shadow .2s;cursor:pointer
+.carousel-indicators {
+    bottom: 5%;
+    left: 8%;
+    margin: 0;
+    justify-content: flex-start;
 }
-.social-btn:hover{background:rgba(255,255,255,.08);transform:translateY(-1px);box-shadow:0 8px 24px rgba(110,65,226,.25)}
-.social-btn svg{display:block}
-
-/* ------- Terms text ------- */
-.terms-note{color:var(--muted);font-size:.85rem;line-height:1.3}
-.link-terms{color:var(--brand-3);text-decoration:none}
-.link-terms:hover{color:var(--brand-1);text-decoration:underline}
-
-/* ------- OTP ------- */
-.otp-title{font-weight:800;letter-spacing:.4px}
-.otp-row{gap:1rem;justify-content:center}
-.otp-input{
-  width:64px;height:64px;border-radius:var(--radius-otp);
-  border:1px solid var(--border);background:var(--surface);
-  color:var(--text);font-size:1.75rem;text-align:center;font-weight:700;transition:.2s
+.carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 0;
+    transition: 0.2s;
 }
-.otp-input:focus{outline:0;border-color:var(--brand-1);box-shadow:0 0 0 4px var(--ring);background:rgba(255,255,255,.08)}
-.otp-hint{color:var(--muted)}
-
-/* Checkbox: pastikan ikon ✓ muncul di tema gelap */
-.form-check-input{
-  width: 18px; height: 18px;
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  cursor: pointer;
+.carousel-indicators .active {
+    background: var(--brand-1);
+    width: 24px;
+    border-radius: 5px;
 }
 
-.form-check-input:checked{
-  background-color: var(--brand-2);
-  border-color: var(--brand-2);
-  /* paksa tampilin ikon check putih */
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='white' d='M6.173 12.927L2.1 8.854l1.4-1.4 2.673 2.673 6.327-6.327 1.4 1.4-7.727 7.727z'/%3e%3c/svg%3e");
-}
-.form-check-input:focus{
-  box-shadow: 0 0 0 3px rgba(183,132,245,.12);
+.login-right {
+    flex: 0 0 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
 }
 
-/* ------- Responsive ------- */
-@media (max-width:991.98px){
-  .login-container{flex-direction:column}
-  .login-left{display:none}
-  .login-right{flex:1;max-width:100%;padding:2rem 1.5rem}
-  .otp-input{width:56px;height:56px;font-size:1.5rem}
-}
-@media (max-width:575.98px){
-  .login-right{padding:2rem 1.25rem}
-  .otp-input{width:52px;height:52px;font-size:1.4rem}
+.auth-panel,
+.panel {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    background: var(--panel);
+    border-radius: var(--radius-panel);
+    padding: 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
-/* ------- Reduced motion ------- */
-@media (prefers-reduced-motion:reduce){
-  *{animation:none !important;transition:none !important}
+.title {
+    color: var(--brand-1);
+    font-weight: 800;
+}
+.subtitle {
+    color: #c9c8ff;
+}
+.welcome-text {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.welcome-text h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text);
+}
+
+.tab-switcher {
+    display: flex;
+    gap: 0;
+    margin-bottom: 2rem;
+    background: rgba(110, 65, 226, 0.12);
+    border-radius: 12px;
+    padding: 4px;
+    border: 1px solid var(--border);
+}
+.tab-btn {
+    flex: 1;
+    padding: 0.8rem;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 10px;
+    transition: 0.2s;
+    cursor: pointer;
+    text-decoration: none;
+}
+.tab-btn.active {
+    background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(110, 65, 226, 0.3);
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+}
+.form-control {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-input);
+    font-size: 0.95rem;
+    transition: 0.2s;
+}
+.form-control::placeholder {
+    color: var(--muted);
+}
+.form-control:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--brand-1);
+    box-shadow: 0 0 0 3px rgba(183, 132, 245, 0.12);
+    color: var(--text);
+    outline: 0;
+}
+
+.ipt {
+    background: #0f0f15;
+    border: 1px solid var(--border);
+    color: #e9e9ee;
+    border-radius: var(--radius-input);
+    height: 48px;
+    padding: 12px 16px;
+}
+.ipt:focus {
+    border-color: var(--brand-1);
+    box-shadow: 0 0 0 3px var(--ring);
+    background: #101018;
+}
+
+.label {
+    color: #b6afff;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.username-wrap {
+    position: relative;
+}
+.username-prefix {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-weight: 700;
+}
+.form-control.username-input {
+    background: #0f0f15;
+    border: 1px solid #2a2a39;
+    color: #e9e9ee;
+    padding-left: 42px;
+    height: 48px;
+    border-radius: var(--radius-username);
+}
+.form-control.username-input:focus {
+    border-color: var(--brand-1);
+    box-shadow: 0 0 0 3px var(--ring);
+    background: #101018;
+    color: #fff;
+}
+.hint {
+    color: var(--muted);
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+}
+.form-check-input:checked {
+    background: var(--brand-2);
+    border-color: var(--brand-2);
+}
+.form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(183, 132, 245, 0.12);
+}
+.form-check-label {
+    font-size: 0.9rem;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.btn-login,
+.btn-main,
+.btn-verify,
+.btn-continue {
+    background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+    color: #fff;
+    border: 0;
+    border-radius: var(--radius-btn);
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(110, 65, 226, 0.3);
+    transition: transform 0.15s, filter 0.2s, box-shadow 0.2s;
+}
+.btn-login {
+    width: 100%;
+    padding: 0.9rem 2rem;
+}
+.btn-main {
+    height: 44px;
+    border-radius: var(--radius-pill);
+}
+.btn-continue {
+    height: 48px;
+}
+.btn-verify {
+    padding: 0.6rem 1.5rem;
+    border-radius: var(--radius-pill);
+}
+.btn-login:hover,
+.btn-main:hover,
+.btn-verify:hover,
+.btn-continue:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+}
+.btn-login:focus-visible {
+    outline: 2px solid var(--brand-3);
+    outline-offset: 2px;
+}
+.btn-continue:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(0.2);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 1.5rem 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    gap: 12px;
+}
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.social-login {
+    display: flex;
+    gap: 1rem;
+}
+.social-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    height: 44px;
+    border-radius: var(--radius-social);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: transform 0.15s, background 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+.social-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(110, 65, 226, 0.25);
+}
+.social-btn svg {
+    display: block;
+}
+
+.terms-note {
+    color: var(--muted);
+    font-size: 0.85rem;
+    line-height: 1.3;
+}
+.link-terms {
+    color: var(--brand-3);
+    text-decoration: none;
+}
+.link-terms:hover {
+    color: var(--brand-1);
+    text-decoration: underline;
+}
+
+.otp-title {
+    font-weight: 800;
+    letter-spacing: 0.4px;
+}
+.otp-row {
+    gap: 1rem;
+    justify-content: center;
+}
+.otp-input {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-otp);
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 1.75rem;
+    text-align: center;
+    font-weight: 700;
+    transition: 0.2s;
+}
+.otp-input:focus {
+    outline: 0;
+    border-color: var(--brand-1);
+    box-shadow: 0 0 0 4px var(--ring);
+    background: rgba(255, 255, 255, 0.08);
+}
+.otp-hint {
+    color: var(--muted);
+}
+
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--brand-2);
+    border-color: var(--brand-2);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='white' d='M6.173 12.927L2.1 8.854l1.4-1.4 2.673 2.673 6.327-6.327 1.4 1.4-7.727 7.727z'/%3e%3c/svg%3e");
+}
+.form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(183, 132, 245, 0.12);
+}
+
+@media (max-width: 991.98px) {
+    .login-container {
+        flex-direction: column;
+    }
+    .login-left {
+        display: none;
+    }
+    .login-right {
+        flex: 1;
+        max-width: 100%;
+        padding: 2rem 1.5rem;
+    }
+    .otp-input {
+        width: 56px;
+        height: 56px;
+        font-size: 1.5rem;
+    }
+}
+@media (max-width: 575.98px) {
+    .login-right {
+        padding: 2rem 1.25rem;
+    }
+    .otp-input {
+        width: 52px;
+        height: 52px;
+        font-size: 1.4rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
 }
