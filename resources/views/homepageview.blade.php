@@ -143,6 +143,105 @@
         </div>
     </section>
 
+        <!--Bagian Ni Kadek Adelia Paramita Putri (5026231196)-->
+    <!-- Rekomendasi: Kelas yang cocok buat kamu -->
+    <section class="py-5 section-match">
+        <div class="container">
+            <h2 class="section-title">Kelas yang cocok buat kamu</h2>
+
+            @if(isset($recommendations) && $recommendations->count())
+                <div class="row g-4">
+                    @foreach($recommendations as $index => $kelas)
+                        <div class="col-md-4">
+                            <div class="match-card">
+                                {{-- Top label: kategori & durasi --}}
+                                <div class="match-card__top">
+                                    <span class="match-card__category">
+                                        {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan
+                                            ?? 'Kelas Teknik' }}
+                                    </span>
+                                    <span class="match-card__duration">
+                                        {{-- kalau nanti ada kolom durasi di kelas, tinggal ganti --}}
+                                        3 Bulan
+                                    </span>
+                                </div>
+
+                                @php
+                                    $foto = $kelas->foto;
+                                @endphp
+
+                                {{-- <div class="match-card__image-wrapper">
+                                    @if($foto)
+                                        <img
+                                            src="{{ \Illuminate\Support\Str::startsWith($foto, ['http://', 'https://']) ? $foto : asset($foto) }}"
+                                            alt="{{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}"
+                                            class="match-card__image"
+                                        >
+                                    @else
+                                        <div class="match-card__image placeholder-image">
+                                            <i class="bi bi-play-circle"></i>
+                                        </div>
+                                    @endif
+                                </div> --}}
+                                @php
+                                    // 3 gambar statis di public/image/
+                                    $staticImages = [
+                                        'image/rekomkelas1.png',
+                                        'image/rekomkelas2.png',
+                                        'image/rekomkelas3.png',
+                                    ];
+
+                                    // pilih gambar sesuai urutan kartu (0 → 1, 1 → 2, 2 → 3)
+                                    $foto = $staticImages[$index % count($staticImages)];
+                                @endphp
+
+                                <div class="match-card__image-wrapper">
+                                    <img
+                                        src="{{ asset($foto) }}"
+                                        alt="{{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}"
+                                        class="match-card__image"
+                                    >
+                                </div>
+
+
+                                {{-- Judul & deskripsi singkat --}}
+                                <div class="match-card__body">
+                                    <h4 class="match-card__title">
+                                        {{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}
+                                    </h4>
+                                    <p class="match-card__desc">
+                                        {{ $kelas->deskripsi ?? optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.' }}
+                                    </p>
+                                </div>
+
+                                {{-- Mentor & harga --}}
+                                <div class="match-card__footer">
+                                    <div class="match-card__mentor">
+                                        <span class="match-card__mentor-dot"></span>
+                                        <span>
+                                            {{ optional(optional($kelas->matkul)->mentor)->nama ?? 'Mentor JagoTeknik' }}
+                                        </span>
+                                    </div>
+                                    <div class="match-card__price">
+                                        @if(!is_null($kelas->harga))
+                                            Rp {{ number_format($kelas->harga, 0, ',', '.') }}
+                                        @else
+                                            Gratis
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="mt-3 text-muted">
+                    Belum ada rekomendasi khusus. Jelajahi kelas lain dulu, yuk! 😄
+                </p>
+            @endif
+        </div>
+    </section>
+
     <!-- Menampilkan Pesan Sukses -->
     @if (session('success'))
         <div class="alert alert-success" role="alert">
