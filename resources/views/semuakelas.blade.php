@@ -391,7 +391,11 @@
                         </div>
                     @endif
                 </div>
-                <!--Adelia Paramita (5026231196)-->
+
+                <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+                =========================================================
+                Section: Wishlist Kelas
+                ====================================================== -->
                 <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
 
                     @php
@@ -401,207 +405,185 @@
                         if ($user) {
                             $userId = $user->id_user ?? $user->id;
 
-                            // Ambil wishlist user + filter agar kelas yang sudah dibeli tidak muncul
+                            // Ambil wishlist user + jangan tampilkan kelas yang sudah dibeli
                             $wishlistItems = DB::table('wishlist_kelas as w')
                                 ->join('kelas as k', 'w.id_kelas', '=', 'k.id_kelas')
                                 ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+                                ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
                                 ->leftJoin('beli_matkul as b', function ($join) use ($userId) {
                                     $join->on('b.id_matkul', '=', 'm.id_matkul')
-                                        ->where('b.id_user', '=', $userId);
+                                         ->where('b.id_user', '=', $userId);
                                 })
                                 ->where('w.id_user', $userId)
                                 ->whereNull('b.id_beli_matkul')
-                                ->select('k.id_kelas', 'm.nama_matkul')
+                                ->select(
+                                    'k.id_kelas',
+                                    'm.nama_matkul',
+                                    'm.deskripsi',
+                                    'm.thumbnail',
+                                    'k.preview',
+                                    'k.harga_asli',
+                                    'ment.nama as nama_mentor'
+                                )
                                 ->get();
                         }
 
-                        // fallback kalau belum login ATAU wishlist kosong → tampilkan contoh default
-                        $showDefault = !$user || $wishlistItems->isEmpty();
+                        $showEmptyState = !$user || $wishlistItems->isEmpty();
                     @endphp
 
                     <div class="section-header mb-3">
-                        <h2 class="section-title">Kelas yang mau diikut</h2>
+                        <h2 class="section-title">Kelas yang mau diikuti</h2>
                         <p class="section-subtitle">
-                            @if($showDefault)
-                                Lihat daftar kelas yang bisa kamu masukkan ke wishlist di JagoTeknik.
-                            @else
-                                Kelas yang kamu masukkan ke wishlist.
-                            @endif
+                            Lihat daftar kelas yang sudah kamu masukkan ke wishlist di JagoTeknik.
                         </p>
                     </div>
 
-                    <div class="row g-4">
+                    {{-- ====================== KOSONG: HANYA TEKS ====================== --}}
+                    @if($showEmptyState)
+                        <div class="mt-5 text-center">
+                            <p class="text-muted mb-2" style="font-size: 1.1rem;">
+                                Belum ada kelas yang kamu wishlist.
+                            </p>
+                            <p class="mb-3">
+                                Coba eksplor dulu tab <strong>“Semua”</strong> dan tambahkan kelas yang kamu suka. 😊
+                            </p>
+                        </div>
 
-                        {{-- ====================== FALLBACK DEFAULT KETIKA BELUM LOGIN ====================== --}}
-                        @if($showDefault)
-
-                            {{-- CARD 1 --}}
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="course-card">
-                                    <div class="course-image">
-                                        <img src="{{ asset('kalkulus2.jpg') }}" alt="Kalkulus 2">
-                                        <div class="course-badge add">
-                                            <i class="bi bi-plus-circle-fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="course-info">
-                                        <h3 class="course-title">Kalkulus 2</h3>
-                                        <p class="course-progress">Daftar kelas ini</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- CARD 2 --}}
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="course-card">
-                                    <div class="course-image">
-                                        <img src="{{ asset('fisika.jpg') }}" alt="Fisika">
-                                        <div class="course-badge add">
-                                            <i class="bi bi-plus-circle-fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="course-info">
-                                        <h3 class="course-title">Fisika</h3>
-                                        <p class="course-progress">Daftar kelas ini</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- CARD 3 --}}
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="course-card">
-                                    <div class="course-image">
-                                        <img src="{{ asset('kimia.jpg') }}" alt="Kimia">
-                                        <div class="course-badge add">
-                                            <i class="bi bi-plus-circle-fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="course-info">
-                                        <h3 class="course-title">Kimia</h3>
-                                        <p class="course-progress">Daftar kelas ini</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {{-- CARD 4 --}}
-                            <div class="col-lg-3 col-md-4 col-sm-6">
-                                <div class="course-card">
-                                    <div class="course-image">
-                                        <img src="{{ asset('pemrograman.jpg') }}" alt="Pemrograman">
-                                        <div class="course-badge add">
-                                            <i class="bi bi-plus-circle-fill"></i>
-                                        </div>
-                                    </div>
-                                    <div class="course-info">
-                                        <h3 class="course-title">Pemrograman</h3>
-                                        <p class="course-progress">Daftar kelas ini</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                        @else
-
-                        {{-- ====================== DATA DINAMIS WISHLIST USER ====================== --}}
+                    {{-- ====================== ADA DATA: TAMPILKAN CARD WISHLIST ====================== --}}
+                    @else
+                        <div class="row g-4 mt-2">
                             @foreach($wishlistItems as $item)
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <div class="course-card">
-
                                         <div class="course-image">
-                                            {{-- NOTE: Gambar placeholder, bisa ganti sesuai DB --}}
-                                            <img src="{{ asset('kalkulus2.jpg') }}" alt="{{ $item->nama_matkul }}">
+                                            {{-- sementara 1 gambar placeholder, bebas mau ganti --}}
+                                            @php
+                                                $thumb = $item->thumbnail; // URL dari kolom matkul.thumbnail
+                                            @endphp
 
-                                            {{-- TOGGLE WISHLIST --}}
+                                            <img
+                                                src="{{ $thumb && \Illuminate\Support\Str::startsWith($thumb, ['http://', 'https://']) ? $thumb : asset($thumb ?? 'image/lpkelas1.png') }}"
+                                                alt="{{ $item->nama_matkul }}">
+
+                                            {{-- tombol + di pojok kanan atas, buat hapus dari wishlist --}}
                                             <form action="{{ route('wishlist.toggle', ['id_kelas' => $item->id_kelas]) }}"
                                                 method="POST"
-                                                class="course-badge add">
+                                                class="course-badge wishlist-menu">
                                                 @csrf
-                                                <button type="submit" style="all: unset; cursor: pointer;">
-                                                    <i class="bi bi-plus-circle-fill"></i>
+                                                <button type="submit" class="wishlist-menu-button">
+                                                    <i class="bi bi-three-dots-vertical"></i>
                                                 </button>
                                             </form>
                                         </div>
 
                                         <div class="course-info">
+                                            {{-- JUDUL KELAS --}}
                                             <h3 class="course-title">{{ $item->nama_matkul }}</h3>
+
+                                            {{-- BAR KECIL “Daftar kelas ini” PERSIS FIGMA --}}
                                             <p class="course-progress">Daftar kelas ini</p>
                                         </div>
-
                                     </div>
                                 </div>
                             @endforeach
+                        </div>
+                    @endif
 
-                        @endif
-
-                    </div>
                 </div>
-                <!--batas adel-->
+                <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+                =========================================================
+                Section: Wishlist Kelas
+                ====================================================== -->
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer-custom">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3 mb-4">
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="bi bi-mortarboard-fill me-2" style="font-size: 1.5rem; color: var(--primary-purple);"></i>
-                        <span class="fw-bold fs-5">Jago Teknik</span>
+<!-- FOOTER -->
+    <footer class="py-5 border-top border-opacity-25" style="border-color:var(--border)!important;">
+        <div class="container text-left text-white">
+            <div class="row align-items-left">
+
+                <!-- Jago Teknik Logo and Tagline (Left side) -->
+                <div class="col-md-2 text-md-left">
+                    <div class="footer-logo">
+                        <img src="image/jagoteknik.png" alt="Jago Teknik Logo" class="footer-logo-img" />
+                        <p class="footer-tagline mt-2">Kuliah Teknik Jadi Easy</p>
                     </div>
-                    <p class="text-muted">Kuliah Teknik Jadi Easy</p>
                 </div>
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold mb-3">Jurusan</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">Umum</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Teknik</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Vokasi</a></li>
-                    </ul>
+
+                <!-- Jurusan, Ikuti Kami, Legal, Kontak Kami (Horizontal Row) -->
+                <div class="col-md-10">
+                    <div class="row text-md-left">
+                        <!-- Jurusan Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Jurusan</li>
+                                <li>Umum</li>
+                                <li>Teknik</li>
+                                <li>Vokasi</li>
+                            </ul>
+                        </div>
+
+                        <!-- Ikuti Kami Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Ikuti Kami</li>
+                                <li>X</li>
+                                <li>Instagram</li>
+                                <li>LinkedIn</li>
+                                <li>YouTube</li>
+                            </ul>
+                        </div>
+
+                        <!-- Legal Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Legal</li>
+                                <li>Terms</li>
+                                <li>Privacy</li>
+                                <li>Cookies</li>
+                                <li>Contact</li>
+                            </ul>
+                        </div>
+
+                        <!-- Kontak Kami Section -->
+                        <div class="col-md-3">
+                            <ul class="list-unstyled">
+                                <li>Kontak Kami</li>
+                                <li>081234567890</li>
+                                <li>jagoteknikcourse@gmail.com</li>
+                                <li>Surabaya, Indonesia 60111</li>
+                                <li>News</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold mb-3">Ikuti Kami</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">X</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Instagram</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">LinkedIn</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">YouTube</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-2 mb-4">
-                    <h6 class="fw-bold mb-3">Legal</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="footer-link">Terms</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Privacy</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Cookies</a></li>
-                        <li class="mb-2"><a href="#" class="footer-link">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3 mb-4">
-                    <h6 class="fw-bold mb-3">Kontak Kami</h6>
-                    <ul class="list-unstyled">
-                        <li class="mb-2 text-muted">081234567890</li>
-                        <li class="mb-2"><a href="mailto:jagoteknikcourse@gmail.com" class="footer-link">jagoteknikcourse@gmail.com</a></li>
-                        <li class="mb-2 text-muted">Surabaya, Indonesia 60111</li>
-                        <li class="mb-2"><a href="#" class="footer-link">News</a></li>
-                    </ul>
-                </div>
+
             </div>
-            <hr style="border-color: rgba(255, 255, 255, 0.1);">
-            <div class="row align-items-center">
-                <div class="col-md-6">
-                    <p class="text-muted mb-0">&copy; 2025 Jago Teknik</p>
-                </div>
-                <div class="col-md-6 text-end">
-                    <a href="#" class="social-icon me-3"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="social-icon me-3"><i class="bi bi-linkedin"></i></a>
-                    <a href="#" class="social-icon me-3"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="social-icon me-3"><i class="bi bi-github"></i></a>
-                    <a href="#" class="social-icon"><i class="bi bi-dribbble"></i></a>
+
+            <div class="container mt-4">
+                <div class="row d-flex align-items-center justify-content-between">
+
+                    <!-- Left side: Copyright Text -->
+                    <div class="col-12 col-md-6 text-md-left">
+                        <p class="mb-0" style="text-align: left">© <span id="year"></span> Jago Teknik. All
+                            rights reserved.</p>
+                    </div>
+
+                    <!-- Right side: Social Media Icons -->
+                    <div class="col-12 col-md-6 text-md-right">
+                        <div class="social-icons">
+                            <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-github"></i></a>
+                            <a href="#" class="social-icon"><i class="bi bi-globe"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
-
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 

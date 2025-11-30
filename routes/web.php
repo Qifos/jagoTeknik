@@ -39,8 +39,9 @@ Route::get('/username', [UserController::class, 'showUsernameView'])->name('user
 Route::post('/username', [UserController::class, 'setUsername'])->name('username.set');
 
 // Dashboard contoh
-Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
-
+// Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
+Route::get('/homepage', [RekomendasiController::class, 'showHomepage'])
+    ->name('homepage');
 
 
 // Kelas pages (static views for design preview)
@@ -133,6 +134,10 @@ Route::view('/personalisasi', 'personalisasi')->name('personalisasi.view');
 // Route untuk menampilkan halaman password
 
 Route::middleware('auth')->group(function () {
+    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+
     Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])
         ->name('wishlist.toggle');
+
+    Route::get('/account', fn () => view('account'))->name('account.view');
 });
