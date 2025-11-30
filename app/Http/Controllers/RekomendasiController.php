@@ -1,10 +1,10 @@
 <?php
 /**
- * Author : Ni Kadek Adelia Paramita (NRP 5026231196)
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
  * File   : app/Http/Controllers/RekomendasiController.php
- * Desc   : Rekomendasi controller untuk kelas yang cocok tiap user
- * Date   : 2025-11-04
+ * Desc   : controller untuk 3 list rekomendasi kelas masing" user di homepage
  */
+
 namespace App\Http\Controllers;
 
 use App\Models\BeliMatkul;

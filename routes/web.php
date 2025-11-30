@@ -33,17 +33,11 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/username', [UserController::class, 'showUsernameView'])->name('username.view');
 Route::post('/username', [UserController::class, 'setUsername'])->name('username.set');
 
-// Testing/Dev Routes
-Route::view('/otp-test', 'otpview');
-Route::view('/username-test', 'usernameview');
-Route::view('/personalisasi-test', 'personalisasi');
+// Dashboard contoh
+// Route::get('/homepage', fn () => view('homepageview'))->name('homepage');
+Route::get('/homepage', [RekomendasiController::class, 'showHomepage'])
+    ->name('homepage');
 
-// ============================================
-// CORE APPLICATION ROUTES
-// ============================================
-
-// Dashboard / Homepage (Using Controller for Recommendations)
-Route::get('/homepage', [RekomendasiController::class, 'showHomepage'])->name('homepage');
 
 // Personalisasi
 Route::get('/personalisasi', [UserController::class, 'showPersonalisasi'])->name('personalisasi.view');
@@ -120,17 +114,17 @@ Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('c
 
 // Wishlist Logic (Auth required)
 Route::middleware('auth')->group(function () {
-    // Primary Toggle
-    Route::post('/wishlist/{id_kelas}', [KelasController::class, 'toggleWishlist'])->name('wishlist.toggle');
-    // Alternative Toggle (if needed by frontend)
-    Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])->name('wishlist.toggle.alt');
+    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 });
 
-// Serve CSS from resources (Development only)
-Route::get('/resources/css/app.css', function () {
-    $path = resource_path('css/app.css');
-    if (!file_exists($path)) {
-        abort(404);
-    }
-    return response()->file($path, ['Content-Type' => 'text/css']);
+Route::view('/personalisasi', 'personalisasi')->name('personalisasi.view');
+// Route untuk menampilkan halaman password
+
+Route::middleware('auth')->group(function () {
+    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
+
+    Route::post('/wishlist/{id_kelas}/toggle', [WishlistController::class, 'toggle'])
+        ->name('wishlist.toggle');
+
+    Route::get('/account', fn () => view('account'))->name('account.view');
 });

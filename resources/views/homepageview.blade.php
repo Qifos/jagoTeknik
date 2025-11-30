@@ -62,46 +62,102 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero position-relative">
-        <div class="hero__orbit"></div>
-        <div class="container position-relative" style="z-index:2;">
-            <div class="row align-items-center">
-                <!-- Left: judul & subjudul -->
-                <div class="col-lg-6">
-                    <h1 class="hero__title">Halo <span class="accent">{{ Auth::user()->username }}</span>!</h1>
-                    <p class="hero__subtitle fs-5">Mau belajar apa hari ini?</p>
-                    <h2 class="section-title mb-0">Kelas yang akan datang</h2>
-                </div>
+            <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+            =========================================================
+            Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
+            ====================================================== -->
 
-                <!-- Kanan: dua bubble kecil -->
-                <div class="col-lg-6 mt-4 mt-lg-0">
-                    <div class="bubbles">
-                        <div class="bubble">
-                            <div class="bubble__ring">
-                                <div class="bubble__icon"><i class="bi bi-clock"></i></div>
-                            </div>
-                            <div class="bubble__label">
-                                <div class="bubble__title">Fisika 1</div>
-                                <div class="bubble__time">11:00 – 13:00</div>
-                            </div>
+            @php
+                use Illuminate\Support\Facades\Auth;
+                use Illuminate\Support\Facades\DB;
+                use Carbon\Carbon;
+
+                $user = Auth::user();
+                $jadwalTerdekatHome = collect();
+
+                if ($user) {
+                    $userId = $user->id_user ?? $user->id;
+                    $now = Carbon::now();
+                    $today = $now->toDateString();
+                    $currentTime = $now->format('H:i:s');
+
+                    $jadwalTerdekatHome = DB::table('jadwal as j')
+                        ->join('kelas as k', 'j.id_kelas', '=', 'k.id_kelas')
+                        ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+                        ->join('beli_matkul as bm', function ($join) use ($userId) {
+                            $join->on('bm.id_matkul', '=', 'm.id_matkul')
+                                 ->where('bm.id_user', '=', $userId);
+                        })
+                        // jadwal yang masih di depan waktu sekarang
+                        ->where(function ($q) use ($today, $currentTime) {
+                            $q->where('j.tanggal', '>', $today)
+                              ->orWhere(function ($q2) use ($today, $currentTime) {
+                                  $q2->where('j.tanggal', '=', $today)
+                                     ->where('j.jam_mulai', '>=', $currentTime);
+                              });
+                        })
+                        ->orderBy('j.tanggal')
+                        ->orderBy('j.jam_mulai')
+                        ->limit(2)  // ambil 2 jadwal terdekat
+                        ->select(
+                            'j.tanggal',
+                            'j.jam_mulai',
+                            'j.jam_selesai',
+                            'm.nama_matkul'
+                        )
+                        ->get();
+                }
+            @endphp
+
+            <section class="hero-section">
+                <div class="container">
+                    <div class="row align-items-center g-4">
+                        <!-- Kiri: salam + judul & subjudul -->
+                        <div class="col-lg-6">
+                            <h1 class="hero__title">
+                                Halo <span class="accent">{{ Auth::user()->username }}</span>!
+                            </h1>
+                            <p class="hero__subtitle fs-5">Mau belajar apa hari ini?</p>
+                            <h2 class="section-title mb-0">Kelas yang akan datang</h2>
                         </div>
 
-                        <div class="bubble">
-                            <div class="bubble__ring">
-                                <span class="bubble__dot"></span>
-                                <div class="bubble__icon"><i class="bi bi-book"></i></div>
-                            </div>
-                            <div class="bubble__label">
-                                <div class="bubble__title">Kalkulus 2</div>
-                                <div class="bubble__time">14:00 – 16:00</div>
+                        <!-- Kanan: dua bubble jadwal terdekat -->
+                        <div class="col-lg-6 mt-4 mt-lg-0">
+                            <div class="bubbles">
+                                @forelse ($jadwalTerdekatHome as $index => $jadwal)
+                                    <div class="bubble">
+                                        <div class="bubble__ring">
+                                            {{-- icon beda sedikit untuk bubble pertama & kedua --}}
+                                            <div class="bubble__icon">
+                                                <i class="bi {{ $index === 0 ? 'bi-clock' : 'bi-book' }}"></i>
+                                            </div>
+                                            @if($index === 1)
+                                                <span class="bubble__dot"></span>
+                                            @endif
+                                        </div>
+                                        <div class="bubble__label">
+                                            <div class="bubble__title">{{ $jadwal->nama_matkul }}</div>
+                                            <div class="bubble__time">
+                                                {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}
+                                                – {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @empty
+                                    <p class="text-muted mb-0">
+                                        Belum ada jadwal kelas terdekat.
+                                    </p>
+                                @endforelse
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
+
+            <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+            =========================================================
+            Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
+            ====================================================== -->
 
     <!-- Course Section -->
     <section class="py-5 section-courses">
@@ -143,7 +199,7 @@
         </div>
     </section>
 
-        <!--Bagian Ni Kadek Adelia Paramita Putri (5026231196)-->
+    <!--Bagian Ni Kadek Adelia Paramita Putri (5026231196)-->
     <!-- Rekomendasi: Kelas yang cocok buat kamu -->
     <section class="py-5 section-match">
         <div class="container">

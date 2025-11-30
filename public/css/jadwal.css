@@ -1,46 +1,118 @@
-:root{
-  --bg:#0b0b10;        /* page background */
-  --surface:#111116;   /* cards/nav surface */
-  --muted:#8c7b92;     /* muted lavender */
-  --primary:#a78bdc;   /* title lavender */
-  --accent:#4f46e5;    /* indigo selection */
-  --text:#f4f4f7;      /* main text */
-  --text-dim:#c2c2cc;  /* secondary text */
-}
-html,body{background:var(--bg); color:var(--text);}
-.navbar{background:var(--surface);}
-.navbar .nav-link, .navbar-brand{color:var(--text)}
-.navbar .nav-link.active, .navbar .nav-link:hover{color:var(--primary)}
-.form-control::placeholder{color:#9aa}
+/**
+ * Author : Akhtar Zia Faizarrobbi (NRP 5026231095)
+ * Desc   : jadwal.css
+ * Date   : 2025-11-10
+ */
 
-.brand-mark{width:36px;height:36px;border-radius:50%;background:#d9d9e3;}
+ :root{
+    --bg:#0b0b10;
+    --surface:#111116;
+    --muted:#8c7b92;
+    --primary:#a78bdc;
+    --accent:#4f46e5;
+    --text:#f4f4f7;
+    --text-dim:#c2c2cc;
+  }
 
-.search-wide{min-width:320px}
+  /* Pastikan page jadwal tetap pakai theme jadwal (karena homepage.css juga set body) */
+  html,body{background:var(--bg); color:var(--text);}
 
-/* Section titles */
-.headline{color:var(--primary); font-weight:700; letter-spacing:.3px}
+  .form-control::placeholder{color:#9aa}
 
-/* Surface panel */
-.panel-surface{background:var(--surface); border-radius:1rem; border:1px solid #26263a;}
+  /* brand logo navbar (sama seperti homepage) */
+  .brand-logo{
+    height:40px;
+    width:auto;
+    display:block;
+  }
+  @media (max-width:576px){
+    .brand-logo{ height:34px; }
+  }
 
-/* Left upcoming class card */
-.class-pill{width:92px; height:92px; border-radius:50%; background:#2a2430; display:flex; align-items:center; justify-content:center; margin-inline:auto}
-.class-pill i{font-size:2rem; color:#ffb3b3}
+  /* Section titles */
+  .headline{color:var(--primary); font-weight:700; letter-spacing:.3px}
 
-/* Calendar card */
-.calendar{background:var(--surface); border-radius:1rem; padding:1rem}
-.calendar .cal-top{display:flex; align-items:center; justify-content:space-between;}
-.calendar .month-chip{background:#1a1a22; border-radius:.6rem; padding:.35rem .8rem; font-weight:600}
-.calendar .grid{display:grid; grid-template-columns:repeat(7,1fr); gap:.5rem}
-.calendar .cell{background:#1a1a22; border:1px solid #1f1f29; border-radius:.6rem; text-align:center; padding:.6rem 0; color:var(--text)}
-.calendar .cell.muted{opacity:.45}
-.calendar .cell.head{background:transparent; border:none; color:var(--text-dim); font-weight:600}
-.calendar .cell.active{background:var(--accent); border-color:var(--accent); font-weight:700}
-.calendar .navbtn{width:40px; height:40px; border-radius:50%; background:#1a1a22; display:flex; align-items:center; justify-content:center; border:1px solid #1f1f29}
+  /* Surface panel */
+  .panel-surface{background:var(--surface); border-radius:1rem; border:1px solid #26263a;}
 
-/* Course cards */
-.course-card{background:linear-gradient(180deg,#6c35ff22,#6c35ff11), var(--surface); border:1px solid #252535; border-radius:1rem; overflow:hidden}
-.course-card .thumb{width:84px; height:84px; border-radius:1rem; background:#2a2430; display:flex; align-items:center; justify-content:center}
-.badge-cat{background:#2b2b38; color:var(--text-dim)}
+  /* Left upcoming class card */
+  .class-pill{
+    width:92px; height:92px; border-radius:50%; background:#2a2430;
+    display:flex; align-items:center; justify-content:center; margin-inline:auto
+  }
+  .class-pill i{font-size:2rem; color:#ffb3b3}
 
-.btn-outline-light{--bs-btn-color:#e7e7f0; --bs-btn-border-color:#3b3b49; --bs-btn-hover-bg:#232331; --bs-btn-hover-border-color:#4a4a5f}
+  /* Calendar card */
+  .calendar{background:var(--surface); border-radius:1rem; padding:1rem}
+  .calendar .cal-top{display:flex; align-items:center; justify-content:space-between;}
+  .calendar .month-chip{background:#1a1a22; border-radius:.6rem; padding:.35rem .8rem; font-weight:600}
+  .calendar .grid{display:grid; grid-template-columns:repeat(7,1fr); gap:.5rem}
+
+  /* header day cells (Mo Tu ...) */
+  .calendar .cell.head{
+    background:transparent; border:none; color:var(--text-dim); font-weight:600;
+    text-align:center; padding:.6rem 0;
+  }
+
+  /* tombol nav */
+  .calendar .navbtn{
+    width:40px; height:40px; border-radius:50%;
+    background:#1a1a22;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid #1f1f29
+  }
+
+  /* ===== kalender interaktif: cell jadi button ===== */
+  .calendar button.cell{
+    appearance:none;
+    width:100%;
+    background:#1a1a22;
+    border:1px solid #1f1f29;
+    border-radius:.6rem;
+    text-align:center;
+    padding:.6rem 0;
+    color:var(--text);
+    cursor:pointer;
+  }
+  .calendar button.cell.muted{opacity:.45}
+  .calendar button.cell:hover{border-color:#2a2a3a}
+  .calendar button.cell.active{
+    background:var(--accent);
+    border-color:var(--accent);
+    font-weight:700;
+  }
+
+  /* ===== tanda “hari ini” (today) ===== */
+  .calendar button.cell.today{
+    position:relative;
+    border-color: rgba(167, 139, 220, .6);
+  }
+  .calendar button.cell.today::after{
+    content:"";
+    position:absolute;
+    width:6px;
+    height:6px;
+    border-radius:999px;
+    left:50%;
+    bottom:6px;
+    transform:translateX(-50%);
+    background: rgba(167, 139, 220, .9);
+  }
+
+  /* Course cards */
+  .course-card{
+    background:linear-gradient(180deg,#6c35ff22,#6c35ff11), var(--surface);
+    border:1px solid #252535; border-radius:1rem; overflow:hidden
+  }
+  .course-card .thumb{
+    width:84px; height:84px; border-radius:1rem;
+    background:#2a2430; display:flex; align-items:center; justify-content:center
+  }
+  .badge-cat{background:#2b2b38; color:var(--text-dim)}
+
+  .btn-outline-light{
+    --bs-btn-color:#e7e7f0;
+    --bs-btn-border-color:#3b3b49;
+    --bs-btn-hover-bg:#232331;
+    --bs-btn-hover-border-color:#4a4a5f
+  }
