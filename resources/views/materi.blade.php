@@ -78,21 +78,20 @@
                 <!-- Video List -->
                 @if($videos && $videos->count() > 0)
                     <h5 class="mt-4 mb-3">Video Pembelajaran</h5>
-                    <div class="row g-3">
+                    <div class="video-grid">
                         @foreach($videos as $video)
-                            <div class="col-md-6 col-lg-4">
-                                <div class="teaser-card" x-data="{}">
-                                    <div class="thumb mb-3">
-                                        <img src="https://placehold.co/400x225/000/fff?text={{ urlencode($video->nama_video ?? 'Video') }}" class="img-fluid" alt="{{ $video->nama_video }}">
-                                        <a href="{{ route('media.video.detail', ['id' => $video->id_video]) }}" class="play-large">▶</a>
+                            <div class="teaser-card">
+                                <div class="thumb">
+                                    <img src="https://placehold.co/400x225/000/fff?text={{ urlencode($video->nama_video ?? 'Video') }}" alt="{{ $video->nama_video }}">
+                                    <a href="{{ route('media.video.detail', ['id' => $video->id_video]) }}" class="play-large">▶</a>
+                                </div>
+                                <div>
+                                    <div class="fw-bold video-title">
+                                        {{ $video->nama_video }}
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-start">
-                                        <div>
-                                            <div class="small text-white-75">{{ $video->durasi ?? 'Video' }}</div>
-                                            <div class="fw-bold instructor">
-                                                <span>{{ $video->nama_video }}</span>
-                                            </div>
-                                        </div>
+                                    <div class="instructor">
+                                        <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
+                                        <span>{{ $video->durasi ?? 'Video' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -102,6 +101,37 @@
                     <div class="alert alert-info mt-4">
                         <p>Belum ada video pembelajaran untuk materi ini.</p>
                     </div>
+                @endif
+
+                <!-- Navigation Button to Next Materi -->
+                @php
+                    $currentMateriId = $materi->id_materi ?? null;
+                    $nextMateri = $materi->matkul->materi()
+                        ->where('id_materi', '>', $currentMateriId)
+                        ->orderBy('id_materi', 'asc')
+                        ->first();
+                    $previousMateri = $materi->matkul->materi()
+                        ->where('id_materi', '<', $currentMateriId)
+                        ->orderBy('id_materi', 'desc')
+                        ->first();
+                @endphp
+
+                <!-- Previous Button -->
+                @if($previousMateri)
+                    <a href="{{ route('media.materi', ['id' => $previousMateri->id_materi]) }}" class="materi-prev-button">
+                        ← Materi Sebelumnya
+                    </a>
+                @endif
+
+                <!-- Next or Complete Button -->
+                @if($nextMateri)
+                    <a href="{{ route('media.materi', ['id' => $nextMateri->id_materi]) }}" class="materi-nav-button">
+                        Lanjut ke Materi Selanjutnya →
+                    </a>
+                @else
+                    <button class="materi-nav-button complete-btn" onclick="completeMateri()">
+                        Selesaikan Pembelajaran ✓
+                    </button>
                 @endif
             </div>
         </div>
@@ -163,5 +193,115 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Alpine.js for small interactions -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        // Complete materi function
+        async function completeMateri() {
+            const materiId = {{ $materi->id_materi ?? 0 }};
+            const matkulId = {{ $matkul->id_matkul ?? 0 }};
+
+            try {
+                const response = await fetch(`/api/materi/complete/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Selamat! Anda telah menyelesaikan pembelajaran ini.');
+                    // Redirect to kelas view
+                    window.location.href = `/kelas/${matkulId}`;
+                } else {
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        }
+
+        // Track content reading progress
+        let scrollDepth = 0;
+        let contentReadTimer = null;
+        const materiId = {{ $materi->id_materi ?? 0 }};
+
+        window.addEventListener('scroll', () => {
+            const contentCard = document.querySelector('.content-card');
+            if (!contentCard) return;
+
+            const scrollHeight = contentCard.scrollHeight - window.innerHeight;
+            const scrolledHeight = window.scrollY;
+            scrollDepth = Math.round((scrolledHeight / scrollHeight) * 100);
+
+            // Record when user has read most of the content
+            if (scrollDepth >= 80 && !contentReadTimer) {
+                contentReadTimer = setTimeout(() => {
+                    recordContentProgress(true);
+                }, 2000); // Record after 2 seconds of reading
+            }
+        });
+
+        // Record content read progress
+        async function recordContentProgress(contentRead) {
+            if (!materiId) return;
+
+            try {
+                await fetch(`/api/progress/content/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify({
+                        scroll_depth: scrollDepth,
+                        content_read: contentRead
+                    })
+                });
+            } catch (error) {
+                console.error('Error recording content progress:', error);
+            }
+        }
+
+        // Track video completion if there are videos
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoElements = document.querySelectorAll('video');
+            videoElements.forEach((video, index) => {
+                video.addEventListener('ended', () => {
+                    recordVideoProgress(true, video.duration);
+                });
+
+                // Record progress as video plays
+                video.addEventListener('timeupdate', () => {
+                    const currentTime = Math.round(video.currentTime);
+                    recordVideoProgress(false, video.duration, currentTime);
+                });
+            });
+        });
+
+        // Record video progress
+        async function recordVideoProgress(completed, totalDuration, watchedDuration = null) {
+            if (!materiId) return;
+
+            try {
+                await fetch(`/api/progress/video/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify({
+                        watched_duration: watchedDuration || totalDuration,
+                        total_duration: Math.round(totalDuration),
+                        completed: completed
+                    })
+                });
+            } catch (error) {
+                console.error('Error recording video progress:', error);
+            }
+        }
+    </script>
 </body>
 </html>

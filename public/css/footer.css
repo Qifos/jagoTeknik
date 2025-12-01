@@ -1,47 +1,89 @@
 /* --- Footer Styling --- */
-.site-footer {
-    border-top: 1px solid #333;
-    padding: 3rem 0;
-    color: var(--text-muted);
-  }
-  .site-footer h5 {
-    color: var(--text-light);
-    font-weight: 700;
-  }
-  /* Re-using navbar.css .footer-logo */
-  .site-footer a {
-    color: var(--text-muted);
-    text-decoration: none;
-  }
-  .site-footer a:hover {
-    color: var(--text-light);
-    text-decoration: underline;
-  }
-  .site-footer .list-unstyled {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-
 footer {
     background-color: #000;
     color: #e9e9ee;
+    padding: 3rem 0;
+    border-top: 1px solid #333;
+}
+
+footer h5,
+footer .section-title {
+    color: #e9e9ee;
+    font-weight: 700;
+}
+
+footer a {
+    color: #e9e9ee;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--text-light);
+    text-decoration: underline;
+}
+
+footer .list-unstyled {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+footer .list-unstyled li {
+    color: #e9e9ee;
+}
+
+footer .list-unstyled li:first-child {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.footer-logo {
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-right: 0;
+    color: white;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.footer-logo img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 0.5rem;
+}
+
+.footer-tagline {
+    font-size: 0.9rem;
+    color: #e9e9ee;
+    margin: 0;
 }
 
 footer .social-icons {
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
 }
 
 footer .social-icon {
     font-size: 1.5rem;
     color: #e9e9ee;
-    margin: 0 10px;
     text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 footer .social-icon:hover {
-    color: var(--brand-3);
+    color: var(--brand-3, #ff6aa6);
 }
 
 @media (max-width: 768px) {
@@ -56,5 +98,10 @@ footer .social-icon:hover {
 
     footer .social-icons {
         margin-top: 20px;
+        justify-content: flex-start;
+    }
+
+    .footer-logo {
+        align-items: flex-start;
     }
 }

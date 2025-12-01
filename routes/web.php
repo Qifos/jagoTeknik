@@ -8,6 +8,7 @@ use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
@@ -127,4 +128,30 @@ Route::middleware('auth')->group(function () {
         ->name('wishlist.toggle');
 
     Route::get('/account', fn () => view('account'))->name('account.view');
+});
+
+
+// ============================================
+// 6. PROGRESS TRACKING ROUTES (Auth required)
+// ============================================
+Route::middleware('auth')->group(function () {
+    // Record video watch progress
+    Route::post('/api/progress/video/{materiId}', [ProgressController::class, 'recordVideoWatch'])
+        ->name('progress.video.record');
+
+    // Record content read progress
+    Route::post('/api/progress/content/{materiId}', [ProgressController::class, 'recordContentRead'])
+        ->name('progress.content.record');
+
+    // Complete materi
+    Route::post('/api/materi/complete/{materiId}', [ProgressController::class, 'completeMateri'])
+        ->name('materi.complete');
+
+    // Check if materi is unlocked
+    Route::get('/api/progress/check-unlock/{materiId}', [ProgressController::class, 'checkMateriUnlock'])
+        ->name('progress.check.unlock');
+
+    // Get matkul progress
+    Route::get('/api/progress/matkul/{matkulId}', [ProgressController::class, 'getMatkulProgress'])
+        ->name('progress.matkul');
 });

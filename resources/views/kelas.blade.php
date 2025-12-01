@@ -100,10 +100,6 @@
                     <div class="card-item">
                         <a href="{{ route('media.materi', ['id' => $item['id']]) }}" class="text-decoration-none">
                             <div class="custom-card">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="small-pill">{{ $item['tag'] }}</span>
-                                </div>
-
                                 <div class="media-container mb-3">
                                     @if(isset($item['thumb']) && $item['thumb'])
                                         <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
@@ -112,18 +108,21 @@
                                             <span>{{ $item['title'] }}</span>
                                         </div>
                                     @endif
+                                    <span class="small-pill">{{ $item['tag'] }}</span>
                                 </div>
 
-                                <div class="card-title mb-2">{{ $item['title'] }}</div>
-                                <div class="instructor mb-3">
-                                    <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
-                                    <span>{{ $item['instructor'] }}</span>
-                                </div>
+                                <div style="padding: 0 12px;">
+                                    <div class="card-title mb-2">{{ $item['title'] }}</div>
+                                    <div class="instructor mb-2">
+                                        <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
+                                        <span>{{ $item['instructor'] }}</span>
+                                    </div>
 
-                                <div class="custom-progress mt-auto">
-                                    <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                    <div class="custom-progress mt-auto">
+                                        <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                    </div>
+                                    <div class="progress-text mt-2 mb-3">{{ $item['progress_text'] }}</div>
                                 </div>
-                                <div class="progress-text mt-2">{{ $item['progress_text'] }}</div>
                             </div>
                         </a>
                     </div>
@@ -156,16 +155,18 @@
                                     @endif
                                 </div>
 
-                                <div class="card-title mb-2">{{ $video['title'] }}</div>
-                                <div class="instructor mb-3">
-                                    <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
-                                    <span>{{ $video['instructor'] }}</span>
-                                </div>
+                                <div style="padding: 0 12px; display: flex; flex-direction: column; flex: 1;">
+                                    <div class="card-title mb-2">{{ $video['title'] }}</div>
+                                    <div class="instructor mb-2">
+                                        <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
+                                        <span>{{ $video['instructor'] }}</span>
+                                    </div>
 
-                                <div class="custom-progress mt-auto">
-                                    <div class="bar" style="width: {{ $video['progress'] }}%"></div>
+                                    <div class="custom-progress mt-auto">
+                                        <div class="bar" style="width: {{ $video['progress'] }}%"></div>
+                                    </div>
+                                    <div class="progress-text mt-2 mb-3">{{ $video['progress_text'] }}</div>
                                 </div>
-                                <div class="progress-text mt-2">{{ $video['progress_text'] }}</div>
                             </div>
                         </a>
                     </div>

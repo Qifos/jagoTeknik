@@ -6,12 +6,12 @@
     <title>Jago Teknik - Beli {{ $kelas->nama_matkul }}</title>
 
     <!-- CSS Links -->
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/belikelas.css') }}">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/belikelas.css') }}">
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">

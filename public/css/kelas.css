@@ -1,94 +1,107 @@
 /* --- Card Layout & Sizing --- */
 .h-scroll {
     display: flex;
-    gap: 1.5rem; /* Controls spacing between cards */
+    gap: 1.5rem;
+    padding: 1rem 0;
     overflow-x: auto;
-    padding: 0.5rem 0.25rem 1.5rem 0.25rem; /* Added padding for scrollbar */
-    scrollbar-width: thin;
-    scrollbar-color: var(--panel-purple) transparent;
-  }
-  /* Hide scrollbar for Webkit */
-  .h-scroll::-webkit-scrollbar {
-    height: 8px;
-  }
-  .h-scroll::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .h-scroll::-webkit-scrollbar-thumb {
-    background-color: var(--panel-purple);
-    border-radius: 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
-  /* Responsive card sizing */
+  .h-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
   .h-scroll .card-item {
-    flex-shrink: 0;
-    flex-basis: 85%; /* Mobile-first */
+    flex: 0 0 280px;
+    min-width: 280px;
   }
-  @media (min-width: 576px) {
+
+  @media (max-width: 768px) {
     .h-scroll .card-item {
-      flex-basis: calc(50% - 0.75rem); /* 2 cards */
+      flex: 0 0 240px;
+      min-width: 240px;
+    }
+    .h-scroll {
+      gap: 1rem;
     }
   }
-  @media (min-width: 992px) {
+
+  @media (max-width: 576px) {
     .h-scroll .card-item {
-      flex-basis: calc(33.333% - 1rem); /* 3 cards */
-    }
-  }
-  @media (min-width: 1200px) {
-    .h-scroll .card-item {
-      flex-basis: calc(25% - 1.125rem); /* 4 cards */
+      flex: 0 0 100%;
+      min-width: 100%;
     }
   }
 
   /* --- Card Styling (from PDF) --- */
   .custom-card {
-    border-radius: var(--card-radius);
-    background: linear-gradient(180deg, var(--panel-purple), var(--panel-purple-2));
+    border-radius: 16px;
+    background: linear-gradient(135deg, #6b4fa0 0%, #5a3f8f 100%);
     color: white;
-    padding: 18px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    padding: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ensure cards are same height in a row */
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+  }
+  .custom-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   }
   .custom-card .small-pill {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
     border-radius: 999px;
-    font-size: 0.75rem;
-    font-weight: 500;
+    font-size: 0.65rem;
+    font-weight: 700;
+    width: fit-content;
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
   .custom-card .card-title {
     font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--text-light);
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: 8px;
+    line-height: 1.35;
   }
   .custom-card .instructor {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.9);
+    margin-top: auto;
   }
   .custom-card .instructor img {
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
   }
   .custom-progress {
-    height: 8px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
     overflow: hidden;
+    margin: 6px 0;
   }
   .custom-progress .bar {
     height: 100%;
-    background: #fff;
-    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 2px;
   }
   .custom-card .progress-text {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: 500;
   }
 
   /* --- Media Placeholder --- */
@@ -96,9 +109,10 @@
     width: 100%;
     padding-top: 56.25%; /* 16:9 Aspect Ratio */
     position: relative;
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
     background-color: #000;
+    margin-bottom: 0;
   }
   .media-container img {
     position: absolute;
@@ -117,24 +131,63 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, var(--panel-purple), var(--panel-purple-2));
+    background: linear-gradient(135deg, #6b4fa0, #5a3f8f);
     color: rgba(255, 255, 255, 0.9);
     font-weight: 700;
-    font-size: 1.1rem;
-    border-radius: 12px;
+    font-size: 1rem;
+    border-radius: 0;
+    text-align: center;
+    padding: 1rem;
   }
 
   /* Video Card (Slightly simpler) */
   .custom-video-card {
-    border-radius: var(--card-radius);
-    background: linear-gradient(180deg, #7a2fb0, #6b4fa0);
+    border-radius: 16px;
+    background: linear-gradient(135deg, #8b3fa0 0%, #7a2fb0 100%);
     color: white;
-    padding: 12px 14px 18px 14px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+    padding: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+  }
+  .custom-video-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   }
   .custom-video-card .media-container {
-    border-radius: 12px;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+  .custom-video-card .card-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: 6px;
+    line-height: 1.35;
+    padding: 12px 12px 0;
+  }
+  .custom-video-card .instructor {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: auto;
+    padding: 0 12px;
+  }
+  .custom-video-card .instructor img {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+  }
+  .custom-video-card .custom-progress {
+    margin: 8px 12px 0;
+  }
+  .custom-video-card .progress-text {
+    padding: 4px 12px 12px;
   }
 
 
