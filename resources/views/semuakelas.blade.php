@@ -32,13 +32,13 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Beranda</a>
+                        <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
+                        <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Jadwal</a>
+                        <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Chat</a>
@@ -52,7 +52,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="#">
+                        <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
                             <img src="profile.jpg" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>

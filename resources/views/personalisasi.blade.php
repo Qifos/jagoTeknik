@@ -1,6 +1,6 @@
 <!--
  * Author : Faiz Hazmi Maulana (NRP 502623120)
- * Desc   : semuaKelas
+ * Desc   : Personalisasi
  * Date   : 2025-11-30
 -->
 <!DOCTYPE html>
@@ -33,13 +33,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
+                        <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
+                        <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                        <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
@@ -53,7 +53,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                        <a class="nav-link active d-flex align-items-center" href="{{ url('/personalisasi') }}">
                             <img src="profile.jpg" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -205,10 +205,37 @@
                 <div class="tab-pane fade" id="notifikasi" role="tabpanel">
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
-                            <p class="text-white text-center">Pengaturan notifikasi akan ditampilkan di sini.</p>
+                            <div class="profile-form">
+                                <p class="notif-title">Atur notifikasi dari Jago Teknik</p>
+
+                                <div class="notif-list">
+                                    <div class="form-check form-switch notif-row">
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_reminder_kelas">
+                                        <label class="form-check-label notif-label" for="notif_reminder_kelas">Reminder kelas</label>
+                                    </div>
+
+                                    <div class="form-check form-switch notif-row">
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_reminder_belajar">
+                                        <label class="form-check-label notif-label" for="notif_reminder_belajar">Reminder belajar</label>
+                                    </div>
+
+                                    <div class="form-check form-switch notif-row">
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_live_chat">
+                                        <label class="form-check-label notif-label" for="notif_live_chat">Live chat</label>
+                                    </div>
+
+                                    <div class="form-check form-switch notif-row">
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_promosi">
+                                        <label class="form-check-label notif-label" for="notif_promosi">Promosi</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
 
                 <!-- Privasi Tab. Sinta Dewi Rahmawati (5026231231) -->
                 <div class="tab-pane fade" id="privasi" role="tabpanel">

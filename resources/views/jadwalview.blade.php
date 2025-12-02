@@ -39,13 +39,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
+            <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">Jadwal</a>
+            <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Chat</a>
@@ -61,7 +61,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+            <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
               <img src="{{ asset('profile.jpg') }}" alt="Profile" class="profile-img">
               <span class="ms-2">Profil</span>
             </a>

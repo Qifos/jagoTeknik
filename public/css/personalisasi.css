@@ -187,6 +187,58 @@ body {
     font-size: 1rem;
 }
 
+/* =========================
+   NOTIFIKASI TAB (scoped)
+   ========================= */
+   #notifikasi .notif-title{
+    color: #fff;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+}
+
+#notifikasi .notif-list{
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* jarak antar item */
+}
+
+#notifikasi .notif-row{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding-left: 0; /* hilangkan indent form-check */
+}
+
+/* ukuran switch */
+#notifikasi .notif-switch{
+    width: 46px;
+    height: 24px;
+    margin-left: 0;
+    cursor: pointer;
+    border: 1px solid #3a3a3a;
+    background-color: #1a1a1a;
+}
+
+/* warna ON (ungu) */
+#notifikasi .notif-switch:checked{
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+/* fokus (klik/tab) */
+#notifikasi .notif-switch:focus{
+    box-shadow: 0 0 0 .2rem rgba(139, 92, 246, .25);
+    border-color: #8b5cf6;
+}
+
+#notifikasi .notif-label{
+    color: #fff;
+    font-weight: 400;
+    cursor: pointer; /* biar enak diklik */
+}
+
+
 /* Form Labels */
 .form-label {
     color: #fff;
