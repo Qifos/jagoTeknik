@@ -135,6 +135,7 @@
                                 ->select(
                                     'k.id_kelas',
                                     'm.id_matkul',
+                                    'k.image_path',
                                     'm.nama_matkul',
                                     'm.deskripsi',
                                     'k.deskripsi as deskripsi_kelas',
@@ -236,9 +237,10 @@
 
                                         <div class="course-card">
                                             <div class="course-image">
-                                                <img src="{{ asset('images/kelas/' . strtolower(str_replace(' ', '_', $item->nama_matkul)) . '.jpg') }}"
-                                                     alt="{{ $item->nama_matkul }}"
-                                                     onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                                {{-- GAMBAR DARI image_path TABEL KELAS --}}
+                                                <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
+                                                    alt="{{ $item->nama_matkul }}"
+                                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
                                                 <div class="course-badge {{ $item->status_kelas === 'completed' ? 'completed' : ($item->status_kelas === 'wishlist' ? 'add' : '') }}">
                                                     @if($item->status_kelas === 'completed')
                                                         <i class="bi bi-check-circle-fill"></i>
@@ -254,7 +256,6 @@
                                             </div>
                                             <div class="course-info">
                                                 <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                                <p class="course-instructor">Oleh: {{ $item->nama_mentor ?? 'Instruktur' }}</p>
                                                 <p class="course-progress">
                                                     @if($item->status_kelas === 'completed')
                                                         <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
@@ -305,7 +306,8 @@
                                     <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
                                         <div class="course-card">
                                             <div class="course-image">
-                                                <img src="{{ asset('images/kelas/' . strtolower(str_replace(' ', '_', $item->nama_matkul)) . '.jpg') }}"
+                                                <!-- SESUDAH (PERBAIKAN) -->
+                                                    <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
                                                      alt="{{ $item->nama_matkul }}"
                                                      onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
                                                 <div class="course-badge completed">
@@ -314,7 +316,6 @@
                                             </div>
                                             <div class="course-info">
                                                 <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                                <p class="course-instructor">Oleh: {{ $item->nama_mentor ?? 'Instruktur' }}</p>
                                                 @php
                                                     $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
                                                 @endphp
@@ -365,7 +366,8 @@
                                     <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
                                         <div class="course-card">
                                             <div class="course-image">
-                                                <img src="{{ asset('images/kelas/' . strtolower(str_replace(' ', '_', $item->nama_matkul)) . '.jpg') }}"
+                                                <!-- SESUDAH (PERBAIKAN) -->
+                                                    <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
                                                      alt="{{ $item->nama_matkul }}"
                                                      onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
                                                 <div class="course-badge completed">

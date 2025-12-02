@@ -1,3 +1,8 @@
+<!--
+ * Author : Faiz Hazmi Maulana (NRP 502623120)
+ * Desc   : semuaKelas
+ * Date   : 2025-11-30
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>

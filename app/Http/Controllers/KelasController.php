@@ -126,41 +126,66 @@ class KelasController extends Controller
      * Display dynamic class details (Price, Description) from the matkul table
      * GET /kelas/{id}/beli -> Shows the buy landing page
      */
-    public function belikelas($id)
-    {
-        $user = Auth::user();
+   public function belikelas($id)
+{
+    $user = Auth::user();
 
-        if (!$user) {
-            return redirect()->route('login.view')->with('error', 'Silakan login terlebih dahulu.');
-        }
-
-        // Check if user already purchased this class
-        $sudahDibeli = BeliMatkul::where('id_user', $user->id_user)
-            ->where('id_matkul', $id)
-            ->exists();
-
-        if ($sudahDibeli) {
-            return redirect()->route('kelas.show', $id)
-                ->with('info', 'Anda sudah memiliki kelas ini.');
-        }
-
-        // Fetch the Matkul with its Mentor
-        $kelas = Matkul::with('mentor')->findOrFail($id);
-
-        // Dynamic benefits based on materi count
-        $materiCount = Materi::where('id_matkul', $id)->count();
-        $benefits = [
-            'Bimbingan kelas offline',
-            'Akses video pembelajaran',
-            'Silabus & soal terbaru',
-            $materiCount . ' Materi pembelajaran'
-        ];
-
-        return view('belikelasview', [
-            'kelas' => $kelas,
-            'benefits' => $benefits
-        ]);
+    if (!$user) {
+        return redirect()->route('login.view')->with('error', 'Silakan login terlebih dahulu.');
     }
+
+    // ✅ PERBAIKAN: Ambil data dari tabel KELAS, bukan MATKUL
+    $kelas = DB::table('kelas as k')
+        ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+        ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
+        ->where('k.id_kelas', $id)
+        ->select(
+            'k.id_kelas',
+            'k.image_path',
+            'k.harga_asli',
+            'k.preview',
+            'm.id_matkul',
+            'm.nama_matkul',
+            'm.deskripsi',
+            'ment.nama as nama_mentor'
+        )
+        ->first();
+
+    if (!$kelas) {
+        return redirect()->route('kelas.semua')
+            ->with('error', 'Kelas tidak ditemukan.');
+    }
+
+    // Check if user already purchased this class
+    $sudahDibeli = BeliMatkul::where('id_user', $user->id_user)
+        ->where('id_matkul', $kelas->id_matkul)
+        ->exists();
+
+    if ($sudahDibeli) {
+        return redirect()->route('kelas.show', $kelas->id_matkul)
+            ->with('info', 'Anda sudah memiliki kelas ini.');
+    }
+
+    // Dynamic benefits based on materi count
+    $materiCount = Materi::where('id_matkul', $kelas->id_matkul)->count();
+    $benefits = [
+        'Bimbingan kelas offline',
+        'Akses video pembelajaran',
+        'Silabus & soal terbaru',
+        $materiCount . ' Materi pembelajaran'
+    ];
+
+    // Ambil harga_asli dari tabel kelas
+    $harga = $kelas->harga_asli ?? 0;
+    $image = $kelas->image_path;
+
+    return view('belikelasview', [
+        'kelas' => $kelas,
+        'benefits' => $benefits,
+        'harga' => $harga,
+        'image' => $image
+    ]);
+}
 
     /**
      * Show the class detail page (for already purchased classes)
