@@ -159,43 +159,98 @@
             Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
             ====================================================== -->
 
-    <!-- Course Section -->
-    <section class="py-5 section-courses">
+    <!-- Course Section: Jelajahi Kelas Kamu -->
+    <section class="py-5 section-explore-classes">
         <div class="container">
-            <h2 class="section-title">Jelajahi kelas kamu</h2>
-            <div class="row g-4">
-                <!-- Courses List -->
-                <div class="col-md-4">
-                    <div class="course-card">
-                        <div class="course-image">
-                            <i class="bi bi-calculator" style="color: #fff;"></i>
-                        </div>
-                        <div class="course-body">
-                            <span class="course-badge">Teori</span>
-                            <h4>Matematika Dasar</h4>
-                            <p class="text-muted">Pelajari konsep dasar matematika</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- More courses here... -->
+            <div class="section-header-with-link">
+                <h2 class="section-title">Jelajahi kelas kamu</h2>
+                <a href="{{ route('kelas.semua') }}" class="view-more-link">Lihat lebih banyak</a>
             </div>
 
-            <h2 class="section-title">Lihat lebih banyak</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="course-card">
-                        <div class="course-image"
-                            style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                            <i class="bi bi-cloud" style="color: #fff;"></i>
-                        </div>
-                        <div class="course-body">
-                            <span class="course-badge">Praktik</span>
-                            <h4>Termodinamika</h4>
-                            <p class="text-muted">Studi tentang energi dan panas</p>
-                        </div>
+            @php
+                $userClasses = collect();
+                $user = Auth::user();
+
+                if ($user) {
+                    $userId = $user->id_user ?? $user->id;
+
+                    // Get all classes owned by user, ordered by last accessed
+                    $userClasses = DB::table('beli_matkul as bm')
+                        ->join('matkul as m', 'bm.id_matkul', '=', 'm.id_matkul')
+                        ->join('mentor as mt', 'm.id_mentor', '=', 'mt.id_mentor')
+                        ->leftJoin('user_matkul_progress as ump', function($join) use ($userId) {
+                            $join->on('ump.id_matkul', '=', 'm.id_matkul')
+                                 ->where('ump.id_user', '=', $userId);
+                        })
+                        ->where('bm.id_user', '=', $userId)
+                        ->orderByDesc('ump.last_accessed_at')
+                        ->orderByDesc('bm.created_at')
+                        ->select(
+                            'm.id_matkul',
+                            'm.nama_matkul',
+                            'm.deskripsi',
+                            'mt.nama as mentor_name',
+                            'ump.progress_percentage',
+                            'ump.last_accessed_at'
+                        )
+                        ->get();
+                }
+            @endphp
+
+            @if($userClasses->count() > 0)
+                <div class="explore-classes-container">
+                    <!-- Scroll Container -->
+                    <div class="explore-classes-scroll" id="exploreClassesScroll">
+                        @foreach($userClasses as $index => $kelas)
+                            @php
+                                $staticImages = [
+                                    'image/rekomkelas1.png',
+                                    'image/rekomkelas2.png',
+                                    'image/rekomkelas3.png',
+                                ];
+                                $foto = $staticImages[$index % count($staticImages)];
+                            @endphp
+                            <a href="{{ route('media.materi', $kelas->id_matkul) }}" class="explore-card">
+                                <div class="explore-card__image-wrapper">
+                                    <img
+                                        src="{{ asset($foto) }}"
+                                        alt="{{ $kelas->nama_matkul }}"
+                                        class="explore-card__image"
+                                    >
+                                </div>
+                                <div class="explore-card__body">
+                                    <h4 class="explore-card__title">{{ $kelas->nama_matkul }}</h4>
+                                    <p class="explore-card__mentor">
+                                        <span class="explore-card__mentor-dot"></span>
+                                        {{ $kelas->mentor_name ?? 'Mentor' }}
+                                    </p>
+                                    @if($kelas->progress_percentage)
+                                        <div class="explore-card__progress">
+                                            <div class="progress-bar" style="width: {{ $kelas->progress_percentage }}%"></div>
+                                        </div>
+                                        <p class="explore-card__progress-text">{{ $kelas->progress_percentage }}%</p>
+                                    @endif
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <div class="explore-classes-nav">
+                        <button class="explore-nav-btn explore-nav-prev" id="explorePrevBtn" aria-label="Sebelumnya">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <button class="explore-nav-btn explore-nav-next" id="exploreNextBtn" aria-label="Berikutnya">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
+            @else
+                <div class="empty-state">
+                    <p class="empty-state__text">Belum ada kelas</p>
+                    <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-3">Jelajahi Kelas</a>
+                </div>
+            @endif
         </div>
     </section>
 
@@ -447,6 +502,54 @@
         </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Initialize scroll navigation for "Jelajahi Kelas Kamu" section
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollContainer = document.getElementById('exploreClassesScroll');
+            const prevBtn = document.getElementById('explorePrevBtn');
+            const nextBtn = document.getElementById('exploreNextBtn');
+
+            if (!scrollContainer || !prevBtn || !nextBtn) {
+                return; // Exit if elements not found
+            }
+
+            const updateButtonStates = () => {
+                const isAtStart = scrollContainer.scrollLeft <= 0;
+                const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 10;
+
+                prevBtn.disabled = isAtStart;
+                nextBtn.disabled = isAtEnd;
+            };
+
+            const scrollAmount = 250; // pixels to scroll
+
+            prevBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+                setTimeout(updateButtonStates, 300);
+            });
+
+            nextBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+                setTimeout(updateButtonStates, 300);
+            });
+
+            // Update button states on scroll
+            scrollContainer.addEventListener('scroll', updateButtonStates);
+
+            // Initial button state
+            updateButtonStates();
+        });
+
+        // Set current year in footer
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>

@@ -33,16 +33,34 @@ body {
         rgba(10, 10, 18, 0.8),
         rgba(10, 10, 18, 0.4)
     );
-    border-bottom: 1px solid var(--border);
 }
+/* Menghilangkan border pada input dan hanya memberikan border di luar */
 .navbar .form-control {
-    background: var(--surface);
-    border-color: var(--text);
+    background: var(--bg);
+    border: none; /* Menghapus border pada input field */
     color: var(--muted);
 }
+
+.navbar .input-group {
+    border: 1px solid var(--text); /* Menambahkan border di luar input */
+    border-radius: 5px; /* Memberikan border melingkar di luar */
+}
+
 .navbar .form-control::placeholder {
-    color: var(--muted);
+    color: var(--text);
 }
+
+/* Styling untuk ikon pencarian */
+.navbar .input-group-text {
+    background: var(--bg); /* Warna background untuk icon */
+    border: none; /* Menghapus border pada icon */
+    color: var(--text); /* Warna icon */
+}
+
+.navbar .navbar-toggler {
+    border: none;
+}
+
 
 /* Utilities */
 .accent {
@@ -108,10 +126,11 @@ body {
 }
 
 /* ===================== HERO ===================== */
-/*.landing-hero{position:relative;overflow:hidden;background:#000; background: url('/image/circle.png') no-repeat center center}*/
+.landing-hero{position:relative;overflow:hidden;background:#000; background: url('/image/circle.png') no-repeat center center}
 .landing-hero {
     position: relative;
-    padding-top: 40px;
+    padding-top: 10px;
+    margin-top: 20px;
     background: url("/image/circle.png") no-repeat top center;
     background-size: contain; /* Adjust background size as needed */
     z-index: 0; /* Ensure background is behind content */
@@ -183,7 +202,7 @@ body {
     top: 52%;
     left: 54%;
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: 120%;
     height: 100%;
     background: url("/image/landing-orb.png") center/contain no-repeat;
     opacity: 0.95;

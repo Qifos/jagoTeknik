@@ -7,6 +7,7 @@
     --primary-color: #8b5cf6;
     --dark-bg: #0a0a0a;
     --card-bg: #1a1a1a;
+    --panel-purple: #6b2fa0;
 }
 
 body {
@@ -231,7 +232,249 @@ body {
     margin-top: 60px;
 }
 
-/* Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+/* =========================================================
+   Section: Jelajahi Kelas Kamu (User Owned Classes)
+   ====================================================== */
+
+.section-explore-classes {
+    margin-top: 80px;
+    margin-bottom: 60px;
+}
+
+.section-header-with-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.section-header-with-link .section-title {
+    margin: 0;
+    flex: 1;
+}
+
+.view-more-link {
+    color: #a78bfa;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+    margin-left: 2rem;
+}
+
+.view-more-link:hover {
+    color: #c4b5fd;
+    text-decoration: underline;
+}
+
+.explore-classes-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.explore-classes-scroll {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.explore-classes-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.explore-card {
+    flex: 0 0 220px;
+    min-width: 220px;
+    background: linear-gradient(135deg, #6b4fa0 0%, #5a3f8f 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    text-decoration: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.explore-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.explore-card__image-wrapper {
+    width: 100%;
+    padding-top: 56.25%;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.explore-card__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.explore-card__body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.explore-card__title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+    color: #fff;
+}
+
+.explore-card__mentor {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 0.75rem 0;
+}
+
+.explore-card__mentor-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    flex-shrink: 0;
+}
+
+.explore-card__progress {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.35rem;
+}
+
+.explore-card__progress .progress-bar {
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+.explore-card__progress-text {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.65);
+    margin: 0;
+}
+
+.explore-classes-nav {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.explore-nav-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(167, 139, 250, 0.15);
+    color: #a78bfa;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.explore-nav-btn:hover:not(:disabled) {
+    background: rgba(167, 139, 250, 0.3);
+    color: #c4b5fd;
+}
+
+.explore-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(107, 79, 160, 0.1);
+    border-radius: 16px;
+    border: 2px dashed rgba(167, 139, 250, 0.3);
+}
+
+.empty-state__text {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .section-header-with-link {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .view-more-link {
+        margin-left: 0;
+    }
+
+    .explore-card {
+        flex: 0 0 180px;
+        min-width: 180px;
+    }
+
+    .explore-card__title {
+        font-size: 0.9rem;
+    }
+
+    .explore-nav-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .explore-card {
+        flex: 0 0 150px;
+        min-width: 150px;
+    }
+
+    .explore-card__body {
+        padding: 0.75rem;
+    }
+
+    .explore-card__title {
+        font-size: 0.85rem;
+    }
+
+    .explore-card__mentor {
+        font-size: 0.75rem;
+    }
+
+    .explore-nav-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+}
+
 /* =========================================================
    Section: Kelas yang cocok buat kamu
    ====================================================== */
@@ -334,108 +577,6 @@ body {
   }
 }
 
-/* Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-/* =========================================================
-   Section: Kelas yang cocok buat kamu
-   ====================================================== */
-
-.section-match {
-  margin-top: 100px;
-}
-
-.match-card {
-  background: linear-gradient(0deg,#60376B 0%, #AB00C1 100%);
-  border-radius: 24px;
-  padding: 1.5rem;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
-}
-
-.match-card__top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  opacity: 0.9;
-  margin-bottom: 0.75rem;
-}
-
-.match-card__image-wrapper {
-  border-radius: 18px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  background: rgba(0, 0, 0, 0.25);
-  min-height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.match-card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.placeholder-image {
-  width: 100%;
-  height: 100%;
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.7;
-}
-
-.match-card__body {
-  margin-bottom: 1rem;
-}
-
-.match-card__title {
-  font-size: 1.05rem;
-  margin-bottom: 0.35rem;
-}
-
-.match-card__desc {
-  font-size: 0.85rem;
-  color: #f9fafb;
-  opacity: 0.85;
-}
-
-.match-card__footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
-}
-
-.match-card__mentor {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.match-card__mentor-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
-}
-
-.match-card__price {
-  font-weight: 600;
-}
-
-@media (max-width: 767.98px) {
-  .section-match {
-    margin-top: 48px;
-  }
-}
 /* Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
 /* =========================================================
    Section: Kelas yang cocok buat kamu

@@ -25,7 +25,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container py-2">
-            <a class="navbar-brand fw-bold d-flex align-items-center gap-2">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-0">
                 <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
             </a>
 
@@ -39,10 +39,10 @@
                     <li class="nav-item d-none d-lg-block">
                         <form class="d-flex" role="search" onsubmit="return false;">
                             <div class="input-group">
-                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
-                                        class="bi bi-search"></i></span>
                                 <input class="form-control border-start-1" type="search"
                                     placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
@@ -57,7 +57,7 @@
     </nav>
 
     <!-- LANDING -->
-    <header class="landing-hero pt-5">
+    <header class="landing-hero pt-9">
         <div class="container position-relative" style="z-index:1;">
             <div class="row align-items-center min-vh-100 pb-5 pb-lg-0">
 
@@ -390,4 +390,5 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

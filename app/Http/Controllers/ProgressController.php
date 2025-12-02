@@ -43,10 +43,12 @@ class ProgressController extends Controller
                 ['id_user' => $userId, 'id_materi' => $materiId],
                 [
                     'id_matkul' => $materi->id_matkul,
+                    'status' => 'in_progress',
                     'video_watched_duration' => $validated['watched_duration'],
                     'video_total_duration' => $validated['total_duration'],
                     'video_completed' => $validated['completed'],
                     'last_accessed_at' => now(),
+                    'started_at' => $progress->started_at ?? now(), // Set started_at only on first access
                 ]
             );
 
@@ -97,9 +99,11 @@ class ProgressController extends Controller
                 ['id_user' => $userId, 'id_materi' => $materiId],
                 [
                     'id_matkul' => $materi->id_matkul,
+                    'status' => 'in_progress',
                     'scroll_depth' => $validated['scroll_depth'],
                     'content_read' => $validated['content_read'],
                     'last_accessed_at' => now(),
+                    'started_at' => $progress->started_at ?? now(), // Set started_at only on first access
                 ]
             );
 
@@ -279,13 +283,23 @@ class ProgressController extends Controller
             $progressPercentage = round(($completedMateri / $totalMateri) * 100);
         }
 
+        // Get earliest started_at from all materi for this matkul
+        $earliestStart = UserMateriProgress::where('id_user', $userId)
+            ->where('id_matkul', $matkulId)
+            ->whereNotNull('started_at')
+            ->orderBy('started_at', 'asc')
+            ->first()
+            ->started_at ?? now();
+
         // Update or create progress record
         $matkulProgress = UserMatkulProgress::updateOrCreate(
             ['id_user' => $userId, 'id_matkul' => $matkulId],
             [
                 'progress_percentage' => $progressPercentage,
                 'status' => $progressPercentage === 100 ? 'selesai' : 'di_ikuti',
+                'started_at' => $earliestStart,
                 'completed_at' => $progressPercentage === 100 ? now() : null,
+                'last_accessed_at' => now(),
             ]
         );
 
