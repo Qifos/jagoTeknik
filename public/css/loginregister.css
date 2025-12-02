@@ -115,11 +115,13 @@ body {
 }
 
 .login-right {
-    flex: 0 0 500px;
+    flex: 0 0 600px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 28px;
+    background: none;
+    color: none;
 }
 
 .auth-panel,
@@ -127,10 +129,10 @@ body {
     width: 100%;
     max-width: 520px;
     margin: 0 auto;
-    background: var(--panel);
-    border-radius: var(--radius-panel);
+    background: none;
+    border-radius: var(--bg);
     padding: 28px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    box-shadow: none;
 }
 
 .title {
@@ -156,7 +158,7 @@ body {
     gap: 0;
     margin-bottom: 2rem;
     background: rgba(110, 65, 226, 0.12);
-    border-radius: 12px;
+    border-radius: 50px;
     padding: 4px;
     border: 1px solid var(--border);
 }
@@ -168,7 +170,7 @@ body {
     color: var(--muted);
     font-weight: 600;
     font-size: 1rem;
-    border-radius: 10px;
+    border-radius: 50px;
     transition: 0.2s;
     cursor: pointer;
     text-decoration: none;
@@ -187,7 +189,7 @@ body {
 }
 .form-control {
     background: var(--surface);
-    border: 1px solid var(--border);
+    border: 1px solid var(--brand-1);
     color: var(--text);
     padding: 0.9rem 1rem;
     border-radius: var(--radius-input);

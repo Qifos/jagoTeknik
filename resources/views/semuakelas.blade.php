@@ -66,10 +66,9 @@
     <section class="main-section">
         <div class="container py-4">
             <!-- Back Button -->
-            <button class="btn btn-back mb-4">
-                <i class="bi bi-chevron-left"></i> Back
-            </button>
-
+            <a class="btn btn-back mb-4" href="{{ url('/homepage') }}">
+                 <i class="bi bi-chevron-left"></i> Back
+            </a>
             <!-- Page Title -->
             <h1 class="page-title mb-4 text-center">Kelas Jago Teknik</h1>
 
