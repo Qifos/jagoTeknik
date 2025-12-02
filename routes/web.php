@@ -58,6 +58,9 @@ Route::get('/kelas/{id}/beli', [KelasController::class, 'belikelas'])->name('kel
 // Learning Page (Access content after purchase)
 Route::get('/kelas/{id}/belajar', [KelasController::class, 'showKelasDetail'])->name('kelas.detail.beli');
 
+// Class Preview from Jadwal
+Route::get('/kelas/{id_kelas}/preview', [KelasController::class, 'preview'])->name('kelas.preview');
+
 // API for progress tracking
 Route::get('/api/progress-kelas/{id_kelas}', [KelasController::class, 'getProgressKelas'])->name('api.kelas.progress');
 

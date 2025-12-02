@@ -278,6 +278,68 @@ class KelasController extends Controller
     }
 
     /**
+     * Preview class page from Jadwal view
+     * Shows class details with video preview
+     * GET /kelas/{id_kelas}/preview
+     */
+    public function preview($id_kelas)
+    {
+        // Fetch kelas with related matkul and mentor data
+        $kelas = DB::table('kelas as k')
+            ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+            ->leftJoin('mentor as mt', 'm.id_mentor', '=', 'mt.id_mentor')
+            ->where('k.id_kelas', $id_kelas)
+            ->select(
+                'k.id_kelas',
+                'k.image_path',
+                'k.deskripsi',
+                'k.tempat',
+                'm.id_matkul',
+                'm.nama_matkul',
+                'm.deskripsi as matkul_deskripsi',
+                'mt.nama as mentor_nama'
+            )
+            ->first();
+
+        if (!$kelas) {
+            return redirect()->route('jadwal.index')
+                ->with('error', 'Kelas tidak ditemukan.');
+        }
+
+        // Get nearest jadwal for this kelas
+        $today = \Carbon\Carbon::now()->toDateString();
+        $currentTime = \Carbon\Carbon::now()->format('H:i:s');
+
+        $jadwal = DB::table('jadwal as j')
+            ->where('j.id_kelas', $id_kelas)
+            ->where(function ($query) use ($today, $currentTime) {
+                $query->where('j.tanggal', '>', $today)
+                      ->orWhere(function ($q) use ($today, $currentTime) {
+                          $q->where('j.tanggal', '=', $today)
+                            ->where('j.jam_mulai', '>=', $currentTime);
+                      });
+            })
+            ->orderBy('j.tanggal', 'asc')
+            ->orderBy('j.jam_mulai', 'asc')
+            ->select('j.id_jadwal', 'j.tanggal', 'j.jam_mulai', 'j.jam_selesai')
+            ->first();
+
+        if (!$jadwal) {
+            return redirect()->route('jadwal.index')
+                ->with('error', 'Jadwal kelas tidak ditemukan.');
+        }
+
+        // Get matkul with mentor and jurusan
+        $matkul = Matkul::with(['mentor', 'jurusan'])->find($kelas->id_matkul);
+
+        return view('kelaspreview', [
+            'kelas' => $kelas,
+            'jadwal' => $jadwal,
+            'matkul' => $matkul
+        ]);
+    }
+
+    /**
      * Default index for compatibility with existing routes
      */
     public function index()

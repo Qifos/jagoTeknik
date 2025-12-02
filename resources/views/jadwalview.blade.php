@@ -206,45 +206,71 @@
     <!-- Next classes -->
     <h2 class="display-6 headline mt-5 mb-4">Jadwal Kelas Selanjutnya</h2>
 
+    @php
+        $nextClasses = collect();
+        $now = Carbon::now();
+        $today = $now->toDateString();
+        $currentTime = $now->format('H:i:s');
+
+        // Get 3 nearest classes that haven't passed yet
+        $nextClasses = DB::table('jadwal as j')
+            ->join('kelas as k', 'j.id_kelas', '=', 'k.id_kelas')
+            ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+            ->where(function ($q) use ($today, $currentTime) {
+                $q->where('j.tanggal', '>', $today)
+                  ->orWhere(function ($q2) use ($today, $currentTime) {
+                      $q2->where('j.tanggal', '=', $today)
+                         ->where('j.jam_mulai', '>=', $currentTime);
+                  });
+            })
+            ->orderBy('j.tanggal', 'asc')
+            ->orderBy('j.jam_mulai', 'asc')
+            ->limit(3)
+            ->select(
+                'j.id_jadwal',
+                'j.tanggal',
+                'j.jam_mulai',
+                'j.jam_selesai',
+                'k.id_kelas',
+                'k.deskripsi',
+                'k.tempat',
+                'k.image_path',
+                'm.id_matkul',
+                'm.nama_matkul'
+            )
+            ->get();
+    @endphp
+
     <div class="row g-4">
-      <div class="col-md-6 col-lg-4">
-        <div class="course-card p-4 h-100 d-flex flex-column">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="thumb"><i class="bi bi-hexagon fs-2 text-secondary"></i></div>
-            <div>
-              <h5 class="mb-1">Kalkulus 1</h5>
-              <span class="badge badge-cat">Matematika</span>
+        @forelse($nextClasses as $kelas)
+            <div class="col-md-6 col-lg-4">
+                <a href="{{ route('kelas.preview', $kelas->id_kelas) }}" class="text-decoration-none">
+                    <div class="course-card p-4 h-100 d-flex flex-column">
+                        <div class="d-flex align-items-center gap-3 mb-3">
+                            <div class="thumb">
+                                <i class="bi bi-hexagon fs-2 text-secondary"></i>
+                            </div>
+                            <div>
+                                <h5 class="mb-1">{{ $kelas->nama_matkul }}</h5>
+                                <span class="badge badge-cat">{{ Carbon::parse($kelas->tanggal)->format('d M Y') }}</span>
+                            </div>
+                        </div>
+                        <p class="text-secondary mb-0">
+                            {{ \Illuminate\Support\Str::limit($kelas->deskripsi, 50, '...') }}
+                        </p>
+                        <div class="mt-auto pt-3 border-top border-secondary">
+                            <small class="text-muted">
+                                <i class="bi bi-clock me-2"></i>{{ Carbon::parse($kelas->jam_mulai)->format('H:i') }} - {{ Carbon::parse($kelas->jam_selesai)->format('H:i') }}
+                            </small>
+                        </div>
+                    </div>
+                </a>
             </div>
-          </div>
-          <p class="text-secondary mb-0">Belajar kalkulus untuk meraih perhitungan yang…</p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="course-card p-4 h-100 d-flex flex-column">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="thumb"><i class="bi bi-snow fs-2 text-secondary"></i></div>
-            <div>
-              <h5 class="mb-1">Fisika 1</h5>
-              <span class="badge badge-cat">Fisika</span>
+        @empty
+            <div class="col-12">
+                <p class="text-center text-muted">Belum ada jadwal kelas yang akan datang.</p>
             </div>
-          </div>
-          <p class="text-secondary mb-0">Pahami dasar-dasar dari hukum fisika, dan temuk…</p>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="course-card p-4 h-100 d-flex flex-column">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="thumb"><i class="bi bi-grid-1x2 fs-2 text-secondary"></i></div>
-            <div>
-              <h5 class="mb-1">Aljabar Linier</h5>
-              <span class="badge badge-cat">Matematika</span>
-            </div>
-          </div>
-          <p class="text-secondary mb-0">Pelajari dasar-dasar aljabar linier dan perhit…</p>
-        </div>
-      </div>
+        @endforelse
     </div>
   </main>
 
