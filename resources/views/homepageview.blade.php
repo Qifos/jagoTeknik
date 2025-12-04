@@ -159,100 +159,113 @@
             Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
             ====================================================== -->
 
-    <!-- Course Section: Jelajahi Kelas Kamu -->
-    <section class="py-5 section-explore-classes">
-        <div class="container">
-            <div class="section-header-with-link">
-                <h2 class="section-title">Jelajahi kelas kamu</h2>
-                <a href="{{ route('kelas.semua') }}" class="view-more-link">Lihat lebih banyak</a>
-            </div>
+           <!-- ✅ JELAJAHI KELAS KAMU SECTION - SESUAI GAMBAR KIRI -->
+<section class="py-5 section-explore-classes">
+    <div class="container">
+        <div class="section-header-with-link">
+            <h2 class="section-title">Jelajahi kelas kamu</h2>
+            <a href="{{ route('kelas.semua') }}" class="view-more-link">Lihat lebih banyak</a>
+        </div>
 
             @php
-                $userClasses = collect();
-                $user = Auth::user();
+            $userClasses = collect();
+            $user = Auth::user();
 
-                if ($user) {
-                    $userId = $user->id_user ?? $user->id;
+            if ($user) {
+                $userId = $user->id_user ?? $user->id;
 
-                    // Get all classes owned by user, ordered by last accessed
-                    $userClasses = DB::table('beli_matkul as bm')
-                        ->join('matkul as m', 'bm.id_matkul', '=', 'm.id_matkul')
-                        ->join('mentor as mt', 'm.id_mentor', '=', 'mt.id_mentor')
-                        ->leftJoin('user_matkul_progress as ump', function($join) use ($userId) {
-                            $join->on('ump.id_matkul', '=', 'm.id_matkul')
-                                 ->where('ump.id_user', '=', $userId);
-                        })
-                        ->where('bm.id_user', '=', $userId)
-                        ->orderByDesc('ump.last_accessed_at')
-                        ->orderByDesc('bm.created_at')
-                        ->select(
-                            'm.id_matkul',
-                            'm.nama_matkul',
-                            'm.deskripsi',
-                            'mt.nama as mentor_name',
-                            'ump.progress_percentage',
-                            'ump.last_accessed_at'
-                        )
-                        ->get();
-                }
-            @endphp
+                // Get all classes owned by user, ordered by last accessed
+                $userClasses = DB::table('beli_matkul as bm')
+                    ->join('matkul as m', 'bm.id_matkul', '=', 'm.id_matkul')
+                    ->join('mentor as mt', 'm.id_mentor', '=', 'mt.id_mentor')
+                    ->join('kelas as k', 'k.id_matkul', '=', 'm.id_matkul')
+                    ->leftJoin('user_matkul_progress as ump', function($join) use ($userId) {
+                        $join->on('ump.id_matkul', '=', 'm.id_matkul')
+                            ->where('ump.id_user', '=', $userId);
+                    })
+                    ->where('bm.id_user', '=', $userId)
+                    ->orderByDesc('ump.last_accessed_at')
+                    ->orderByDesc('bm.created_at')
+                    ->select(
+                        'm.id_matkul',
+                        'k.id_kelas',
+                        'm.nama_matkul',
+                        'k.image_path',
+                        'mt.nama as mentor_name',
+                        'ump.progress_percentage',
+                        'ump.last_accessed_at'
+                    )
+                    ->limit(10)
+                    ->get();
+            }
+        @endphp
 
-            @if($userClasses->count() > 0)
-                <div class="explore-classes-container">
-                    <!-- Scroll Container -->
-                    <div class="explore-classes-scroll" id="exploreClassesScroll">
-                        @foreach($userClasses as $index => $kelas)
-                            @php
-                                $staticImages = [
-                                    'image/rekomkelas1.png',
-                                    'image/rekomkelas2.png',
-                                    'image/rekomkelas3.png',
-                                ];
-                                $foto = $staticImages[$index % count($staticImages)];
-                            @endphp
-                            <a href="{{ route('media.materi', $kelas->id_matkul) }}" class="explore-card">
-                                <div class="explore-card__image-wrapper">
-                                    <img
-                                        src="{{ asset($foto) }}"
-                                        alt="{{ $kelas->nama_matkul }}"
-                                        class="explore-card__image"
-                                    >
+
+        @if($userClasses->count() > 0)
+            <div class="explore-classes-container">
+                <!-- Scroll Container -->
+                <div class="explore-classes-scroll" id="exploreClassesScroll">
+                    @foreach($userClasses as $kelas)
+                        <a href="{{ route('media.materi', $kelas->id_matkul) }}" class="explore-card-final">
+                            <!-- IMAGE SECTION dengan LABEL KATEGORI -->
+                            <div class="explore-card-final__image-wrapper">
+                                <img
+                                    src="{{ $kelas->image_path ? asset($kelas->image_path) : asset('images/kelas/default.jpg') }}"
+                                    alt="{{ $kelas->nama_matkul }}"
+                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'"
+                                >
+                                <!-- Label Kategori -->
+                                <span class="explore-card-final__category">{{ $kelas->nama_jurusan ?? 'Teknik' }}</span>
+                            </div>
+
+                            <!-- CONTENT SECTION -->
+                            <div class="explore-card-final__content">
+                                <!-- Kelas Name -->
+                                <h4 class="explore-card-final__title">{{ $kelas->nama_matkul }}</h4>
+
+                                <!-- Subtitle/Chapter Info -->
+                                <p class="explore-card-final__subtitle">
+                                    @php
+                                        $chapterNum = intval(($kelas->progress_percentage ?? 0) / 14.28) + 1;
+                                    @endphp
+                                    Bagian {{ $chapterNum }} - Pembelajaran
+                                </p>
+
+                                <!-- Mentor Info -->
+                                <div class="explore-card-final__mentor">
+                                    <span class="explore-card-final__dot"></span>
+                                    <span>{{ $kelas->mentor_name ?? 'Mentor' }}</span>
                                 </div>
-                                <div class="explore-card__body">
-                                    <h4 class="explore-card__title">{{ $kelas->nama_matkul }}</h4>
-                                    <p class="explore-card__mentor">
-                                        <span class="explore-card__mentor-dot"></span>
-                                        {{ $kelas->mentor_name ?? 'Mentor' }}
-                                    </p>
-                                    @if($kelas->progress_percentage)
-                                        <div class="explore-card__progress">
-                                            <div class="progress-bar" style="width: {{ $kelas->progress_percentage }}%"></div>
-                                        </div>
-                                        <p class="explore-card__progress-text">{{ $kelas->progress_percentage }}%</p>
-                                    @endif
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
 
-                    <!-- Navigation Arrows -->
-                    <div class="explore-classes-nav">
-                        <button class="explore-nav-btn explore-nav-prev" id="explorePrevBtn" aria-label="Sebelumnya">
-                            <i class="bi bi-chevron-left"></i>
-                        </button>
-                        <button class="explore-nav-btn explore-nav-next" id="exploreNextBtn" aria-label="Berikutnya">
-                            <i class="bi bi-chevron-right"></i>
-                        </button>
-                    </div>
+                                <!-- Progress -->
+                                <div class="explore-card-final__progress">
+                                    Lesson {{ $kelas->progress_percentage ? intval($kelas->progress_percentage / 14.28) : 0 }} of 7
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-            @else
-                <div class="empty-state">
-                    <p class="empty-state__text">Belum ada kelas</p>
-                    <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-3">Jelajahi Kelas</a>
+
+                <!-- Navigation Arrows -->
+                <div class="explore-classes-nav-final">
+                    <button class="explore-nav-btn-final explore-nav-prev-final" id="explorePrevBtn" aria-label="Sebelumnya">
+                        <i class="bi bi-chevron-left"></i>
+                    </button>
+                    <button class="explore-nav-btn-final explore-nav-next-final" id="exploreNextBtn" aria-label="Berikutnya">
+                        <i class="bi bi-chevron-right"></i>
+                    </button>
                 </div>
-            @endif
-        </div>
-    </section>
+            </div>
+        @else
+            <div class="empty-state-final">
+                <i class="bi bi-book" style="font-size: 3rem; color: #6c757d; margin-bottom: 1rem;"></i>
+                <p class="empty-state-final__text">Belum ada kelas yang diikuti</p>
+                <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-3">Jelajahi Kelas</a>
+            </div>
+        @endif
+    </div>
+</section>
+<!-- ✅ AKHIR JELAJAHI KELAS KAMU -->
 
     <!--Bagian Ni Kadek Adelia Paramita Putri (5026231196)-->
     <!-- Rekomendasi: Kelas yang cocok buat kamu -->

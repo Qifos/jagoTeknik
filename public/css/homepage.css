@@ -232,8 +232,12 @@ body {
     margin-top: 60px;
 }
 
+/*=========================================================
+   ✅ Section: Jelajahi Kelas Kamu (IMPROVED - SESUAI GAMBAR)
+   ====================================================== */
+
 /* =========================================================
-   Section: Jelajahi Kelas Kamu (User Owned Classes)
+   ✅ Section: Jelajahi Kelas Kamu (SESUAI GAMBAR KIRI)
    ====================================================== */
 
 .section-explore-classes {
@@ -245,7 +249,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .section-header-with-link .section-title {
@@ -275,8 +279,8 @@ body {
 
 .explore-classes-scroll {
     display: flex;
-    gap: 1.5rem;
-    padding: 1rem 0;
+    gap: 2rem;
+    padding: 0.5rem 0;
     overflow-x: auto;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
@@ -288,108 +292,124 @@ body {
     display: none;
 }
 
-.explore-card {
-    flex: 0 0 220px;
-    min-width: 220px;
-    background: linear-gradient(135deg, #6b4fa0 0%, #5a3f8f 100%);
-    border-radius: 16px;
+/* ✅ CARD - SESUAI GAMBAR KIRI */
+.explore-card-final {
+    flex: 0 0 260px;
+    min-width: 260px;
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border-radius: 22px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     color: #fff;
     text-decoration: none;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s ease;
+    height: 100%;
 }
 
-.explore-card:hover {
+.explore-card-final:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 16px 48px rgba(139, 92, 246, 0.4);
 }
 
-.explore-card__image-wrapper {
-    width: 100%;
-    padding-top: 56.25%;
+/* ✅ IMAGE WRAPPER dengan LABEL KATEGORI */
+.explore-card-final__image-wrapper {
     position: relative;
+    width: 100%;
+    height: 240px;
     overflow: hidden;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.1);
 }
 
-.explore-card__image {
-    position: absolute;
-    top: 0;
-    left: 0;
+.explore-card-final__image-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
-.explore-card__body {
-    padding: 1rem;
+/* ✅ KATEGORI LABEL */
+.explore-card-final__category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ CONTENT SECTION */
+.explore-card-final__content {
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
+    gap: 0.8rem;
     flex: 1;
 }
 
-.explore-card__title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin: 0 0 0.5rem 0;
+/* ✅ TITLE */
+.explore-card-final__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0;
     line-height: 1.3;
     color: #fff;
+    letter-spacing: -0.3px;
 }
 
-.explore-card__mentor {
+/* ✅ SUBTITLE */
+.explore-card-final__subtitle {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ✅ MENTOR */
+.explore-card-final__mentor {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.8rem;
+    gap: 0.6rem;
+    font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.85);
-    margin: 0 0 0.75rem 0;
+    margin: 0.5rem 0 0 0;
 }
 
-.explore-card__mentor-dot {
-    width: 6px;
-    height: 6px;
+.explore-card-final__dot {
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.8);
     flex-shrink: 0;
 }
 
-.explore-card__progress {
-    width: 100%;
-    height: 3px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 2px;
-    overflow: hidden;
-    margin-bottom: 0.35rem;
+/* ✅ PROGRESS TEXT */
+.explore-card-final__progress {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.3rem;
 }
 
-.explore-card__progress .progress-bar {
-    height: 100%;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 2px;
-    transition: width 0.3s ease;
-}
-
-.explore-card__progress-text {
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.65);
-    margin: 0;
-}
-
-.explore-classes-nav {
+/* ✅ NAVIGATION BUTTONS */
+.explore-classes-nav-final {
     display: flex;
     gap: 0.75rem;
+    justify-content: flex-end;
     margin-top: 1.5rem;
 }
 
-.explore-nav-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(167, 139, 250, 0.15);
+.explore-nav-btn-final {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1.5px solid rgba(167, 139, 250, 0.3);
+    background: rgba(167, 139, 250, 0.08);
     color: #a78bfa;
     cursor: pointer;
     display: flex;
@@ -397,32 +417,37 @@ body {
     justify-content: center;
     transition: all 0.3s ease;
     font-size: 1.2rem;
+    font-weight: 600;
 }
 
-.explore-nav-btn:hover:not(:disabled) {
-    background: rgba(167, 139, 250, 0.3);
+.explore-nav-btn-final:hover:not(:disabled) {
+    background: rgba(167, 139, 250, 0.15);
+    border-color: rgba(167, 139, 250, 0.5);
     color: #c4b5fd;
+    transform: scale(1.05);
 }
 
-.explore-nav-btn:disabled {
-    opacity: 0.3;
+.explore-nav-btn-final:disabled {
+    opacity: 0.2;
     cursor: not-allowed;
 }
 
-.empty-state {
+/* ✅ EMPTY STATE */
+.empty-state-final {
     text-align: center;
-    padding: 3rem 2rem;
-    background: rgba(107, 79, 160, 0.1);
+    padding: 4rem 2rem;
+    background: rgba(107, 79, 160, 0.08);
     border-radius: 16px;
-    border: 2px dashed rgba(167, 139, 250, 0.3);
+    border: 2px dashed rgba(167, 139, 250, 0.25);
 }
 
-.empty-state__text {
+.empty-state-final__text {
     font-size: 1.1rem;
     color: rgba(255, 255, 255, 0.6);
     margin: 0;
 }
 
+/* ✅ RESPONSIVE */
 @media (max-width: 768px) {
     .section-header-with-link {
         flex-direction: column;
@@ -434,43 +459,60 @@ body {
         margin-left: 0;
     }
 
-    .explore-card {
-        flex: 0 0 180px;
-        min-width: 180px;
+    .explore-classes-scroll {
+        gap: 1.5rem;
     }
 
-    .explore-card__title {
-        font-size: 0.9rem;
+    .explore-card-final {
+        flex: 0 0 220px;
+        min-width: 220px;
     }
 
-    .explore-nav-btn {
-        width: 36px;
-        height: 36px;
+    .explore-card-final__image-wrapper {
+        height: 200px;
+    }
+
+    .explore-card-final__title {
+        font-size: 1.1rem;
+    }
+
+    .explore-card-final__content {
+        padding: 1.25rem;
+        gap: 0.6rem;
+    }
+
+    .explore-nav-btn-final {
+        width: 40px;
+        height: 40px;
         font-size: 1rem;
     }
 }
 
 @media (max-width: 576px) {
-    .explore-card {
-        flex: 0 0 150px;
-        min-width: 150px;
+    .explore-card-final {
+        flex: 0 0 180px;
+        min-width: 180px;
     }
 
-    .explore-card__body {
-        padding: 0.75rem;
+    .explore-card-final__image-wrapper {
+        height: 160px;
     }
 
-    .explore-card__title {
+    .explore-card-final__title {
+        font-size: 1rem;
+    }
+
+    .explore-card-final__subtitle {
         font-size: 0.85rem;
     }
 
-    .explore-card__mentor {
-        font-size: 0.75rem;
+    .explore-card-final__content {
+        padding: 1rem;
     }
 
-    .explore-nav-btn {
-        width: 32px;
-        height: 32px;
+    .explore-nav-btn-final {
+        width: 36px;
+        height: 36px;
         font-size: 0.9rem;
     }
 }
