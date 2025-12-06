@@ -336,39 +336,17 @@ body {
             color: #888 !important;
         }
 
-/* Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-/* =========================================================
-   Section: Kelas yang cocok buat kamu
-   ====================================================== */
+        .course-card-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
 
-/* Posisi badge di pojok kanan atas gambar (khusus wishlist) */
-.course-card .wishlist-menu {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
+        .course-card-link:hover .course-card {
+            transform: translateY(-4px);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        }
 
-/* Lingkaran putih agak abu/transparan */
-.wishlist-menu-button {
-    all: unset;                     /* buang style default button */
-    cursor: pointer;
-    width: 26px;
-    height: 26px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.85);  /* putih sedikit transparan */
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-/* Icon 3 titik vertikal di dalamnya */
-.wishlist-menu-button i {
-    font-size: 1.1rem;
-    color: #ffffff;                    /* abu tua, biar nggak terlalu kontras */
-}
 
-/* Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-/* =========================================================
-   Section: Kelas yang cocok buat kamu
-   ====================================================== */

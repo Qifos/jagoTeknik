@@ -144,6 +144,9 @@
                                 <div class="text-secondary mb-2">
                                     {{ $jadwalTerdekat->nama_mentor ?? 'Mentor belum ditentukan' }}
                                 </div>
+                                <div class="text-secondary mb-2">
+                                    {{ $jadwalTerdekat->tanggal ?? '-' }}
+                                </div>
                                 <div class="fs-6 mb-1">
                                     {{ \Carbon\Carbon::parse($jadwalTerdekat->jam_mulai)->format('H:i') }}
                                     — {{ \Carbon\Carbon::parse($jadwalTerdekat->jam_selesai)->format('H:i') }}
@@ -151,6 +154,7 @@
                                 <div class="fs-5 fw-bold">
                                     {{ $jadwalTerdekat->tempat ?? 'Ruang belum ditentukan' }}
                                 </div>
+
                             @else
                                 <h5 class="mb-1">Belum ada jadwal terdekat</h5>
                                 <div class="text-secondary mb-2">
