@@ -36,6 +36,7 @@ class User extends Authenticatable
         'id_jurusan', 'nama', 'username', 'email',
         'password', 'no_hp', 'angkatan', 'tanggal_lahir',
         'jenis_kelamin', 'foto_profil', 'otp', 'is_active',
+        'avatar', 'dark_mode', 'messenger_color', 'active_status', 'last_seen',
     ];
 
 

@@ -104,13 +104,18 @@ Route::resource('jadwal', JadwalController::class)->parameters(['jadwal' => 'jad
 Route::get('/api/jadwal/bulan', [JadwalController::class, 'byMonth'])->name('jadwal.byMonth');
 
 
-// 5. CHAT ROUTES
-// --------------------------------------------
-Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
-Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
-Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
-Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
-
+// // 5. CHAT ROUTES
+// // --------------------------------------------
+// Route::get('/livechat', [ChatController::class, 'index'])->name('chat.index');
+// Route::get('/api/chat/rooms', [ChatController::class, 'rooms'])->name('chat.rooms');
+// Route::post('/api/chat/send', [ChatController::class, 'send'])->name('chat.send');
+// Route::post('/api/chat/mark-read', [ChatController::class, 'markRead'])->name('chat.markRead');
+Route::middleware(['web','auth'])->group(function () {
+    Route::get('/chat', function () {
+        // simple aja: langsung lempar ke Chatify
+        return redirect()->route('chatify');
+    })->name('chat.index');
+});
 
 // ============================================
 // UTILITIES & ACTIONS
