@@ -392,109 +392,102 @@
                     @endif
                 </div>
 
-                <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-                =========================================================
-                Section: Wishlist Kelas
-                ====================================================== -->
-                <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+            <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+            =========================================================
+            Section: Tab Wishlist - View Semua Kelas
+            ====================================================== -->
 
-                    @php
-                        $user = Auth::user();
-                        $wishlistItems = collect();
+            <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
 
-                        if ($user) {
-                            $userId = $user->id_user ?? $user->id;
+                @php
+                    $user = Auth::user();
+                    $wishlistItems = collect();
 
-                            // Ambil wishlist user + jangan tampilkan kelas yang sudah dibeli
-                            $wishlistItems = DB::table('wishlist_kelas as w')
-                                ->join('kelas as k', 'w.id_kelas', '=', 'k.id_kelas')
-                                ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
-                                ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
-                                ->leftJoin('beli_matkul as b', function ($join) use ($userId) {
-                                    $join->on('b.id_matkul', '=', 'm.id_matkul')
-                                         ->where('b.id_user', '=', $userId);
-                                })
-                                ->where('w.id_user', $userId)
-                                ->whereNull('b.id_beli_matkul')
-                                ->select(
-                                    'k.id_kelas',
-                                    'm.nama_matkul',
-                                    'm.deskripsi',
-                                    'm.thumbnail',
-                                    'k.preview',
-                                    'k.harga_asli',
-                                    'ment.nama as nama_mentor'
-                                )
-                                ->get();
-                        }
+                    if ($user) {
+                        $userId = $user->id_user ?? $user->id;
 
-                        $showEmptyState = !$user || $wishlistItems->isEmpty();
-                    @endphp
+                        $wishlistItems = DB::table('wishlist_kelas as w')
+                            ->join('kelas as k', 'w.id_kelas', '=', 'k.id_kelas')
+                            ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+                            ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
+                            ->leftJoin('beli_matkul as b', function ($join) use ($userId) {
+                                $join->on('b.id_matkul', '=', 'm.id_matkul')
+                                     ->where('b.id_user', '=', $userId);
+                            })
+                            ->where('w.id_user', $userId)
+                            // tetap exclude kelas yang sudah dibeli
+                            ->whereNull('b.id_beli_matkul')
+                            ->select(
+                                'k.id_kelas',
+                                'm.nama_matkul',
+                                'k.image_path'
+                            )
+                            ->get();
+                    }
 
-                    <div class="section-header mb-3">
-                        <h2 class="section-title">Kelas yang mau diikuti</h2>
-                        <p class="section-subtitle">
-                            Lihat daftar kelas yang sudah kamu masukkan ke wishlist di JagoTeknik.
-                        </p>
-                    </div>
+                    $showEmptyState = !$user || $wishlistItems->isEmpty();
+                @endphp
 
-                    {{-- ====================== KOSONG: HANYA TEKS ====================== --}}
+                <div class="section-header mb-3">
+                    <h2 class="section-title">Kelas yang mau diikuti</h2>
+                    <p class="section-subtitle">
+                        Lihat daftar kelas yang sudah kamu masukkan ke wishlist di JagoTeknik.
+                    </p>
+                </div>
+
+                <div class="row g-4">
+
                     @if($showEmptyState)
-                        <div class="mt-5 text-center">
-                            <p class="text-muted mb-2" style="font-size: 1.1rem;">
-                                Belum ada kelas yang kamu wishlist.
-                            </p>
-                            <p class="mb-3">
-                                Coba eksplor dulu tab <strong>“Semua”</strong> dan tambahkan kelas yang kamu suka. 😊
-                            </p>
+                        <div class="col-12">
+                            <div class="empty-wishlist-box text-center py-5">
+                                <h3 class="empty-title">Belum ada kelas di wishlist</h3>
+                                <p class="empty-subtitle">Tambah kelas dari tab "Semua".</p>
+                            </div>
                         </div>
-
-                    {{-- ====================== ADA DATA: TAMPILKAN CARD WISHLIST ====================== --}}
                     @else
-                        <div class="row g-4 mt-2">
-                            @foreach($wishlistItems as $item)
-                                <div class="col-lg-3 col-md-4 col-sm-6">
+                        @foreach($wishlistItems as $kelas)
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+
+                                {{-- Dari wishlist: klik card langsung ke halaman detail / pembelian --}}
+                                <a href="{{ route('kelas.beli', $kelas->id_kelas) }}" class="course-card-link">
+
                                     <div class="course-card">
                                         <div class="course-image">
-                                            {{-- sementara 1 gambar placeholder, bebas mau ganti --}}
-                                            @php
-                                                $thumb = $item->thumbnail; // URL dari kolom matkul.thumbnail
-                                            @endphp
+                                            <img src="{{ asset($kelas->image_path) }}"
+                                                 alt="{{ $kelas->nama_matkul }}"
+                                                 onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
 
-                                            <img
-                                                src="{{ $thumb && \Illuminate\Support\Str::startsWith($thumb, ['http://', 'https://']) ? $thumb : asset($thumb ?? 'image/lpkelas1.png') }}"
-                                                alt="{{ $item->nama_matkul }}">
-
-                                            {{-- tombol + di pojok kanan atas, buat hapus dari wishlist --}}
-                                            <form action="{{ route('wishlist.toggle', ['id_kelas' => $item->id_kelas]) }}"
-                                                method="POST"
-                                                class="course-badge wishlist-menu">
-                                                @csrf
-                                                <button type="submit" class="wishlist-menu-button">
-                                                    <i class="bi bi-three-dots-vertical"></i>
-                                                </button>
-                                            </form>
+                                            {{-- Ikon plus di pojok kanan atas (sama seperti tab Semua) --}}
+                                            <div class="course-badge add">
+                                                <form action="{{ route('wishlist.toggle', ['id_kelas' => $kelas->id_kelas]) }}"
+                                                      method="POST"
+                                                      style="all: unset; cursor: pointer;">
+                                                    @csrf
+                                                    <button type="submit" style="all: unset; cursor: pointer;">
+                                                        <i class="bi bi-plus-circle-fill"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
 
                                         <div class="course-info">
-                                            {{-- JUDUL KELAS --}}
-                                            <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-
-                                            {{-- BAR KECIL “Daftar kelas ini” PERSIS FIGMA --}}
+                                            <h3 class="course-title">{{ $kelas->nama_matkul }}</h3>
                                             <p class="course-progress">Daftar kelas ini</p>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+
+                                </a>
+                            </div>
+                        @endforeach
                     @endif
 
                 </div>
-                <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-                =========================================================
-                Section: Wishlist Kelas
-                ====================================================== -->
             </div>
+
+            <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+            =========================================================
+            Section: Tab Wishlist - View Semua Kelas
+            ====================================================== -->
         </div>
     </section>
 

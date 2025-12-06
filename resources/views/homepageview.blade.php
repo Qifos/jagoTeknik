@@ -141,6 +141,9 @@
                                                 {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}
                                                 – {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}
                                             </div>
+                                            <div class="bubble__tanggal text-secondary mb-2">
+                                                {{ $jadwal->tanggal ?? '-' }}
+                                            </div>
                                         </div>
                                     </div>
                                 @empty
@@ -208,7 +211,8 @@
             @if(isset($recommendations) && $recommendations->count())
                 <div class="row g-4">
                     @foreach($recommendations as $index => $kelas)
-                        <div class="col-md-4">
+                        <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
+                           class="col-md-4 text-decoration-none d-block">
                             <div class="match-card">
                                 {{-- Top label: kategori & durasi --}}
                                 <div class="match-card__top">
@@ -216,38 +220,15 @@
                                         {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan
                                             ?? 'Kelas Teknik' }}
                                     </span>
-                                    <span class="match-card__duration">
-                                        {{-- kalau nanti ada kolom durasi di kelas, tinggal ganti --}}
-                                        3 Bulan
-                                    </span>
+                                    <span class="match-card__duration">3 Bulan</span>
                                 </div>
 
                                 @php
-                                    $foto = $kelas->foto;
-                                @endphp
-
-                                {{-- <div class="match-card__image-wrapper">
-                                    @if($foto)
-                                        <img
-                                            src="{{ \Illuminate\Support\Str::startsWith($foto, ['http://', 'https://']) ? $foto : asset($foto) }}"
-                                            alt="{{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}"
-                                            class="match-card__image"
-                                        >
-                                    @else
-                                        <div class="match-card__image placeholder-image">
-                                            <i class="bi bi-play-circle"></i>
-                                        </div>
-                                    @endif
-                                </div> --}}
-                                @php
-                                    // 3 gambar statis di public/image/
                                     $staticImages = [
                                         'image/rekomkelas1.png',
                                         'image/rekomkelas2.png',
                                         'image/rekomkelas3.png',
                                     ];
-
-                                    // pilih gambar sesuai urutan kartu (0 → 1, 1 → 2, 2 → 3)
                                     $foto = $staticImages[$index % count($staticImages)];
                                 @endphp
 
@@ -259,18 +240,17 @@
                                     >
                                 </div>
 
-
-                                {{-- Judul & deskripsi singkat --}}
                                 <div class="match-card__body">
                                     <h4 class="match-card__title">
                                         {{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}
                                     </h4>
                                     <p class="match-card__desc">
-                                        {{ $kelas->deskripsi ?? optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.' }}
+                                        {{ $kelas->deskripsi
+                                            ?? optional($kelas->matkul)->deskripsi
+                                            ?? 'Belajar materi teknik dengan cara yang mudah dipahami.' }}
                                     </p>
                                 </div>
 
-                                {{-- Mentor & harga --}}
                                 <div class="match-card__footer">
                                     <div class="match-card__mentor">
                                         <span class="match-card__mentor-dot"></span>
@@ -287,7 +267,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @else
@@ -297,6 +277,8 @@
             @endif
         </div>
     </section>
+    </section>
+    <!-- Batas Rekomendasi -->
 
     <!-- Menampilkan Pesan Sukses -->
     @if (session('success'))
