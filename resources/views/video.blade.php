@@ -51,7 +51,7 @@
                             <input class="form-control search-input" type="search" placeholder="Cari di Jago Teknik" aria-label="Search">
                         </form>
                         <a href="#" class="d-flex align-items-center text-white text-decoration-none gap-2">
-                            <img src="https://placehold.co/40x40/6b2fa0/white?text=A" alt="Profil" class="profile-img">
+                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="d-none d-lg-inline">Profil</span>
                         </a>
                     </div>

@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Author : Akhtar Zia Faizarrobbi (NRP 5026231095)
+ * File   : app/Http/Models/Jadwal.php
+ * Desc   : Jadwal
+ * Date   : 2025-11-10
+ */
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;

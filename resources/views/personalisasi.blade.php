@@ -54,7 +54,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active d-flex align-items-center" href="{{ url('/personalisasi') }}">
-                            <img src="profile.jpg" alt="Profile" class="profile-img">
+                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
                     </li>
@@ -201,7 +201,7 @@
                     </div>
                 </div>
 
-                <!-- Notifikasi Tab -->
+                <!-- Notifikasi Tab. Akhtar Zia Faizarrobbi (5026231095) -->
                 <div class="tab-pane fade" id="notifikasi" role="tabpanel">
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
@@ -228,6 +228,10 @@
                                         <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_promosi">
                                         <label class="form-check-label notif-label" for="notif_promosi">Promosi</label>
                                     </div>
+                                </div>
+                                <!-- Save Button -->
+                                <div class="text-center mt-5">
+                                    <button type="button" class="btn btn-save" onclick="redirectToHome()">Save</button>
                                 </div>
                             </div>
                         </div>

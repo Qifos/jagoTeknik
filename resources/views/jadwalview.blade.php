@@ -62,7 +62,7 @@
 
           <li class="nav-item">
             <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
-              <img src="{{ asset('profile.jpg') }}" alt="Profile" class="profile-img">
+                <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
               <span class="ms-2">Profil</span>
             </a>
           </li>
