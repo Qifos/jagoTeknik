@@ -21,25 +21,6 @@ body {
 }
 .custom-tabs .nav-item { margin: 0 .25rem; }
 
-/* Navbar Styles */
-.navbar {
-  background-color: rgba(0,0,0,0.9) !important;
-  padding: 1rem 0;
-  border-bottom: 1px solid #1a1a1a;
-
-  /* bikin selalu nempel di atas */
-  position: sticky;
-  top: 0;
-  z-index: 1050;
-  backdrop-filter: saturate(160%) blur(6px);
-}
-
-
-.navbar-brand img {
-  height: 52px;          /* sebelumnya 40px */
-  width: auto;
-}
-
 .navbar-nav .nav-link {
     color: #fff !important;
     padding: 0.5rem 1rem;
