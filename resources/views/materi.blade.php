@@ -19,46 +19,54 @@
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-        <nav class="navbar navbar-expand-lg navbar-jagoteknik">
-            <div class="container-fluid">
-                <!-- Left Side -->
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('landing') }}">
-                    <span class="footer-logo me-2">J</span>
-                    Jago Teknik
+        <!-- Navbar (SAMA seperti homepage/jadwal) -->
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                    <img src="{{ asset('image/jagoteknik.png') }}" alt="Jago Teknik" class="brand-logo">
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
+                            <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('kelas.index') }}">Kelas</a>
+                            <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Jadwal</a>
+                            <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Chat</a>
                         </li>
-                    </ul>
 
-                    <!-- Right Side -->
-                    <div class="d-flex align-items-center gap-3">
-                        <form class="d-flex" role="search">
-                            <input class="form-control search-input" type="search" placeholder="Cari di Jago Teknik" aria-label="Search">
-                        </form>
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none gap-2">
-                            <img src="https://placehold.co/40x40/6b2fa0/white?text=A" alt="Profil" class="profile-img">
-                            <span class="d-none d-lg-inline">Profil</span>
-                        </a>
-                    </div>
+                        <li class="nav-item">
+                            <form class="d-flex mx-3">
+                                <div class="search-box">
+                                    <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                            </form>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
+                                <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
+                                <span class="ms-2">Profil</span>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
+
     </header>
+
 
     <main class="flex-grow-1">
         <div class="container py-4">
