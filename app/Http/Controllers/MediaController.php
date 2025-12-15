@@ -15,6 +15,9 @@ use App\Models\Materi;
 use App\Models\Video;
 use App\Models\Matkul;
 use App\Models\BeliMatkul;
+use App\Models\Question;
+use App\Models\UserQuizAnswer;
+
 
 class MediaController extends Controller
 {
@@ -92,11 +95,30 @@ class MediaController extends Controller
             ->where('id_video', '!=', $id)
             ->get();
 
+        // Get questions for this materi
+        $questions = Question::where('id_materi', $materi->id_materi)
+            ->with('options')
+            ->get();
+
+        // Get user's previous answers (if any)
+        $userAnswers = [];
+        if ($user) {
+            $answers = UserQuizAnswer::where('id_user', $user->id_user)
+                ->where('id_materi', $materi->id_materi)
+                ->get();
+            foreach ($answers as $answer) {
+                $userAnswers[$answer->id_question] = $answer->selected_option_id;
+            }
+        }
+
         return view('video', [
             'video' => $video,
             'materi' => $materi,
             'matkul' => $matkul,
-            'relatedVideos' => $relatedVideos
+            'relatedVideos' => $relatedVideos,
+            'questions' => $questions,
+            'userAnswers' => $userAnswers,
+            'user' => $user
         ]);
     }
 

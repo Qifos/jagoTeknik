@@ -264,6 +264,154 @@ class ProgressController extends Controller
     }
 
     /**
+     * Record content scroll to bottom
+     * POST /api/progress/scroll/{materiId}
+     */
+    public function recordContentScroll(Request $request, $materiId)
+    {
+        $userId = Auth::id();
+
+        if (!$userId) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $validated = $request->validate([
+            'scroll_depth' => 'required|integer|min:0|max:100',
+        ]);
+
+        try {
+            $materi = Materi::findOrFail($materiId);
+
+            $scrolledToBottom = $validated['scroll_depth'] >= 90; // Consider 90% as bottom
+
+            $progress = UserMateriProgress::updateOrCreate(
+                ['id_user' => $userId, 'id_materi' => $materiId],
+                [
+                    'id_matkul' => $materi->id_matkul,
+                    'status' => 'in_progress',
+                    'scroll_depth' => $validated['scroll_depth'],
+                    'content_read' => true,
+                    'content_scrolled_to_bottom' => $scrolledToBottom,
+                    'last_accessed_at' => now(),
+                    'started_at' => isset($progress) ? $progress->started_at : now(),
+                ]
+            );
+
+            return response()->json([
+                'success' => true,
+                'scrolled_to_bottom' => $scrolledToBottom,
+                'progress' => $progress,
+                'message' => $scrolledToBottom ? 'Content reading marked as complete' : 'Content scroll progress recorded',
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error recording scroll progress: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Record video completion and update materi status
+     * POST /api/progress/video-complete/{materiId}
+     */
+    public function recordVideoCompletion(Request $request, $materiId)
+    {
+        $userId = Auth::id();
+
+        if (!$userId) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $validated = $request->validate([
+            'watch_percentage' => 'required|integer|min:0|max:100',
+            'total_duration' => 'required|integer|min:0',
+        ]);
+
+        try {
+            $materi = Materi::findOrFail($materiId);
+
+            $progress = UserMateriProgress::updateOrCreate(
+                ['id_user' => $userId, 'id_materi' => $materiId],
+                [
+                    'id_matkul' => $materi->id_matkul,
+                    'video_watch_percentage' => $validated['watch_percentage'],
+                    'video_total_duration' => $validated['total_duration'],
+                    'video_completed' => $validated['watch_percentage'] >= 80, // 80% = watched
+                    'last_accessed_at' => now(),
+                ]
+            );
+
+            // Mark as completed if both content read and video watched
+            if ($progress->content_scrolled_to_bottom && $progress->video_completed) {
+                $progress->status = 'completed';
+                $progress->is_completed = true;
+                $progress->completed_at = now();
+                $progress->save();
+
+                // Update matkul progress
+                $this->updateMatkulProgress($userId, $materi->id_matkul);
+            }
+
+            return response()->json([
+                'success' => true,
+                'video_completed' => $progress->video_completed,
+                'progress' => $progress,
+                'message' => 'Video watch recorded',
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error recording video completion: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Get progress for all materi in a matkul
+     * GET /api/progress/matkul/{matkulId}/materi
+     */
+    public function getMateriProgressList($matkulId)
+    {
+        $userId = Auth::id();
+
+        if (!$userId) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        try {
+            $materiList = Materi::where('id_matkul', $matkulId)
+                ->orderBy('id_materi', 'asc')
+                ->get();
+
+            $materiProgress = $materiList->map(function($materi) use ($userId) {
+                $progress = UserMateriProgress::where('id_user', $userId)
+                    ->where('id_materi', $materi->id_materi)
+                    ->first();
+
+                return [
+                    'id_materi' => $materi->id_materi,
+                    'nama_materi' => $materi->nama_materi,
+                    'is_completed' => $progress ? $progress->is_completed : false,
+                    'content_read' => $progress ? $progress->content_read : false,
+                    'video_completed' => $progress ? $progress->video_completed : false,
+                    'status_text' => $progress && $progress->is_completed ? 'Sudah dibaca' : 'Belum dibaca',
+                ];
+            });
+
+            return response()->json([
+                'success' => true,
+                'materi_progress' => $materiProgress,
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error getting materi progress list: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
      * Update matkul progress percentage and status
      * Helper method
      */
@@ -277,7 +425,7 @@ class ProgressController extends Controller
         } else {
             $completedMateri = UserMateriProgress::where('id_user', $userId)
                 ->where('id_matkul', $matkulId)
-                ->where('status', 'completed')
+                ->where('is_completed', true)
                 ->count();
 
             $progressPercentage = round(($completedMateri / $totalMateri) * 100);

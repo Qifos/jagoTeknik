@@ -128,7 +128,13 @@
                                     <div class="custom-progress mt-auto">
                                         <div class="bar" style="width: {{ $item['progress'] }}%"></div>
                                     </div>
-                                    <div class="progress-text mt-2 mb-3">{{ $item['progress_text'] }}</div>
+                                    <div class="progress-text mt-2 mb-3">
+                                        @if($item['is_completed'])
+                                            <span style="color: #28a745; font-weight: bold;">✓ {{ $item['progress_text'] }}</span>
+                                        @else
+                                            <span style="color: #6c757d;">{{ $item['progress_text'] }}</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </a>
