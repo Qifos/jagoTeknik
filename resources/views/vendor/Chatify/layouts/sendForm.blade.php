@@ -1,3 +1,7 @@
+<!--
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * Desc   : Package View Chatify dan beberapa custom manual
+-->
 <div class="messenger-sendCard">
     <form id="message-form" method="POST" action="{{ route('send.message') }}" enctype="multipart/form-data">
         @csrf

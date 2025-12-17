@@ -1,3 +1,7 @@
+<!--
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * Desc   : Package View Chatify dan beberapa custom manual
+-->
 {{-- ---------------------- Image modal box ---------------------- --}}
 <div id="imageModalBox" class="imageModal">
     <span class="imageModal-close">&times;</span>

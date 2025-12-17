@@ -1,3 +1,7 @@
+<!--
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * Desc   : Package View Chatify dan beberapa custom manual
+-->
 {{-- user info and avatar --}}
 <div class="avatar av-l chatify-d-flex"></div>
 <p class="info-name">{{ config('chatify.name') }}</p>

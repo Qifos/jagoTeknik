@@ -1,3 +1,7 @@
+<!--
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * Desc   : Package View Chatify dan beberapa custom manual
+-->
 <?php
 $seenIcon = (!!$seen ? 'check-double' : 'check');
 $timeAndSeen = "<span data-time='$created_at' class='message-time'>

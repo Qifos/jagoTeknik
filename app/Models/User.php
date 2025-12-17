@@ -36,11 +36,13 @@ class User extends Authenticatable
         'id_jurusan', 'nama', 'username', 'email',
         'password', 'no_hp', 'angkatan', 'tanggal_lahir',
         'jenis_kelamin', 'foto_profil', 'otp', 'is_active',
+        'jenis_kelamin', 'foto_profil', 'otp', 'is_active', 'is_mentor',
         'avatar', 'dark_mode', 'messenger_color', 'active_status', 'last_seen',
     ];
 
 
     protected $hidden = ['password', 'remember_token', 'otp'];
+    protected $appends = ['id', 'name'];
 
 
     // Biar Auth::attempt() tetap bisa pakai 'password'
@@ -57,5 +59,23 @@ class User extends Authenticatable
     public function beliMatkul()
     {
         return $this->hasMany(BeliMatkul::class, 'id_user', 'id_user');
+    }
+
+    // ✅ Chatify sering pakai $user->id
+    public function getIdAttribute()
+    {
+        return $this->getAttribute($this->primaryKey);
+    }
+
+    // ✅ Chatify sering pakai $user->name
+    public function getNameAttribute()
+    {
+        return $this->getAttribute('nama');
+    }
+
+    // (opsional) kalau avatar kadang null, fallback ke foto_profil
+    public function getAvatarAttribute($value)
+    {
+        return $value ?: $this->getAttribute('foto_profil');
     }
 }

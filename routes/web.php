@@ -13,6 +13,7 @@ use App\Http\Controllers\QuizController;
 use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\MentorController;
 
 Route::redirect('/', '/landingpage');
 
@@ -201,3 +202,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/quiz/results/{materiId}', [QuizController::class, 'getResults'])
         ->name('quiz.results');
 });
+
+Route::get('/mentor', [MentorController::class, 'index'])->name('mentor.index');
+Route::get('/mentor/{id}', [MentorController::class, 'show'])->name('mentor.show');

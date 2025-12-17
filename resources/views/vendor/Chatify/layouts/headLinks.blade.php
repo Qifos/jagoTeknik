@@ -1,3 +1,7 @@
+<!--
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * Desc   : Package View Chatify dan beberapa custom manual
+-->
 <title>{{ config('chatify.name') }}</title>
 
 {{-- Meta tags --}}
@@ -20,6 +24,7 @@
 <link rel='stylesheet' href='https://unpkg.com/nprogress@0.2.0/nprogress.css'/>
 <link href="{{ asset('css/chatify/style.css') }}" rel="stylesheet" />
 <link href="{{ asset('css/chatify/'.$dark_mode.'.mode.css') }}" rel="stylesheet" />
+<link href="{{ asset('css/chatify/jagoteknik-chatify.css') }}" rel="stylesheet" />
 <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
 {{-- Setting messenger primary color to css --}}

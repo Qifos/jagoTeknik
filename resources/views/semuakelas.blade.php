@@ -51,7 +51,7 @@
                         <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
 
                     <li class="nav-item">
