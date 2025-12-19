@@ -4,24 +4,126 @@
   padding: 1.5rem;
   border-radius: 12px;
   height: 100%;
+  border: 1px solid #333;
 }
-.video-sidebar .time-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(0, 0, 0, 0.6);
-  color: #fff;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  padding: 6px 10px;
+
+.video-container {
+  position: relative;
+  margin-bottom: 2rem;
 }
-.video-sidebar .instructor img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+
+.video-player {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  margin-bottom: 1.5rem;
 }
+
 .video-player .ratio {
   border-radius: 12px;
   overflow: hidden;
   background: #000;
+}
+
+.video-player iframe {
+  border-radius: 12px;
+}
+
+.video-info {
+  margin-bottom: 1.5rem;
+}
+
+.video-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.video-description {
+  color: #bdbfc4;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.video-instructor {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem 0;
+  border-top: 1px solid #333;
+}
+
+.video-instructor img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.video-instructor-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.video-instructor-name {
+  font-weight: 700;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+.video-instructor-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.time-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  padding: 6px 12px;
+  font-weight: 600;
+  z-index: 10;
+}
+
+/* Sidebar for video list */
+.video-list-sidebar {
+  background-color: #1a1a2e;
+  border-radius: 12px;
+  padding: 1rem;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.video-list-item {
+  padding: 0.75rem;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.video-list-item:hover,
+.video-list-item.active {
+  background-color: rgba(107, 47, 160, 0.2);
+  border-color: #6b2fa0;
+}
+
+.video-list-item-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.3rem;
+}
+
+.video-list-item-instructor {
+  font-size: 0.75rem;
+  color: #888;
 }

@@ -1,3 +1,9 @@
+<!--
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : resources/views/materi.blade.php
+ * Desc   : view untuk halaman materi pembelajaran
+ * Date   : 25-11-2025
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -57,64 +63,76 @@
     <main class="flex-grow-1">
         <div class="container py-4">
             <div class="mb-3">
-                <a href="#" onclick="if(history.length > 1) { history.back(); return false; } else { window.location = '{{ route('kelas.index') }}'; }" class="back-btn">&lt; Back</a>
+                <a href="{{ route('kelas.detail.beli', $matkul->id_matkul) }}" class="back-btn">&lt; Back</a>
             </div>
 
             <header class="text-center">
-                <h1 class="display-5 title-hero">Kalkulus 2</h1>
+                <h1 class="display-5 title-hero">{{ $matkul->nama_matkul }}</h1>
             </header>
 
             <div class="content-card">
-                <h2 class="h4 mb-3">{{ $materi['title'] ?? 'Kupas Tuntas Rumus Kalkulus Dasar: Limit' }}</h2>
+                <h2 class="h4 mb-3">{{ $materi->nama_materi ?? 'Materi Pembelajaran' }}</h2>
 
-                <p>Halo, Sobat Jago Teknik! Materi ini akan membahas tentang materi kalkulus dasar yaitu, limit, turunan, integral, dan beserta jenis-jenisnya. Yuk simak lebih lanjut!</p>
-                <p>Buat yang baru masuk ke Semester 2, sebelum belajar lebih lanjut tentang fisika, Kamu harus pahami dulu tentang kalkulus dasar. Alasan kenapa kita harus paham tentang kalkulus dasar, karena dengan belajar kalkulus, perhitungan dan analisa pada materi matematika atau fisika akan menjadi lebih mudah. Dalam fisika, materi yang menggunakan kalkulus adalah GLBB (gerak lurus berubah beraturan), momen inersia, titik berat, dan lainnya.</p>
+                <div>{!! $materi->isi_materi ?? '<p>Deskripsi materi tidak tersedia.</p>' !!}</div>
 
-                <h5 class="mt-4">Beberapa materi kalkulus yang dapat mempermudah perhitungan dan analisa antara lain:</h5>
-                <ul class="mt-3">
-                    <li>? Limit</li>
-                    <li>? Turunan</li>
-                    <li>? Integral</li>
-                </ul>
-
-                <p class="mt-3">Nilai limit artinya nilai yang mendekati nilai fungsi. Untuk mencari nilai limit, subtitusikan nilai limit. Jika hasilnya ada (bukan bentuk tak tentu), maka selesai. Jika hasilnya tak tentu, maka bentuk limit harus diubah dengan melihat bentuknya:</p>
-
-                <h5 class="mt-4">Bentuk Pangkat</h5>
-                <p>Jika terdapat bentuk pangkat pada persamaan limit, maka faktorkan. Contoh:</p>
-
-                <div class="formula-box my-3">
-                    lim(x→1) (2x-2)/(x²-5x+6) = lim(a→b) (2x-2)/((x-2)(x-3)) = lim(a→b) 2/(x-3) = 2/-2 = -1
-                </div>
-
-                <!-- Teaser Card (from PDF) -->
-                <div class="teaser-card" x-data="{}">
-                    <div class="thumb mb-3">
-                        <img src="https://placehold.co/600x340/000/fff?text=L+I+M+I+T" class="img-fluid" alt="Video Teaser">
-                        <button class="play-large" onclick="window.location='{{ route('media.video', ['id' => $materi['video_id'] ?? 1]) }}'">
-                            ▶
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <div class="small text-white-75">Video Materi - Limit</div>
-                            <div class="fw-bold instructor">
-                                <img src="https://placehold.co/24x24/eee/333?text=IH" alt="instructor">
-                                <span>Ikhwanul Hafidz</span>
+                <!-- Video List -->
+                @if($videos && $videos->count() > 0)
+                    <h5 class="mt-4 mb-3">Video Pembelajaran</h5>
+                    <div class="video-grid">
+                        @foreach($videos as $video)
+                            <div class="teaser-card">
+                                <div class="thumb">
+                                    <img src="https://placehold.co/400x225/000/fff?text={{ urlencode($video->nama_video ?? 'Video') }}" alt="{{ $video->nama_video }}">
+                                    <a href="{{ route('media.video.detail', ['id' => $video->id_video]) }}" class="play-large">▶</a>
+                                </div>
+                                <div>
+                                    <div class="fw-bold video-title">
+                                        {{ $video->nama_video }}
+                                    </div>
+                                    <div class="instructor">
+                                        <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
+                                        <span>{{ $video->durasi ?? 'Video' }}</span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="fw-bold">15:00</div>
+                        @endforeach
                     </div>
-                </div>
+                @else
+                    <div class="alert alert-info mt-4">
+                        <p>Belum ada video pembelajaran untuk materi ini.</p>
+                    </div>
+                @endif
 
-                <!-- Pagination -->
-                <div class="d-flex justify-content-center mt-4">
-                     <nav aria-label="Page navigation">
-                        <ul class="pagination pagination-lg">
-                            <li class="page-item"><a class="page-link" href="#">&lt;</a></li>
-                            <li class="page-item"><a class="page-link" href="#">&gt;</a></li>
-                        </ul>
-                    </nav>
-                </div>
+                <!-- Navigation Button to Next Materi -->
+                @php
+                    $currentMateriId = $materi->id_materi ?? null;
+                    $nextMateri = $materi->matkul->materi()
+                        ->where('id_materi', '>', $currentMateriId)
+                        ->orderBy('id_materi', 'asc')
+                        ->first();
+                    $previousMateri = $materi->matkul->materi()
+                        ->where('id_materi', '<', $currentMateriId)
+                        ->orderBy('id_materi', 'desc')
+                        ->first();
+                @endphp
+
+                <!-- Previous Button -->
+                @if($previousMateri)
+                    <a href="{{ route('media.materi', ['id' => $previousMateri->id_materi]) }}" class="materi-prev-button">
+                        ← Materi Sebelumnya
+                    </a>
+                @endif
+
+                <!-- Next or Complete Button -->
+                @if($nextMateri)
+                    <a href="{{ route('media.materi', ['id' => $nextMateri->id_materi]) }}" class="materi-nav-button">
+                        Lanjut ke Materi Selanjutnya →
+                    </a>
+                @else
+                    <button class="materi-nav-button complete-btn" onclick="completeMateri()">
+                        Selesaikan Pembelajaran ✓
+                    </button>
+                @endif
             </div>
         </div>
     </main>
@@ -175,5 +193,115 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Alpine.js for small interactions -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        // Complete materi function
+        async function completeMateri() {
+            const materiId = {{ $materi->id_materi ?? 0 }};
+            const matkulId = {{ $matkul->id_matkul ?? 0 }};
+
+            try {
+                const response = await fetch(`/api/materi/complete/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Selamat! Anda telah menyelesaikan pembelajaran ini.');
+                    // Redirect to kelas view
+                    window.location.href = `/kelas/${matkulId}`;
+                } else {
+                    alert('Terjadi kesalahan. Silakan coba lagi.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan. Silakan coba lagi.');
+            }
+        }
+
+        // Track content reading progress
+        let scrollDepth = 0;
+        let contentReadTimer = null;
+        const materiId = {{ $materi->id_materi ?? 0 }};
+
+        window.addEventListener('scroll', () => {
+            const contentCard = document.querySelector('.content-card');
+            if (!contentCard) return;
+
+            const scrollHeight = contentCard.scrollHeight - window.innerHeight;
+            const scrolledHeight = window.scrollY;
+            scrollDepth = Math.round((scrolledHeight / scrollHeight) * 100);
+
+            // Record when user has read most of the content
+            if (scrollDepth >= 80 && !contentReadTimer) {
+                contentReadTimer = setTimeout(() => {
+                    recordContentProgress(true);
+                }, 2000); // Record after 2 seconds of reading
+            }
+        });
+
+        // Record content read progress
+        async function recordContentProgress(contentRead) {
+            if (!materiId) return;
+
+            try {
+                await fetch(`/api/progress/content/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify({
+                        scroll_depth: scrollDepth,
+                        content_read: contentRead
+                    })
+                });
+            } catch (error) {
+                console.error('Error recording content progress:', error);
+            }
+        }
+
+        // Track video completion if there are videos
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoElements = document.querySelectorAll('video');
+            videoElements.forEach((video, index) => {
+                video.addEventListener('ended', () => {
+                    recordVideoProgress(true, video.duration);
+                });
+
+                // Record progress as video plays
+                video.addEventListener('timeupdate', () => {
+                    const currentTime = Math.round(video.currentTime);
+                    recordVideoProgress(false, video.duration, currentTime);
+                });
+            });
+        });
+
+        // Record video progress
+        async function recordVideoProgress(completed, totalDuration, watchedDuration = null) {
+            if (!materiId) return;
+
+            try {
+                await fetch(`/api/progress/video/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify({
+                        watched_duration: watchedDuration || totalDuration,
+                        total_duration: Math.round(totalDuration),
+                        completed: completed
+                    })
+                });
+            } catch (error) {
+                console.error('Error recording video progress:', error);
+            }
+        }
+    </script>
 </body>
 </html>

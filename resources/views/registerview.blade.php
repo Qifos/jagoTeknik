@@ -1,7 +1,6 @@
 <!--
  * Author : Sinta Dewi Rahmawati (NRP 5026231231)
  * Desc   : Register View
- * Date   : 2025-11-04
 -->
 
 <!doctype html>

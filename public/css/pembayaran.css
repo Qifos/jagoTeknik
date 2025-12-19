@@ -1,9 +1,35 @@
 /* --- Beli Kelas Page (NEW LAYOUT) --- */
 .beli-header {
   margin-bottom: 2rem;
+  padding: 2.5rem 2rem;
+  background: linear-gradient(135deg, #6b2fa0, #8b5cf6);
+  border-radius: 0 0 24px 24px;
+  margin-left: -1rem;
+  margin-right: -1rem;
+  margin-top: -1rem;
+  box-shadow: 0 8px 32px rgba(107, 47, 160, 0.3);
+}
+.beli-header .back-btn {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+.beli-header .back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #fff;
 }
 .beli-header .title-hero {
-  font-size: 2.5rem; /* Smaller than display-5 */
+  font-size: 2.8rem;
+  color: #fff;
+  margin-top: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 /* Left Column */
@@ -17,6 +43,7 @@
   justify-content: center;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 .beli-hero-image img {
   width: 100%;
@@ -29,13 +56,15 @@
   left: 0;
   right: 0;
   padding: 2rem;
-  background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-  font-size: 2rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  font-size: 1.8rem;
   font-weight: 700;
   color: var(--text-light);
+  line-height: 1.2;
 }
 .class-tabs {
   border-bottom: 1px solid #333;
+  margin-top: 1.5rem;
 }
 .class-tabs .nav-link {
   background: transparent;
@@ -43,12 +72,21 @@
   border-bottom: 3px solid transparent;
   color: var(--text-muted);
   font-weight: 700;
-  padding: 1rem 0.5rem;
+  padding: 1rem 0.75rem;
   margin-right: 1.5rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+.class-tabs .nav-link:hover {
+  color: var(--text-light);
+  border-bottom-color: rgba(139, 92, 246, 0.5);
 }
 .class-tabs .nav-link.active {
   color: var(--text-light);
   border-bottom-color: var(--panel-purple);
+}
+.tab-content {
+  padding: 1.5rem 0;
 }
 .tab-content .benefit-list {
   list-style: none;
@@ -56,10 +94,11 @@
   color: var(--text-light);
 }
 .tab-content .benefit-list li {
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 .tab-content .benefit-list svg {
   margin-right: 0.75rem;
@@ -72,123 +111,161 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 .rating-bar .progress {
   height: 8px;
   width: 100%;
   background-color: #333;
+  border-radius: 4px;
 }
 .rating-bar .progress-bar {
   background-color: var(--panel-purple);
+  border-radius: 4px;
 }
 
 /* Right Sidebar */
 .beli-sidebar {
-  background-color: #1a1a2e; /* Darker than purple */
-  padding: 1.5rem;
+  background: linear-gradient(135deg, #6b2fa0 0%, #7c5ab8 100%);
+  padding: 2rem;
   border-radius: 18px;
   color: var(--text-light);
+  box-shadow: 0 8px 32px rgba(107, 47, 160, 0.3);
+  position: sticky;
+  top: 2rem;
+  height: fit-content;
 }
 .beli-sidebar .sidebar-image {
   width: 100%;
   aspect-ratio: 16/10;
   object-fit: cover;
   border-radius: 12px;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .beli-sidebar .price-lg {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: var(--text-light);
+  display: flex;
+  align-items: baseline;
 }
 .beli-sidebar .price-sm-strike {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: line-through;
+  margin-left: 0.75rem;
 }
 .beli-sidebar .price-discount {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #f39c12; /* Yellow/Orange for discount */
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #f39c12;
+  margin-left: 0.5rem;
 }
 .beli-sidebar .promo-text {
-  font-size: 0.9rem;
-  color: #f39c12;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0.75rem 0 1.5rem 0;
 }
 .beli-sidebar .btn-beli {
   background-color: #0f0f10;
   color: var(--text-light);
   font-weight: 700;
-  padding: 0.75rem;
-  border-radius: 10px;
+  padding: 0.9rem 1.5rem;
+  border-radius: 12px;
   width: 100%;
   border: 0;
   text-decoration: none;
-  display: inline-block;
+  display: block;
   text-align: center;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
 }
 .beli-sidebar .btn-beli:hover {
   background-color: #222;
   color: var(--text-light);
+  transform: translateY(-2px);
 }
 
 .beli-sidebar .benefit-list {
   list-style: none;
   padding-left: 0;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1rem;
 }
 .beli-sidebar .benefit-list li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-size: 0.9rem;
+  line-height: 1.4;
 }
 .beli-sidebar .benefit-list svg {
   margin-right: 0.75rem;
-  color: var(--text-light);
-  width: 16px;
-  height: 16px;
+  color: #fff;
+  width: 18px;
+  height: 18px;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .beli-sidebar .share-icons {
   display: flex;
-  justify-content: space-between;
-  padding: 0 1rem;
+  justify-content: space-around;
+  padding: 1rem 0 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  gap: 0.5rem;
 }
 .beli-sidebar .share-icons a {
-  color: var(--text-muted);
-  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.3rem;
   text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 }
 .beli-sidebar .share-icons a:hover {
-  color: var(--text-light);
+  color: #fff;
 }
 
 
 /* --- Checkout Page (Bayar kelas.png) --- */
 .checkout-body {
-  background-color: var(--bg-dark);
+  background-color: #0f0f10;
+}
+
+.checkout-form h5 {
+  color: #f4f4f5;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
 }
 .checkout-form .form-label {
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: #bdbfc4;
+  font-size: 0.95rem;
 }
 .checkout-form .form-control {
-  background-color: #222;
+  background-color: transparent;
   border: 1px solid #444;
   color: var(--text-light);
   padding: 0.75rem 1rem;
   border-radius: 10px;
 }
+.checkout-form .form-control::placeholder {
+  color: #666;
+}
 .checkout-form .form-control:focus {
-  background-color: #222;
-  border-color: var(--panel-purple);
+  background-color: transparent;
+  border-color: #8b5cf6;
   color: var(--text-light);
-  box-shadow: none;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
 .checkout-form .form-check-input {
   background-color: #333;
@@ -205,11 +282,17 @@
   border-radius: 10px;
   cursor: pointer;
   opacity: 0.6;
+  transition: all 0.3s ease;
+  background-color: transparent;
 }
 .payment-method-card.active {
-  border-color: var(--panel-purple);
-  background-color: #1a1a2e;
+  border-color: #8b5cf6;
+  background-color: rgba(139, 92, 246, 0.1);
   opacity: 1;
+}
+.payment-method-card:hover {
+  border-color: #8b5cf6;
+  opacity: 0.8;
 }
 .payment-method-card img {
   width: 100%;
@@ -217,23 +300,27 @@
   object-fit: contain;
 }
 .btn-konfirmasi {
-  background: var(--panel-purple);
+  background: linear-gradient(135deg, #6b2fa0, #8b5cf6);
   color: var(--text-light);
   font-weight: 700;
-  padding: 0.75rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 10px;
   width: 100%;
   border: 0;
+  transition: all 0.3s ease;
+  font-size: 1rem;
 }
 .btn-konfirmasi:hover {
-  background: var(--panel-purple-2);
+  background: linear-gradient(135deg, #5a1f8f, #7a4ce6);
   color: var(--text-light);
+  transform: translateY(-2px);
 }
 
 .summary-card {
   background-color: #1a1a2e;
   padding: 1.5rem;
   border-radius: 18px;
+  border: 1px solid #333;
 }
 .summary-item {
   display: flex;
@@ -348,7 +435,7 @@
   border-radius: 50%;
 }
 .btn-sukses {
-  background: var(--panel-purple);
+  background: linear-gradient(135deg, #6b2fa0, #8b5cf6);
   color: var(--text-light);
   font-weight: 700;
   padding: 0.75rem 2rem;
@@ -356,8 +443,11 @@
   border: 0;
   text-decoration: none;
   font-size: 1.1rem;
+  transition: all 0.3s ease;
+  display: inline-block;
 }
 .btn-sukses:hover {
-  background: var(--panel-purple-2);
+  background: linear-gradient(135deg, #5a1f8f, #7a4ce6);
   color: var(--text-light);
+  transform: translateY(-2px);
 }

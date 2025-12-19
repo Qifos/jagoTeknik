@@ -25,7 +25,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container py-2">
-            <a class="navbar-brand fw-bold d-flex align-items-center gap-2">
+            <a class="navbar-brand fw-bold d-flex align-items-center gap-0">
                 <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
             </a>
 
@@ -35,14 +35,14 @@
 
             <div class="collapse navbar-collapse" id="navMenu">
                 <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
-                    <li class="nav-item"><a class="nav-link active" href="#">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="{{ route('login.view') }}">Beranda</a></li>
                     <li class="nav-item d-none d-lg-block">
                         <form class="d-flex" role="search" onsubmit="return false;">
                             <div class="input-group">
-                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
-                                        class="bi bi-search"></i></span>
-                                <input class="form-control border-start-0" type="search"
+                                <input class="form-control border-start-1" type="search"
                                     placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
@@ -56,12 +56,11 @@
         </div>
     </nav>
 
-    <!-- LANDING HERO -->
-    <header class="landing-hero pt-5">
+    <!-- LANDING -->
+    <header class="landing-hero pt-9">
         <div class="container position-relative" style="z-index:1;">
             <div class="row align-items-center min-vh-100 pb-5 pb-lg-0">
 
-                <!-- Left copy -->
                 <div class="col-lg-6 mt-5 mt-lg-0">
                     <h1 class="display-4 display-title mb-3">
                         Kuliah Teknik<br />Jadi <span class="accent">Easy</span>
@@ -82,7 +81,6 @@
                     </div>
                 </div>
 
-                <!-- Right visual -->
                 <div class="col-lg-6 mt-5 mt-lg-0">
                     <div class="position-relative mx-auto" style="max-width:520px;">
                         <div class="landing-orb">
@@ -94,7 +92,6 @@
                         </div>
 
                         <div class="landing-orb-image"></div>
-
                         <div class="landing-stat-card landing-stat-tutor">
                             <img src="/image/01.png" alt="Tutor" />
                         </div>
@@ -106,7 +103,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -130,7 +126,6 @@
                             <img src="{{ asset('image/landing-apa1.jpg') }}" alt="Masuk sebagai Mentor"
                                 class="img-fluid w-100 d-block rounded-4" loading="lazy" style="height:auto;" />
                             <div class="image-overlay-gradient"></div>
-
                             <div class="image-overlay-center">
                                 <h3 class="text-white mb-3">Untuk Mentor</h3>
                                 <a href="{{ route('login.view', ['as' => 'mentor']) }}"
@@ -141,7 +136,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-12 col-lg-6">
                         <div class="image-card border rounded-4">
                             <img src="{{ asset('image/landing-apa2.jpg') }}" alt="Masuk sebagai Murid"
@@ -159,42 +153,34 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
         <!-- MILESTONE SECTION -->
         <section id="milestone" class="py-5 mt-4 mb-5">
             <div class="container text-center">
-
                 <h6 class="milestone-title mb-4">Milestone Kami</h6>
-
                 <div class="row justify-content-center g-4">
-
                     <!-- Item 1 -->
                     <div class="col-6 col-md-3">
                         <h2 class="milestone-value">300+</h2>
                         <p class="milestone-label">Mahasiswa<br>Aktif</p>
                     </div>
-
                     <!-- Item 2 -->
                     <div class="col-6 col-md-3">
                         <h2 class="milestone-value">100+</h2>
                         <p class="milestone-label">Mata<br>Kuliah</p>
                     </div>
-
                     <!-- Item 3 -->
                     <div class="col-6 col-md-3">
                         <h2 class="milestone-value">70+</h2>
                         <p class="milestone-label">Tutor<br>Terbaik</p>
                     </div>
-
                     <!-- Item 4 -->
                     <div class="col-6 col-md-3">
                         <h2 class="milestone-value">7</h2>
                         <p class="milestone-label">Tahun<br>Pengalaman</p>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -205,7 +191,7 @@
             </div>
             <div class="container feature-cards">
                 <div class="row g-4">
-
+                    <!-- Card 1 -->
                     <div class="col-12 col-md-4">
                         <div class="feature-card">
                             <div class="feature-head">
@@ -217,7 +203,7 @@
                             </p>
                         </div>
                     </div>
-
+                    <!-- Card 2 -->
                     <div class="col-12 col-md-4">
                         <div class="feature-card">
                             <div class="feature-head">
@@ -229,7 +215,7 @@
                             </p>
                         </div>
                     </div>
-
+                    <!-- Card 3 -->
                     <div class="col-12 col-md-4">
                         <div class="feature-card">
                             <div class="feature-head">
@@ -245,12 +231,10 @@
                 </div>
             </div>
         </section>
-
         <section class="container mt-5">
             <p class="text-left mb-1">Jelajahi Kelas</p>
             <h2 class="text-left feature-maintext mb-4 mt-1">Kelas Paling Populer</h2>
             <div class="row">
-
                 <div class="col-12 col-md-4 position-relative">
                     <a href="{{ route('login.view') }}" class="d-block">
                         <img src="image/lpkelas1.png" alt="Kelas 1" class="img-fluid feature-class"
@@ -270,7 +254,6 @@
                     </a>
                 </div>
             </div>
-
             <div class="text-center mt-4">
                 <a href="{{ route('login.view') }}" class="btn btn-outline-light px-5 py-2"
                     style="position: relative;">
@@ -278,6 +261,7 @@
             </div>
         </section>
 
+        <!-- JAGO NEWS SECTION -->
         <section class="container mt-5">
             <h2 class="text-left feature-maintext mb-4">Jago News</h2>
             <div class="row g-4">
@@ -311,7 +295,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-12 col-md-6">
                     <div class="news-card">
                         <div class="news-card-content-vertical">
@@ -333,16 +316,12 @@
     <footer class="py-5 border-top border-opacity-25" style="border-color:var(--border)!important;">
         <div class="container text-left text-white">
             <div class="row align-items-left">
-
-                <!-- Jago Teknik Logo and Tagline (Left side) -->
                 <div class="col-md-2 text-md-left">
                     <div class="footer-logo">
                         <img src="image/jagoteknik.png" alt="Jago Teknik Logo" class="footer-logo-img" />
                         <p class="footer-tagline mt-2">Kuliah Teknik Jadi Easy</p>
                     </div>
                 </div>
-
-                <!-- Jurusan, Ikuti Kami, Legal, Kontak Kami (Horizontal Row) -->
                 <div class="col-md-10">
                     <div class="row text-md-left">
                         <!-- Jurusan Section -->
@@ -354,7 +333,6 @@
                                 <li>Vokasi</li>
                             </ul>
                         </div>
-
                         <!-- Ikuti Kami Section -->
                         <div class="col-md-3">
                             <ul class="list-unstyled">
@@ -365,7 +343,6 @@
                                 <li>YouTube</li>
                             </ul>
                         </div>
-
                         <!-- Legal Section -->
                         <div class="col-md-3">
                             <ul class="list-unstyled">
@@ -376,7 +353,6 @@
                                 <li>Contact</li>
                             </ul>
                         </div>
-
                         <!-- Kontak Kami Section -->
                         <div class="col-md-3">
                             <ul class="list-unstyled">
@@ -389,19 +365,13 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
             <div class="container mt-4">
                 <div class="row d-flex align-items-center justify-content-between">
-
-                    <!-- Left side: Copyright Text -->
                     <div class="col-12 col-md-6 text-md-left">
                         <p class="mb-0" style="text-align: left">© <span id="year"></span> Jago Teknik. All
                             rights reserved.</p>
                     </div>
-
-                    <!-- Right side: Social Media Icons -->
                     <div class="col-12 col-md-6 text-md-right">
                         <div class="social-icons">
                             <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>

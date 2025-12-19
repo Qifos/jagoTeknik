@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Materi extends Model
 {
+    use HasFactory;
+
     protected $table = 'materi';
     protected $primaryKey = 'id_materi';
     public $timestamps = true;
 
-    public function video(){ return $this->belongsTo(Video::class,'id_video','id_video'); }
-    use HasFactory;
+    public function matkul(){ return $this->belongsTo(Matkul::class,'id_matkul','id_matkul'); }
+
+    public function video(){ return $this->hasMany(Video::class,'id_materi','id_materi'); }
 }

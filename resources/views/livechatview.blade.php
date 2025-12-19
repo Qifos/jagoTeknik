@@ -56,7 +56,7 @@
         <img src="image/jagoteknik.jpg" class="jt-logo" alt="JagoTeknik">
       </div>
       <nav class="jt-nav">
-        <a href="#">Beranda</a>
+        <a class="nav-link active" href="{{route('homepage')}}">Beranda</a>
         <a href="#">Kelas</a>
         <a href="#">Jadwal</a>
         <a href="#" class="active">Chat</a>

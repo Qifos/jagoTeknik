@@ -1,87 +1,84 @@
 <?php
 
+/**
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : app/Http/Controllers/PembayaranController.php
+ * Desc   : pembayaran controller untuk mengelola proses pembayaran kelas
+ * Date   : 25-11-2025
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;   // Import DB facade
-use Illuminate\Support\Facades\Hash; // Import Hash facade
-use Illuminate\Support\Facades\Log;   // Import Log facade
-use App\Models\User;                 // Import User model
-use App\Models\Matkul;               // Import your Matkul model
-use App\Models\BeliMatkul;           // Import your BeliMatkul model
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use App\Models\Matkul;
+use App\Models\BeliMatkul;
 
 class PembayaranController extends Controller
 {
     /**
-     * Show the "Beli Kelas" page.
-     * Mockup: Beli kelas.jpg
+     * TASK 2 - Step 1: Show the "Beli Kelas" page (initial buy view)
+     * Display dynamic class details (Price, Description) from the matkul table
+     * This is handled by KelasController::belikelas method now
      */
-    public function showBeliKelas($id)
-    {
-        // Fetch the class from the 'matkul' table using its ID
-        $kelas = Matkul::findOrFail($id);
-
-        // Mock data for benefits as it's not in the DB
-        $benefits = [
-            'Bimbingan kelas offline',
-            'Akses video',
-            'Silabus & soal terbaru',
-            '32 Materi'
-        ];
-
-        return view('belikelasview', [
-            'kelas' => $kelas,
-            'benefits' => $benefits // Pass benefits separately
-        ]);
-    }
 
     /**
-     * Show the "Checkout" page.
-     * Mockup: Bayar kelas.png
+     * TASK 2 - Step 2: Show the "Checkout" page with password validation
+     * GET /checkout/{id} -> Shows checkout
      */
     public function showCheckout($id)
     {
-        // Fetch the class to get its price
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login.view')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        // Fetch the class to get its price and details
         $kelas = Matkul::findOrFail($id);
 
-        // Simulate the cart items based on the class
+        // Create mock cart items based on the class
         $item1 = [
             'title' => $kelas->nama_matkul . ' - Paket Recording',
-            'description' => 'Video pembelajaran...',
-            'price' => 25000, // Mock price for this part
+            'description' => 'Video pembelajaran lengkap...',
+            'price' => $kelas->harga ?? 90000,
             'image' => 'https://placehold.co/100x100/333/fff?text=Rec'
         ];
         $item2 = [
-            'title' => 'Paket 1 Meet (Reguler EAS)',
-            'description' => 'Kelas offline untuk...',
-            'price' => 65000, // Mock price for this part
+            'title' => 'Paket 1 Meet (Reguler)',
+            'description' => 'Kelas offline untuk pembelajaran...',
+            'price' => 0,
             'image' => 'https://placehold.co/100x100/555/fff?text=Meet'
         ];
 
         $subtotal = $item1['price'] + $item2['price'];
         $admin_fee = 2000;
-        $discount = 0.50; // 50%
-        $total = ($subtotal * (1 - $discount)) + $admin_fee;
+        $discount_percent = 0.50; // 50%
+        $discount_amount = $subtotal * $discount_percent;
+        $total = ($subtotal - $discount_amount) + $admin_fee;
 
         $summary = [
             'items' => [$item1, $item2],
             'subtotal' => $subtotal,
             'discount_percent' => '50%',
+            'discount_amount' => $discount_amount,
             'admin_fee' => $admin_fee,
-            'total' => $total,
-            'final_price' => $total // This is what we'll save
+            'total' => $total
         ];
 
         return view('checkoutview', [
             'summary' => $summary,
-            'kelas_id' => $id // Pass the class ID to the form
+            'kelas' => $kelas,
+            'kelas_id' => $id
         ]);
     }
 
     /**
-     * Process the payment.
-     * This follows the Sequence Diagram: validates user password, then redirects.
+     * TASK 2 - Step 3: Process the payment
+     * POST /checkout/{id} -> Processes payment
+     * Validates user password for security, creates BeliMatkul record, redirects to loading
      */
     public function processPayment(Request $request, $id)
     {
@@ -91,84 +88,123 @@ class PembayaranController extends Controller
             'payment_method' => 'required'
         ]);
 
-        // 1. Authenticate the user (as per your sequence diagram)
-        $credentials = $request->only('email', 'password');
-
-        // We use Auth::validate() instead of Auth::attempt() so we don't log them in,
-        // we just check their password. We assume they are already logged in.
         $user = Auth::user();
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-             // Password failed
+        if (!$user) {
+            return redirect()->route('login.view')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        // Validate password using Hash::check for security
+        if (!Hash::check($request->password, $user->password)) {
             Log::warning("Payment failed (password mismatch) for user: " . $request->email);
             return back()->withErrors(['password' => 'Password yang Anda masukkan salah.'])->withInput();
         }
 
-        // 2. Password is correct. Fetch class and summary data again.
-        // (In a real app, you'd pass this from a secure session, but for this flow, we recalculate)
+        // Fetch class and summary data
         $kelas = Matkul::findOrFail($id);
-        $subtotal = 90000; // Mocked subtotal from showCheckout
-        $admin_fee = 2000;
-        $discount_amount = 45000; // Mocked discount
-        $total = 47000; // Mocked total
 
-        // 3. Create the transaction in `beli_matkul` table
+        // Check if user already purchased this class
+        $alreadyBought = BeliMatkul::where('id_user', $user->id_user)
+            ->where('id_matkul', $id)
+            ->exists();
+
+        if ($alreadyBought) {
+            return back()->withErrors(['payment' => 'Anda sudah membeli kelas ini sebelumnya.']);
+        }
+
+        // Calculate payment amounts
+        $subtotal = $kelas->harga ?? 90000;
+        $admin_fee = 2000;
+        $discount_percent = 0.50;
+        $discount_amount = $subtotal * $discount_percent;
+        $total = ($subtotal - $discount_amount) + $admin_fee;
+
+        // Create the transaction in `beli_matkul` table
         try {
             $pembelian = new BeliMatkul();
             $pembelian->id_matkul = $id;
-            $pembelian->id_user = $user->id_user; // Get logged-in user's ID
+            $pembelian->id_user = $user->id_user;
             $pembelian->cara_pembayaran = $request->payment_method;
             $pembelian->sub_total = $subtotal;
             $pembelian->diskon = $discount_amount;
             $pembelian->biaya_admin = $admin_fee;
             $pembelian->total = $total;
-            $pembelian->benefit = 'Akses ' . $kelas->nama_matkul; // Example benefit
+            $pembelian->benefit = 'Akses ' . $kelas->nama_matkul;
             $pembelian->save();
 
-            Log::info("Payment processing SUCCESS for user: " . $user->email . " for class: " . $id . ". New transaction ID: " . $pembelian->id_beli_matkul);
+            Log::info("Payment processing SUCCESS for user: " . $user->email . " for class: " . $id . ". Transaction ID: " . $pembelian->id_beli_matkul);
 
-            // 4. Redirect to loading page
+            // Redirect to loading page
             return redirect()->route('pembayaran.loading', ['id' => $id]);
 
         } catch (\Exception $e) {
             Log::error("Database error during payment: " . $e->getMessage());
-            return back()->withErrors(['password' => 'Gagal menyimpan transaksi. Coba lagi.'])->withInput();
+            return back()->withErrors(['payment' => 'Gagal menyimpan transaksi. Coba lagi.'])->withInput();
         }
     }
 
     /**
-     * Show the loading page.
-     * This page will auto-redirect to the success page.
+     * TASK 2 - Step 4: Show the loading page for 3 seconds
+     * GET /loading/{id} -> Loading screen
+     * Meta refresh redirects to success page after 3 seconds
      */
     public function showLoading($id)
     {
-        // Redirect to the success page, passing the class ID
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login.view');
+        }
+
+        // Verify the class exists
+        Matkul::findOrFail($id);
+
+        // Redirect URL to success page
         $redirectTo = route('pembayaran.sukses', ['id' => $id]);
+
         return view('loadingview', ['redirectTo' => $redirectTo]);
     }
 
     /**
-     * Show the "Pembelian Sukses" page.
-     * Mockup: bayar sukses.jpg
+     * TASK 2 - Step 5: Show the "Sukses" page
+     * GET /sukses/{id} -> Success screen
+     * Display details of the specific class purchased
      */
     public function showSukses($id)
     {
-        // Fetch the class data that was just purchased
-        $kelas = Matkul::findOrFail($id);
+        $user = Auth::user();
 
-        // Mock data for the card
+        if (!$user) {
+            return redirect()->route('login.view');
+        }
+
+        // Fetch the class data that was just purchased
+        $kelas = Matkul::with('mentor')->findOrFail($id);
+
+        // Get the purchase record for this user and class
+        $pembelian = BeliMatkul::where('id_user', $user->id_user)
+            ->where('id_matkul', $id)
+            ->first();
+
+        if (!$pembelian) {
+            abort(404, 'Pembelian tidak ditemukan');
+        }
+
+        // Prepare success page data
         $purchased_class_data = [
             'id' => $id,
             'title' => $kelas->nama_matkul,
             'description' => $kelas->deskripsi,
             'image' => 'https://placehold.co/600x400/000/fff?text=' . urlencode($kelas->nama_matkul),
-            'rating' => 4.3, // Mock data
-            'rating_count' => 16325, // Mock data
-            'instructor' => 'Mario', // Mock data
-            'instructor_angkatan' => 2023, // Mock data
-            'duration' => '3 Bulan' // Mock data
+            'rating' => 4.3,
+            'rating_count' => 16325,
+            'instructor' => $kelas->mentor->nama ?? 'Instruktur',
+            'duration' => '3 Bulan',
+            'price' => $pembelian->total,
+            'transaction_id' => $pembelian->id_beli_matkul
         ];
 
         return view('suksesview', ['kelas' => $purchased_class_data]);
     }
 }
+

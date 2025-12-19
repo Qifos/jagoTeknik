@@ -1,7 +1,8 @@
 <!--
- * Author : Fiqih Soetam PuTra (NRP 5026231096)
- * Desc   : Kelas
- * Date   : 2025-11-04
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : resources/views/kelas.blade.php
+ * Desc   : view untuk halaman kelas
+ * Date   : 25-11-2025
 -->
 <!DOCTYPE html>
 <html lang="id">
@@ -18,7 +19,7 @@
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
                 <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
@@ -32,7 +33,7 @@
                         <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('kelas.index') }}">Kelas</a>
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
@@ -49,7 +50,7 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
                             <img src="profile.jpg" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -67,7 +68,19 @@
             </div>
 
             <header class="text-center">
-                <h1 class="display-5 title-hero">Kalkulus 2</h1>
+                <h1 class="display-5 title-hero">{{ $matkul->nama_matkul }}</h1>
+                <p class="text-muted">{{ $matkul->mentor->nama ?? 'Instruktur' }}</p>
+                <div class="mt-4">
+                    @if($sudahDibeli)
+                        <a href="{{ route('kelas.detail.beli', $matkul->id_matkul) }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-play-fill"></i> Mulai Belajar
+                        </a>
+                    @else
+                        <a href="{{ route('kelas.beli', $matkul->id_matkul) }}" class="btn btn-warning btn-lg">
+                            <i class="bi bi-cart-plus"></i> Beli Kelas
+                        </a>
+                    @endif
+                </div>
             </header>
 
             <div style="height: 30px;"></div>
@@ -85,12 +98,8 @@
                 <div class="h-scroll" id="materi-scroll">
                     @foreach($materiItems as $item)
                     <div class="card-item">
-                        <a href="{{ route('media.image', ['id' => $item['id']]) }}" class="text-decoration-none">
+                        <a href="{{ route('media.materi', ['id' => $item['id']]) }}" class="text-decoration-none">
                             <div class="custom-card">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="small-pill">{{ $item['tag'] }}</span>
-                                </div>
-
                                 <div class="media-container mb-3">
                                     @if(isset($item['thumb']) && $item['thumb'])
                                         <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
@@ -99,18 +108,21 @@
                                             <span>{{ $item['title'] }}</span>
                                         </div>
                                     @endif
+                                    <span class="small-pill">{{ $item['tag'] }}</span>
                                 </div>
 
-                                <div class="card-title mb-2">{{ $item['title'] }}</div>
-                                <div class="instructor mb-3">
-                                    <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
-                                    <span>{{ $item['instructor'] }}</span>
-                                </div>
+                                <div style="padding: 0 12px;">
+                                    <div class="card-title mb-2">{{ $item['title'] }}</div>
+                                    <div class="instructor mb-2">
+                                        <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
+                                        <span>{{ $item['instructor'] }}</span>
+                                    </div>
 
-                                <div class="custom-progress mt-auto">
-                                    <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                    <div class="custom-progress mt-auto">
+                                        <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                    </div>
+                                    <div class="progress-text mt-2 mb-3">{{ $item['progress_text'] }}</div>
                                 </div>
-                                <div class="progress-text mt-2">{{ $item['progress_text'] }}</div>
                             </div>
                         </a>
                     </div>
@@ -131,7 +143,7 @@
                 <div class="h-scroll" id="video-scroll">
                     @foreach($videoItems as $video)
                     <div class="card-item">
-                        <a href="{{ route('media.video', ['id' => $video['id']]) }}" class="text-decoration-none">
+                        <a href="{{ route('media.video.detail', ['id' => $video['id']]) }}" class="text-decoration-none">
                             <div class="custom-video-card">
                                 <div class="media-container mb-3">
                                     @if(isset($video['thumb']) && $video['thumb'])
@@ -143,16 +155,18 @@
                                     @endif
                                 </div>
 
-                                <div class="card-title mb-2">{{ $video['title'] }}</div>
-                                <div class="instructor mb-3">
-                                    <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
-                                    <span>{{ $video['instructor'] }}</span>
-                                </div>
+                                <div style="padding: 0 12px; display: flex; flex-direction: column; flex: 1;">
+                                    <div class="card-title mb-2">{{ $video['title'] }}</div>
+                                    <div class="instructor mb-2">
+                                        <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
+                                        <span>{{ $video['instructor'] }}</span>
+                                    </div>
 
-                                <div class="custom-progress mt-auto">
-                                    <div class="bar" style="width: {{ $video['progress'] }}%"></div>
+                                    <div class="custom-progress mt-auto">
+                                        <div class="bar" style="width: {{ $video['progress'] }}%"></div>
+                                    </div>
+                                    <div class="progress-text mt-2 mb-3">{{ $video['progress_text'] }}</div>
                                 </div>
-                                <div class="progress-text mt-2">{{ $video['progress_text'] }}</div>
                             </div>
                         </a>
                     </div>

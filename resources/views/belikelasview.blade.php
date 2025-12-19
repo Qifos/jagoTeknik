@@ -1,3 +1,8 @@
+<!--
+ * Author : Faiz Hazmi Maulana (NRP 502623120)
+ * Desc   : semuaKelas
+ * Date   : 2025-11-30
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -6,12 +11,12 @@
     <title>Jago Teknik - Beli {{ $kelas->nama_matkul }}</title>
 
     <!-- CSS Links -->
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/belikelas.css') }}">
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/belikelas.css') }}">
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
@@ -67,112 +72,110 @@
 
             <div class="row g-4 g-lg-5">
                 <!-- Left Column -->
-                <div class="col-lg-7">
-                    <div class="beli-hero-image mb-4">
-                        <img src="https://placehold.co/800x450/000/fff?text={{ urlencode($kelas->nama_matkul) }}" alt="{{ $kelas->nama_matkul }}">
-                        <div class="hero-title-overlay">{{ $kelas->nama_matkul }}</div>
-                    </div>
-
-                    <nav class="class-tabs mb-3">
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab" data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview" aria-selected="true">Overview</button>
-                            <button class="nav-link" id="nav-rating-tab" data-bs-toggle="tab" data-bs-target="#nav-rating" type="button" role="tab" aria-controls="nav-rating" aria-selected="false">Rating</button>
-                            <button class="nav-link" id="nav-benefit-tab" data-bs-toggle="tab" data-bs-target="#nav-benefit" type="button" role="tab" aria-controls="nav-benefit" aria-selected="false">Benefit</button>
-                        </div>
-                    </nav>
-                    <div class="tab-content py-3" id="nav-tabContent">
-                        <!-- Overview Tab -->
-                        <div class="tab-pane fade show active" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
-                            <p>{{ $kelas->deskripsi ?? $kelas->deskripsi_kelas ?? 'Deskripsi kelas tidak tersedia.' }}</p>
-                        </div>
-                        <!-- Rating Tab -->
-                        <div class="tab-pane fade" id="nav-rating" role="tabpanel" aria-labelledby="nav-rating-tab">
-                            <h4 class="fw-bold">Rating: {{ $kelas->rating_kelas ?? '4.5' }}/5 (1,234 reviews)</h4>
-                            <div class="rating-bar">
-                                <span>5 stars</span>
-                                <div class="progress"><div class="progress-bar" style="width: 70%"></div></div>
-                                <span>70%</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>4 stars</span>
-                                <div class="progress"><div class="progress-bar" style="width: 20%"></div></div>
-                                <span>20%</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>3 stars</span>
-                                <div class="progress"><div class="progress-bar" style="width: 5%"></div></div>
-                                <span>5%</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>2 stars</span>
-                                <div class="progress"><div class="progress-bar" style="width: 3%"></div></div>
-                                <span>3%</span>
-                            </div>
-                            <div class="rating-bar">
-                                <span>1 star</span>
-                                <div class="progress"><div class="progress-bar" style="width: 2%"></div></div>
-                                <span>2%</span>
-                            </div>
-                        </div>
-                        <!-- Benefit Tab -->
-                        <div class="tab-pane fade" id="nav-benefit" role="tabpanel" aria-labelledby="nav-benefit-tab">
-                            <ul class="benefit-list">
-                                @foreach($benefits as $benefit)
-                                <li>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
-                                    <span>{{ $benefit }}</span>
-                                </li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Sidebar -->
-                <div class="col-lg-5">
-                    <div class="beli-sidebar">
-                        <img src="https://placehold.co/600x400/000/fff?text={{ urlencode($kelas->nama_matkul) }}" class="img-fluid sidebar-image" alt="{{ $kelas->nama_matkul }}">
-
-                        <div class="d-flex align-items-center gap-3 mb-2">
-                            <!-- Harga dari database -->
-                            <span class="price-lg">Rp {{ number_format($kelas->harga_asli, 0, ',', '.') }}</span>
-                        </div>
-                        <p class="promo-text mb-3">Harga khusus untuk Anda!</p>
-
-                        <!-- Tombol Beli Sekarang -->
-                        <a href="{{ route('pembayaran.checkout', ['id' => $kelas->id_matkul]) }}" class="btn btn-beli">
-                            Beli sekarang - Rp {{ number_format($kelas->harga_asli, 0, ',', '.') }}
-                        </a>
-
-                        <!-- Alternatif: Tombol untuk method showBeliKelas -->
-                        {{-- <a href="{{ route('kelas.beli', ['id' => $kelas->id_matkul]) }}" class="btn btn-beli">
-                            Beli sekarang - Rp {{ number_format($kelas->harga_asli, 0, ',', '.') }}
-                        </a> --}}
-
-                        <h5 class="mt-4 mb-3">Anda Ini Akan Mendapatkan</h5>
-                        <ul class="benefit-list">
-                            @foreach($benefits as $benefit)
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16"><path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.893zM16 1.828c-1.13-.124-2.258-.063-3.112.752v9.746c.935-.53 2.12-.603 3.213-.493 1.18.12 2.37.461 3.287.893zM15 2.828c-.885-.37-2.154-.769-3.388-.893-1.33-.134-2.458.063-3.112.752v9.746c.935-.53 2.12-.603 3.213-.493 1.18.12 2.37.461 3.287.893z"/></svg>
-                                <span>{{ $benefit }}</span>
-                            </li>
-                            @endforeach
-                        </ul>
-
-                        <hr class="my-4">
-
-                        <h5 class="mb-3 text-center">Bagikan Kelas Ini</h5>
-                        <div class="share-icons">
-                            <a href="#"><i class="bi bi-facebook"></i></a>
-                            <a href="#"><i class="bi bi-instagram"></i></a>
-                            <a href="#"><i class="bi bi-twitter-x"></i></a>
-                            <a href="#"><i class="bi bi-telegram"></i></a>
-                            <a href="#"><i class="bi bi-whatsapp"></i></a>
-                        </div>
-                    </div>
-                </div>
+        <div class="col-lg-7">
+            <div class="beli-hero-image mb-4">
+                <img src="{{ $kelas->image_path ? asset($kelas->image_path) : asset('images/kelas/default.jpg') }}"
+                    alt="{{ $kelas->nama_matkul }}"
+                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
             </div>
 
+            <nav class="class-tabs mb-3">
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab" data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview" aria-selected="true">Overview</button>
+                    <button class="nav-link" id="nav-rating-tab" data-bs-toggle="tab" data-bs-target="#nav-rating" type="button" role="tab" aria-controls="nav-rating" aria-selected="false">Rating</button>
+                    <button class="nav-link" id="nav-benefit-tab" data-bs-toggle="tab" data-bs-target="#nav-benefit" type="button" role="tab" aria-controls="nav-benefit" aria-selected="false">Benefit</button>
+                </div>
+            </nav>
+
+            <div class="tab-content py-3" id="nav-tabContent">
+                <!-- Overview Tab -->
+                <div class="tab-pane fade show active" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
+                    <p>{{ $kelas->deskripsi ?? $kelas->deskripsi_kelas ?? 'Deskripsi kelas tidak tersedia.' }}</p>
+                </div>
+
+                <!-- Rating Tab -->
+                <div class="tab-pane fade" id="nav-rating" role="tabpanel" aria-labelledby="nav-rating-tab">
+                    <h4 class="fw-bold">Rating: {{ $kelas->rating_kelas ?? '4.5' }}/5 (1,234 reviews)</h4>
+                    <div class="rating-bar">
+                        <span>5 stars</span>
+                        <div class="progress"><div class="progress-bar" style="width: 70%"></div></div>
+                        <span>70%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>4 stars</span>
+                        <div class="progress"><div class="progress-bar" style="width: 20%"></div></div>
+                        <span>20%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>3 stars</span>
+                        <div class="progress"><div class="progress-bar" style="width: 5%"></div></div>
+                        <span>5%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>2 stars</span>
+                        <div class="progress"><div class="progress-bar" style="width: 3%"></div></div>
+                        <span>3%</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span>1 star</span>
+                        <div class="progress"><div class="progress-bar" style="width: 2%"></div></div>
+                        <span>2%</span>
+                    </div>
+                </div>
+
+                <!-- Benefit Tab -->
+                <div class="tab-pane fade" id="nav-benefit" role="tabpanel" aria-labelledby="nav-benefit-tab">
+                    <ul class="benefit-list">
+                        @foreach($benefits as $benefit)
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/></svg>
+                            <span>{{ $benefit }}</span>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="col-lg-5">
+            <div class="beli-sidebar">
+                <img src="{{ $kelas->image_path ? asset($kelas->image_path) : asset('images/kelas/default.jpg') }}"
+                    alt="{{ $kelas->nama_matkul }}"
+                    class="sidebar-image"
+                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+
+                <div class="d-flex align-items-center gap-3 mb-2">
+                    <span class="price-lg">Rp {{ number_format($harga, 0, ',', '.') }}</span>
+                </div>
+                <p class="promo-text mb-3">Harga khusus untuk Anda!</p>
+
+                <!-- Tombol Beli Sekarang -->
+                <a href="{{ route('pembayaran.checkout', ['id' => $kelas->id_matkul]) }}" class="btn btn-beli">
+                    Beli sekarang - Rp {{ number_format($harga, 0, ',', '.') }}
+                </a>
+
+                <h5 class="mt-4 mb-3">Anda Ini Akan Mendapatkan</h5>
+                <ul class="benefit-list">
+                    @foreach($benefits as $benefit)
+                    <li>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16"><path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.893zM16 1.828c-1.13-.124-2.258-.063-3.112.752v9.746c.935-.53 2.12-.603 3.213-.493 1.18.12 2.37.461 3.287.893zM15 2.828c-.885-.37-2.154-.769-3.388-.893-1.33-.134-2.458.063-3.112.752v9.746c.935-.53 2.12-.603 3.213-.493 1.18.12 2.37.461 3.287.893z"/></svg>
+                        <span>{{ $benefit }}</span>
+                    </li>
+                    @endforeach
+                </ul>
+
+                <hr class="my-4">
+
+                <h5 class="mb-3 text-center">Bagikan Kelas Ini</h5>
+                <div class="share-icons">
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#"><i class="bi bi-telegram"></i></a>
+                    <a href="#"><i class="bi bi-whatsapp"></i></a>
+                </div>
+            </div>
         </div>
     </main>
 

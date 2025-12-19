@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * File   : app/Http/Controllers/WishlistController.php
+ * Desc   : controller untuk daftar wishlist masing" user di navbar kelas
+ */
 namespace App\Http\Controllers;
 
 use App\Models\Wishlist;
@@ -12,40 +16,31 @@ class WishlistController extends Controller
 {
     /**
      * Toggle wishlist untuk sebuah kelas.
-     * - Kalau belum ada → tambahkan
-     * - Kalau sudah ada → hapus
-     * - Kalau kelas sudah dibeli → blok (tidak bisa di-wishlist-kan)
+     * - Kalau belum ada → ditambahkan
+     * - Kalau sudah ada → dihapus
      */
-    public function toggle($id_kelas, Request $request)
+    public function toggle(Request $request, $id_kelas)
     {
         $user = Auth::user();
 
-        // Kalau belum login, lempar ke halaman login
         if (!$user) {
-            return redirect()->route('login.view')
-                ->with('error', 'Silakan login terlebih dahulu untuk menggunakan wishlist.');
+            return redirect()
+                ->route('login')
+                ->with('error', 'Silakan login dulu untuk menggunakan wishlist.');
         }
 
         $userId = $user->id_user ?? $user->id;
 
-        // Pastikan kelas ada
+        // Cari kelas
         $kelas = Kelas::findOrFail($id_kelas);
 
-        // Cek apakah user sudah membeli matkul dari kelas ini
-        $sudahBeli = BeliMatkul::where('id_user', $userId)
+        // Optional: kalau sudah dibeli, nggak usah bisa di-wishlist
+        $sudahDibeli = BeliMatkul::where('id_user', $userId)
             ->where('id_matkul', $kelas->id_matkul)
             ->exists();
 
-        if ($sudahBeli) {
-            // Kelas yang sudah dibeli tidak bisa dimasukkan ke wishlist
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'status'  => 'blocked',
-                    'message' => 'Kelas ini sudah kamu beli, tidak bisa dimasukkan ke wishlist.',
-                ], 400);
-            }
-
-            return back()->with('info', 'Kelas ini sudah kamu beli, tidak bisa dimasukkan ke wishlist.');
+        if ($sudahDibeli) {
+            return back()->with('info', 'Kelas ini sudah kamu beli 👍');
         }
 
         // Cek apakah sudah ada di wishlist

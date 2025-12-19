@@ -1,3 +1,9 @@
+<!--
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : resources/views/checkoutview.blade.php
+ * Desc   : view untuk halaman checkout pembayaran kelas
+ * Date   : 25-11-2025
+-->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -23,6 +29,7 @@
             <!-- Left Side: Form -->
             <div class="col-lg-7">
                 <h1 class="display-5 title-hero mb-4">Checkout</h1>
+                <p class="text-muted mb-4">Kelas: <strong>{{ $kelas->nama_matkul }}</strong></p>
 
                 <form class="checkout-form" method="POST" action="{{ route('pembayaran.process', ['id' => $kelas_id]) }}" x-data="{ paymentMethod: 'bca' }">
                     @csrf
