@@ -16,6 +16,7 @@ use App\Models\Matkul;
 use App\Models\Materi;
 use App\Models\Video;
 use App\Models\BeliMatkul;
+use App\Models\UserMateriProgress;
 
 class KelasController extends Controller
 {
@@ -82,19 +83,36 @@ class KelasController extends Controller
         }
 
         // Fetch all Materi (materials) for this Matkul
-        $materiList = Materi::where('id_matkul', $id)->get();
+        $materiList = Materi::where('id_matkul', $id)->orderBy('id_materi', 'asc')->get();
 
-        // Build materials array with their videos
-        $materiItems = $materiList->map(function($materi, $index) use ($matkul) {
+        // Build materials array with their videos and progress status
+        $materiItems = $materiList->map(function($materi, $index) use ($matkul, $user) {
             $videos = Video::where('id_materi', $materi->id_materi)->get();
+
+            // Get user progress for this materi
+            $progress = null;
+            if ($user) {
+                $progress = UserMateriProgress::where('id_user', $user->id_user)
+                    ->where('id_materi', $materi->id_materi)
+                    ->first();
+            }
+
+            // Determine status text
+            $isCompleted = $progress ? $progress->is_completed : false;
+            $statusText = $isCompleted ? 'Sudah dibaca' : 'Belum dibaca';
+            $progressValue = $isCompleted ? 100 : 0;
+
             return [
                 'id' => $materi->id_materi,
                 'title' => $materi->nama_materi,
-                'tag' => $index % 2 == 0 ? 'Teori' : 'Praktik',
+                'tag' => $materi->tipe ?? 'Teori',
                 'thumb' => $materi->thumbnail_path ?? 'https://placehold.co/600x400/0284c7/white?text=' . urlencode($materi->nama_materi),
                 'instructor' => $matkul->mentor->nama ?? 'Instruktur',
-                'progress' => rand(0, 100),
-                'progress_text' => 'Lesson ' . rand(1, 7) . ' of 7',
+                'progress' => $progressValue,
+                'progress_text' => $statusText,
+                'is_completed' => $isCompleted,
+                'content_read' => $progress ? $progress->content_read : false,
+                'video_completed' => $progress ? $progress->video_completed : false,
                 'videos_count' => $videos->count()
             ];
         });
@@ -113,11 +131,22 @@ class KelasController extends Controller
             ];
         })->filter()->values();
 
+        // Calculate overall progress for the class
+        $overallProgress = 0;
+        if ($user && $materiList->count() > 0) {
+            $completedCount = UserMateriProgress::where('id_user', $user->id_user)
+                ->where('id_matkul', $id)
+                ->where('is_completed', true)
+                ->count();
+            $overallProgress = round(($completedCount / $materiList->count()) * 100);
+        }
+
         return view('kelas', [
             'matkul' => $matkul,
             'sudahDibeli' => $sudahDibeli,
             'materiItems' => $materiItems,
-            'videoItems' => $videoItems
+            'videoItems' => $videoItems,
+            'overallProgress' => $overallProgress
         ]);
     }
 
@@ -275,6 +304,68 @@ class KelasController extends Controller
             ->avg('h.progres_precentage');
 
         return $progress ? round($progress) : rand(0, 100);
+    }
+
+    /**
+     * Preview class page from Jadwal view
+     * Shows class details with video preview
+     * GET /kelas/{id_kelas}/preview
+     */
+    public function preview($id_kelas)
+    {
+        // Fetch kelas with related matkul and mentor data
+        $kelas = DB::table('kelas as k')
+            ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+            ->leftJoin('mentor as mt', 'm.id_mentor', '=', 'mt.id_mentor')
+            ->where('k.id_kelas', $id_kelas)
+            ->select(
+                'k.id_kelas',
+                'k.image_path',
+                'k.deskripsi',
+                'k.tempat',
+                'm.id_matkul',
+                'm.nama_matkul',
+                'm.deskripsi as matkul_deskripsi',
+                'mt.nama as mentor_nama'
+            )
+            ->first();
+
+        if (!$kelas) {
+            return redirect()->route('jadwal.index')
+                ->with('error', 'Kelas tidak ditemukan.');
+        }
+
+        // Get nearest jadwal for this kelas
+        $today = \Carbon\Carbon::now()->toDateString();
+        $currentTime = \Carbon\Carbon::now()->format('H:i:s');
+
+        $jadwal = DB::table('jadwal as j')
+            ->where('j.id_kelas', $id_kelas)
+            ->where(function ($query) use ($today, $currentTime) {
+                $query->where('j.tanggal', '>', $today)
+                      ->orWhere(function ($q) use ($today, $currentTime) {
+                          $q->where('j.tanggal', '=', $today)
+                            ->where('j.jam_mulai', '>=', $currentTime);
+                      });
+            })
+            ->orderBy('j.tanggal', 'asc')
+            ->orderBy('j.jam_mulai', 'asc')
+            ->select('j.id_jadwal', 'j.tanggal', 'j.jam_mulai', 'j.jam_selesai')
+            ->first();
+
+        if (!$jadwal) {
+            return redirect()->route('jadwal.index')
+                ->with('error', 'Jadwal kelas tidak ditemukan.');
+        }
+
+        // Get matkul with mentor and jurusan
+        $matkul = Matkul::with(['mentor', 'jurusan'])->find($kelas->id_matkul);
+
+        return view('kelaspreview', [
+            'kelas' => $kelas,
+            'jadwal' => $jadwal,
+            'matkul' => $matkul
+        ]);
     }
 
     /**

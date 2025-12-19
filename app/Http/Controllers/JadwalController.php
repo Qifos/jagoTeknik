@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Author : Akhtar Zia Faizarrobbi (NRP 5026231095)
+ * File   : app/Http/Controllers/JadwalController.php
+  * Date   : 04-11-2025
+ */
 namespace App\Http\Controllers;
 
 use App\Models\Jadwal;

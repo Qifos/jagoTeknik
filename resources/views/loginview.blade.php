@@ -12,7 +12,6 @@
     <title>Login - Jago Teknik</title>
     <meta name="description" content="Login ke JagoTeknik untuk akses kelas teknik terbaik" />
 
-    <!-- Bootstrap 5 + Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('css/loginregister.css') }}">
@@ -67,9 +66,8 @@
                     <div class="form-check mb-4">
                         <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
                         <label class="form-check-label" for="rememberMe">Ingatkan saya</label>
+                        <button type="submit" class="btn btn-login mt-2">Login</button>
                     </div>
-
-                    <button type="submit" class="btn btn-login">Login</button>
                 </form>
             </div>
     </div>

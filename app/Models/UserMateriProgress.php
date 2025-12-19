@@ -21,19 +21,35 @@ class UserMateriProgress extends Model
         'video_completed',
         'video_watched_duration',
         'video_total_duration',
+        'video_watch_percentage',
         'content_read',
+        'content_scrolled_to_bottom',
         'scroll_depth',
         'started_at',
         'completed_at',
+        'is_completed',
         'last_accessed_at',
+        'quiz_completed',
+        'highest_quiz_score',
+        'recent_quiz_score',
+        'quiz_passed',
+        'last_quiz_attempt',
     ];
 
     protected $casts = [
         'video_completed' => 'boolean',
+        'video_watch_percentage' => 'integer',
         'content_read' => 'boolean',
+        'content_scrolled_to_bottom' => 'boolean',
+        'is_completed' => 'boolean',
+        'quiz_completed' => 'boolean',
+        'quiz_passed' => 'boolean',
+        'highest_quiz_score' => 'integer',
+        'recent_quiz_score' => 'integer',
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
         'last_accessed_at' => 'datetime',
+        'last_quiz_attempt' => 'datetime',
     ];
 
     // Relationships

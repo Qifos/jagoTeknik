@@ -9,6 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Jago Teknik - Materi</title>
 
     <!-- CSS Links -->
@@ -19,46 +20,51 @@
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-        <nav class="navbar navbar-expand-lg navbar-jagoteknik">
-            <div class="container-fluid">
-                <!-- Left Side -->
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('landing') }}">
-                    <span class="footer-logo me-2">J</span>
-                    Jago Teknik
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('kelas.index') }}">Kelas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Jadwal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Chat</a>
-                        </li>
-                    </ul>
-
-                    <!-- Right Side -->
-                    <div class="d-flex align-items-center gap-3">
-                        <form class="d-flex" role="search">
-                            <input class="form-control search-input" type="search" placeholder="Cari di Jago Teknik" aria-label="Search">
+        <!-- Navbar (SAMA seperti homepage/jadwal) -->
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
+                            </div>
                         </form>
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none gap-2">
-                            <img src="https://placehold.co/40x40/6b2fa0/white?text=A" alt="Profil" class="profile-img">
-                            <span class="d-none d-lg-inline">Profil</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
+                            <span class="ms-2">Profil</span>
                         </a>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
     </header>
+
 
     <main class="flex-grow-1">
         <div class="container py-4">
@@ -74,6 +80,58 @@
                 <h2 class="h4 mb-3">{{ $materi->nama_materi ?? 'Materi Pembelajaran' }}</h2>
 
                 <div>{!! $materi->isi_materi ?? '<p>Deskripsi materi tidak tersedia.</p>' !!}</div>
+
+                <!-- QUIZ SECTION (Before Videos) -->
+                <div class="mt-5 mb-4">
+                    <div id="quizScoreDisplay" style="display: none;" class="alert mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-2">Hasil Kuis</h5>
+                                <p class="mb-1"><strong>Skor Tertinggi:</strong> <span id="highestScore">-</span>%</p>
+                                <p class="mb-0"><strong>Skor Terbaru:</strong> <span id="recentScore">-</span>%</p>
+                            </div>
+                            <div class="text-center" style="min-width: 100px;">
+                                <div id="scorePercentage" style="font-size: 2.5rem; font-weight: bold;">-</div>
+                                <small id="scoreStatus">-</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 mb-3">
+                        <button id="quizToggleBtn" class="btn btn-sm" style="background: #6b4fa0; color: #fff; border: none;" onclick="toggleQuizContainer()">
+                            📝 Mulai Kuis Pemahaman
+                        </button>
+                        <button id="reAttemptBtn" class="btn btn-sm" style="background: #8b5cf6; color: #fff; border: none; display: none;" onclick="startNewAttempt()">
+                            🔄 Coba Lagi
+                        </button>
+                    </div>
+
+                    <!-- Quiz Container -->
+                    <div id="quizContainer" style="display: none; background: #2a2a3e; border: 2px solid #6b4fa0; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="mb-0" style="color: #fff;">Kuis Pemahaman Materi</h5>
+                            <button type="button" class="btn-close btn-close-white" onclick="toggleQuizContainer()"></button>
+                        </div>
+
+                        <div id="questionsContent" class="mb-3">
+                            <!-- Questions will be loaded here -->
+                            <div class="text-center py-3">
+                                <div class="spinner-border" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button id="submitQuizBtn" class="btn" style="background: #6b4fa0; color: #fff; border: none;" onclick="submitQuiz()">
+                                ✓ Selesaikan Kuis
+                            </button>
+                            <button type="button" class="btn" style="background: #444; color: #fff; border: none;" onclick="toggleQuizContainer()">
+                                Batal
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- Video List -->
                 @if($videos && $videos->count() > 0)
@@ -125,9 +183,9 @@
 
                 <!-- Next or Complete Button -->
                 @if($nextMateri)
-                    <a href="{{ route('media.materi', ['id' => $nextMateri->id_materi]) }}" class="materi-nav-button">
-                        Lanjut ke Materi Selanjutnya →
-                    </a>
+                    <button id="nextMateriBtn" class="materi-nav-button" onclick="goToNextMateri()" disabled>
+                        Lanjut ke Materi Selanjutnya → (Selesaikan kuis dulu)
+                    </button>
                 @else
                     <button class="materi-nav-button complete-btn" onclick="completeMateri()">
                         Selesaikan Pembelajaran ✓
@@ -195,10 +253,278 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <script>
-        // Complete materi function
+        const materiId = {{ $materi->id_materi ?? 0 }};
+        const matkulId = {{ $matkul->id_matkul ?? 0 }};
+        @if($nextMateri)
+        const nextMateriId = {{ $nextMateri->id_materi ?? 0 }};
+        @else
+        const nextMateriId = null;
+        @endif
+
+        let currentAttempt = 1;
+        let quizAnswers = {};
+        let quizPassed = false;
+        let highestScore = 0;
+        let recentScore = 0;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadQuizStatus();
+        });
+
+        // ===== QUIZ FUNCTIONS =====
+
+        async function loadQuestions() {
+    const container = document.getElementById('questionsContent');
+
+    try {
+        const response = await fetch(`/api/quiz/materi/${materiId}`, {
+            headers: {
+                // ADD THESE TWO LINES:
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                // This ensures you get the CSRF token we added in Step 1
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+            }
+        });
+
+        const data = await response.json();
+
+                if (data.success && data.questions.length > 0) {
+                    // Quiz exists, check if user has attempted it
+                    checkPreviousAttempts();
+                }
+            } catch (error) {
+                console.error('Error loading quiz status:', error);
+            }
+        }
+
+        async function checkPreviousAttempts() {
+            // Check if user has already attempted this quiz
+            try {
+                // We'll check via completeQuiz endpoint to get progress data
+                // For now, just load questions if they open the quiz
+            } catch (error) {
+                console.error('Error checking attempts:', error);
+            }
+        }
+
+        function toggleQuizContainer() {
+            const container = document.getElementById('quizContainer');
+            const isVisible = container.style.display !== 'none';
+
+            if (!isVisible) {
+                container.style.display = 'block';
+                loadQuestions();
+            } else {
+                container.style.display = 'none';
+            }
+        }
+
+        async function loadQuestions() {
+            const container = document.getElementById('questionsContent');
+
+            try {
+                const response = await fetch(`/api/quiz/materi/${materiId}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    renderQuestions(data.questions);
+                    quizAnswers = {};
+                } else {
+                    container.innerHTML = '<div class="alert alert-danger">Error loading questions</div>';
+                }
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                container.innerHTML = '<div class="alert alert-danger">Error loading questions</div>';
+            }
+        }
+
+        function renderQuestions(questions) {
+            const container = document.getElementById('questionsContent');
+            let html = '';
+
+            questions.forEach((question, index) => {
+                html += `
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h6 class="card-title" style="color: #fff;">Pertanyaan ${index + 1} <span class="badge bg-info">${question.difficulty_level}</span></h6>
+                            <p class="mb-3" style="color: #e9ecef;">${question.question_text}</p>
+                            <div class="options">
+                `;
+
+                question.options.forEach(option => {
+                    const checked = question.user_answer === option.id_option ? 'checked' : '';
+                    html += `
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="radio" name="question_${question.id_question}"
+                                   id="option_${option.id_option}" value="${option.id_option}"
+                                   onchange="recordAnswer(${question.id_question}, ${option.id_option})" ${checked}>
+                            <label class="form-check-label" for="option_${option.id_option}" style="color: #fff;">
+                                <strong>${option.option_letter}.</strong> ${option.option_text}
+                            </label>
+                        </div>
+                    `;
+                });
+
+                html += `
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        async function recordAnswer(questionId, optionId) {
+            quizAnswers[questionId] = optionId;
+
+            try {
+                const response = await fetch(`/api/quiz/answer/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify({
+                        id_question: questionId,
+                        selected_option_id: optionId,
+                        attempt_number: currentAttempt
+                    })
+                });
+
+                const data = await response.json();
+                console.log('Answer recorded:', data);
+            } catch (error) {
+                console.error('Error recording answer:', error);
+            }
+        }
+
+        async function submitQuiz() {
+            try {
+                // Check if questions are answered
+                const totalQuestions = document.querySelectorAll('.form-check-input').length / 5;
+                const answeredQuestions = Object.keys(quizAnswers).length;
+
+                if (answeredQuestions < totalQuestions) {
+                    alert('Mohon jawab semua pertanyaan sebelum submit (' + answeredQuestions + ' dari ' + Math.ceil(totalQuestions) + ')');
+                    return;
+                }
+
+                const response = await fetch(`/api/quiz/complete/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                });
+
+                const data = await response.json();
+                console.log('Submit response:', data);
+
+                if (data.success) {
+                    highestScore = data.highest_score || data.score;
+                    recentScore = data.recent_score || data.score;
+                    quizPassed = data.passed;
+
+                    showQuizResult(data);
+                } else {
+                    console.error('Server error:', data);
+                    alert(data.error || 'Error submitting quiz');
+                }
+            } catch (error) {
+                console.error('Error submitting quiz:', error);
+                alert('Terjadi kesalahan: ' + error.message);
+            }
+        }
+
+        function showQuizResult(data) {
+            const scoreDisplay = document.getElementById('quizScoreDisplay');
+            const container = document.getElementById('quizContainer');
+
+            document.getElementById('scorePercentage').textContent = data.score + '%';
+            document.getElementById('highestScore').textContent = data.highest_score || data.score;
+            document.getElementById('recentScore').textContent = data.recent_score || data.score;
+            document.getElementById('scoreStatus').textContent = data.passed ? '✓ LULUS' : '✗ TIDAK LULUS';
+            document.getElementById('scoreStatus').style.color = data.passed ? '#28a745' : '#dc3545';
+
+            if (data.passed) {
+                scoreDisplay.className = 'alert alert-success mb-3';
+                document.getElementById('reAttemptBtn').style.display = 'inline-block';
+
+                // Enable next button if exists
+                if (nextMateriId) {
+                    document.getElementById('nextMateriBtn').disabled = false;
+                    document.getElementById('nextMateriBtn').textContent = 'Lanjut ke Materi Selanjutnya →';
+                    document.getElementById('nextMateriBtn').style.cursor = 'pointer';
+                }
+            } else {
+                scoreDisplay.className = 'alert alert-warning mb-3';
+                document.getElementById('reAttemptBtn').style.display = 'inline-block';
+            }
+
+            scoreDisplay.style.display = 'block';
+            container.style.display = 'none';
+            document.getElementById('quizToggleBtn').textContent = '📝 Lihat Kuis Lagi';
+        }
+
+        async function startNewAttempt() {
+            try {
+                const response = await fetch(`/api/quiz/attempt/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentAttempt = data.attempt_number;
+                    quizAnswers = {};
+
+                    document.getElementById('quizScoreDisplay').style.display = 'none';
+                    toggleQuizContainer();
+                }
+            } catch (error) {
+                console.error('Error starting new attempt:', error);
+                alert('Terjadi kesalahan');
+            }
+        }
+
+        function goToNextMateri() {
+            if (!quizPassed) {
+                alert('Silakan selesaikan kuis dengan skor minimal 70% terlebih dahulu');
+                return;
+            }
+
+            if (nextMateriId) {
+                window.location.href = `/materi/${nextMateriId}`;
+            }
+        }
+
+        // ===== COMPLETE MATERI =====
         async function completeMateri() {
-            const materiId = {{ $materi->id_materi ?? 0 }};
-            const matkulId = {{ $matkul->id_matkul ?? 0 }};
+            if (!materiId || !matkulId) {
+                alert('Informasi materi tidak lengkap');
+                return;
+            }
+
+            if (!quizPassed) {
+                alert('Silakan selesaikan kuis dengan skor minimal 70% terlebih dahulu');
+                return;
+            }
 
             try {
                 const response = await fetch(`/api/materi/complete/${materiId}`, {
@@ -212,94 +538,13 @@
                 if (response.ok) {
                     const data = await response.json();
                     alert('Selamat! Anda telah menyelesaikan pembelajaran ini.');
-                    // Redirect to kelas view
-                    window.location.href = `/kelas/${matkulId}`;
+                    window.location.href = `/kelas/${matkulId}/belajar`;
                 } else {
                     alert('Terjadi kesalahan. Silakan coba lagi.');
                 }
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error completing materi:', error);
                 alert('Terjadi kesalahan. Silakan coba lagi.');
-            }
-        }
-
-        // Track content reading progress
-        let scrollDepth = 0;
-        let contentReadTimer = null;
-        const materiId = {{ $materi->id_materi ?? 0 }};
-
-        window.addEventListener('scroll', () => {
-            const contentCard = document.querySelector('.content-card');
-            if (!contentCard) return;
-
-            const scrollHeight = contentCard.scrollHeight - window.innerHeight;
-            const scrolledHeight = window.scrollY;
-            scrollDepth = Math.round((scrolledHeight / scrollHeight) * 100);
-
-            // Record when user has read most of the content
-            if (scrollDepth >= 80 && !contentReadTimer) {
-                contentReadTimer = setTimeout(() => {
-                    recordContentProgress(true);
-                }, 2000); // Record after 2 seconds of reading
-            }
-        });
-
-        // Record content read progress
-        async function recordContentProgress(contentRead) {
-            if (!materiId) return;
-
-            try {
-                await fetch(`/api/progress/content/${materiId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
-                    },
-                    body: JSON.stringify({
-                        scroll_depth: scrollDepth,
-                        content_read: contentRead
-                    })
-                });
-            } catch (error) {
-                console.error('Error recording content progress:', error);
-            }
-        }
-
-        // Track video completion if there are videos
-        document.addEventListener('DOMContentLoaded', () => {
-            const videoElements = document.querySelectorAll('video');
-            videoElements.forEach((video, index) => {
-                video.addEventListener('ended', () => {
-                    recordVideoProgress(true, video.duration);
-                });
-
-                // Record progress as video plays
-                video.addEventListener('timeupdate', () => {
-                    const currentTime = Math.round(video.currentTime);
-                    recordVideoProgress(false, video.duration, currentTime);
-                });
-            });
-        });
-
-        // Record video progress
-        async function recordVideoProgress(completed, totalDuration, watchedDuration = null) {
-            if (!materiId) return;
-
-            try {
-                await fetch(`/api/progress/video/${materiId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
-                    },
-                    body: JSON.stringify({
-                        watched_duration: watchedDuration || totalDuration,
-                        total_duration: Math.round(totalDuration),
-                        completed: completed
-                    })
-                });
-            } catch (error) {
-                console.error('Error recording video progress:', error);
             }
         }
     </script>

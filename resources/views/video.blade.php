@@ -19,46 +19,52 @@
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-        <nav class="navbar navbar-expand-lg navbar-jagoteknik">
-            <div class="container-fluid">
-                <!-- Left Side -->
-                <a class="navbar-brand d-flex align-items-center" href="{{ route('landing') }}">
-                    <span class="footer-logo me-2">J</span>
-                    Jago Teknik
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('kelas.index') }}">Kelas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Jadwal</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Chat</a>
-                        </li>
-                    </ul>
-
-                    <!-- Right Side -->
-                    <div class="d-flex align-items-center gap-3">
-                        <form class="d-flex" role="search">
-                            <input class="form-control search-input" type="search" placeholder="Cari di Jago Teknik" aria-label="Search">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
+                            </div>
                         </form>
-                        <a href="#" class="d-flex align-items-center text-white text-decoration-none gap-2">
-                            <img src="https://placehold.co/40x40/6b2fa0/white?text=A" alt="Profil" class="profile-img">
-                            <span class="d-none d-lg-inline">Profil</span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
+                            <span class="ms-2">Profil</span>
                         </a>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
+
     </header>
+
 
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">
@@ -120,7 +126,7 @@
                 <div class="col-lg-8">
                     <div class="video-player">
                         <div class="ratio ratio-16x9">
-                            <video controls poster="https://placehold.co/1280x720/000/333?text=Video+Player+{{ $videoId ?? 1 }}" class="w-100">
+                            <video controls poster="https://placehold.co/1280x720/000/333?text=Video+Player+{{ $videoId ?? 1 }}" class="w-100" id="mainVideo">
                                 <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
@@ -187,5 +193,142 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Alpine.js for small interactions -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        const materiId = {{ $materi->id_materi ?? 0 }};
+        const matkulId = {{ $matkul->id_matkul ?? 0 }};
+        let videoWatchPercentage = 0;
+        let videoCompleted = false;
+        let lastProgressUpdate = 0;
+        const PROGRESS_UPDATE_INTERVAL = 5000; // Update every 5 seconds
+
+        // Initialize video tracking
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.querySelector('video');
+
+            if (video) {
+                // Track video play
+                video.addEventListener('play', () => {
+                    console.log('Video started');
+                });
+
+                // Track video time update
+                video.addEventListener('timeupdate', () => {
+                    const currentTime = Math.round(video.currentTime);
+                    const totalDuration = Math.round(video.duration);
+
+                    if (totalDuration > 0) {
+                        videoWatchPercentage = Math.round((currentTime / totalDuration) * 100);
+                    }
+
+                    // Update progress every 5 seconds
+                    const now = Date.now();
+                    if (now - lastProgressUpdate > PROGRESS_UPDATE_INTERVAL) {
+                        recordVideoWatchProgress(totalDuration);
+                        lastProgressUpdate = now;
+                    }
+                });
+
+                // Track video ended
+                video.addEventListener('ended', () => {
+                    console.log('Video completed');
+                    videoCompleted = true;
+                    recordVideoCompletion(video.duration);
+                });
+
+                // Track video pause
+                video.addEventListener('pause', () => {
+                    console.log('Video paused at:', video.currentTime);
+                });
+
+                // Track when leaving the page
+                window.addEventListener('beforeunload', () => {
+                    if (videoWatchPercentage > 0) {
+                        recordVideoWatchProgress(video.duration);
+                    }
+                });
+            }
+        });
+
+        /**
+         * Record video watch progress continuously
+         */
+        async function recordVideoWatchProgress(totalDuration) {
+            if (!materiId || videoWatchPercentage === 0) return;
+
+            try {
+                const response = await fetch(`/api/progress/video-complete/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify({
+                        watch_percentage: videoWatchPercentage,
+                        total_duration: Math.round(totalDuration)
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Video progress recorded:', data);
+                }
+            } catch (error) {
+                console.error('Error recording video progress:', error);
+            }
+        }
+
+        /**
+         * Record video completion
+         */
+        async function recordVideoCompletion(totalDuration) {
+            if (!materiId || !videoCompleted) return;
+
+            try {
+                const response = await fetch(`/api/progress/video-complete/${materiId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    },
+                    body: JSON.stringify({
+                        watch_percentage: 100,
+                        total_duration: Math.round(totalDuration)
+                    })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Video completion recorded:', data);
+
+                    // Show notification after video is done
+                    showVideoCompleteNotification();
+                }
+            } catch (error) {
+                console.error('Error recording video completion:', error);
+            }
+        }
+
+        /**
+         * Show notification when video is completed
+         */
+        function showVideoCompleteNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'alert alert-success position-fixed bottom-0 end-0 m-4';
+            notification.style.zIndex = '9999';
+            notification.innerHTML = `
+                <h6 class="alert-heading">Video Selesai!</h6>
+                <p>Anda telah menonton video ini. Silakan kembali ke materi untuk melanjutkan pembelajaran.</p>
+                <hr>
+                <a href="{{ route('media.materi', ['id' => $materi->id_materi]) }}" class="btn btn-sm btn-success">Kembali ke Materi</a>
+            `;
+            document.body.appendChild(notification);
+
+            // Auto remove after 10 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 10000);
+        }
+    </script>
 </body>
 </html>

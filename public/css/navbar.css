@@ -1,13 +1,13 @@
 /* --- Navbar --- */
-.navbar {
+/* .navbar {
     background-color: #000;
     padding: 1rem 0;
-}
+} */
 
-.navbar-brand {
+/* .navbar-brand {
     font-weight: 700;
     color: var(--text-light);
-}
+} */
 
 .brand-logo {
     width: 40px;
@@ -15,7 +15,7 @@
     object-fit: contain;
 }
 
-.nav-link {
+/* .nav-link {
     color: rgba(255, 255, 255, 0.8) !important;
     font-weight: 500;
     margin: 0 0.5rem;
@@ -25,7 +25,7 @@
 .nav-link:hover,
 .nav-link.active {
     color: var(--text-light) !important;
-}
+} */
 
 .search-box {
     position: relative;

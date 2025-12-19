@@ -21,11 +21,13 @@ class UserMatkulProgress extends Model
         'progress_percentage',
         'started_at',
         'completed_at',
+        'last_accessed_at',
     ];
 
     protected $casts = [
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
+        'last_accessed_at' => 'datetime',
     ];
 
     // Relationships

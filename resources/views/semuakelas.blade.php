@@ -5,55 +5,65 @@
 -->
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelas Jago Teknik</title>
 
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/kelas-style.css">
+        <!-- Samakan navbar & style dengan Homepage & Jadwal -->
+        <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/personalisasi.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+
+        <!-- Style khusus halaman Kelas (card, layout, dsb) -->
+        <link rel="stylesheet" href="{{ asset('css/kelas-style.css') }}">
+
 </head>
+
 <body>
-    <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-                <div class="container-fluid px-4">
-                    <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                        <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
-                            <img src="profile.jpg" alt="Profile" class="profile-img">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
                     </li>
@@ -66,36 +76,35 @@
     <section class="main-section">
         <div class="container py-4">
             <!-- Back Button -->
-            <button class="btn btn-back mb-4">
+            <a class="btn btn-back mb-4" href="{{ url('/homepage') }}">
                 <i class="bi bi-chevron-left"></i> Back
-            </button>
-
+            </a>
             <!-- Page Title -->
             <h1 class="page-title mb-4 text-center">Kelas Jago Teknik</h1>
 
             <!-- Tabs Navigation -->
             <ul class="nav nav-tabs custom-tabs justify-content-center mb-4" id="kelasTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="semua-tab" data-bs-toggle="tab"
-                            data-bs-target="#semua" type="button" role="tab">
+                    <button class="nav-link active" id="semua-tab" data-bs-toggle="tab" data-bs-target="#semua"
+                        type="button" role="tab">
                         Semua
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="diikuti-tab" data-bs-toggle="tab"
-                            data-bs-target="#diikuti" type="button" role="tab">
+                    <button class="nav-link" id="diikuti-tab" data-bs-toggle="tab" data-bs-target="#diikuti"
+                        type="button" role="tab">
                         Di Ikuti
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="selesai-tab" data-bs-toggle="tab"
-                            data-bs-target="#selesai" type="button" role="tab">
+                    <button class="nav-link" id="selesai-tab" data-bs-toggle="tab" data-bs-target="#selesai"
+                        type="button" role="tab">
                         Selesai
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="wishlist-tab" data-bs-toggle="tab"
-                            data-bs-target="#wishlist" type="button" role="tab">
+                    <button class="nav-link" id="wishlist-tab" data-bs-toggle="tab" data-bs-target="#wishlist"
+                        type="button" role="tab">
                         Wishlist
                     </button>
                 </li>
@@ -110,7 +119,7 @@
                         <p class="section-subtitle">Lihat semua kelas yang ada di jagoteknik</p>
                     </div>
 
-                     <!-- Course Cards Grid -->
+                    <!-- Course Cards Grid -->
 
                     <!-- Course Cards Grid -->
                     <div class="row g-4">
@@ -124,13 +133,15 @@
                             $semuaKelas = DB::table('kelas as k')
                                 ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
                                 ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
-                                ->leftJoin('beli_matkul as bm', function($join) use ($user) {
-                                    $join->on('m.id_matkul', '=', 'bm.id_matkul')
-                                         ->where('bm.id_user', '=', $user ? $user->id_user : null);
+                                ->leftJoin('beli_matkul as bm', function ($join) use ($user) {
+                                    $join
+                                        ->on('m.id_matkul', '=', 'bm.id_matkul')
+                                        ->where('bm.id_user', '=', $user ? $user->id_user : null);
                                 })
-                                ->leftJoin('wishlist_kelas as wl', function($join) use ($user) {
-                                    $join->on('k.id_kelas', '=', 'wl.id_kelas')
-                                         ->where('wl.id_user', '=', $user ? $user->id_user : null);
+                                ->leftJoin('wishlist_kelas as wl', function ($join) use ($user) {
+                                    $join
+                                        ->on('k.id_kelas', '=', 'wl.id_kelas')
+                                        ->where('wl.id_user', '=', $user ? $user->id_user : null);
                                 })
                                 ->select(
                                     'k.id_kelas',
@@ -149,7 +160,7 @@
                                         WHEN bm.id_beli_matkul IS NOT NULL THEN "completed"
                                         WHEN wl.id_wishlist_kelas IS NOT NULL THEN "wishlist"
                                         ELSE "available"
-                                    END as status_kelas')
+                                    END as status_kelas'),
                                 )
                                 ->get();
 
@@ -157,7 +168,7 @@
                             $showDefault = $semuaKelas->isEmpty();
                         @endphp
 
-                        @if($showDefault)
+                        @if ($showDefault)
                             <!-- Default cards jika tidak ada data dari database -->
                             <!-- Card 1 - Kalkulus 2 -->
                             <div class="col-lg-3 col-md-4 col-sm-6">
@@ -224,55 +235,61 @@
                             </div>
                         @else
                             <!-- Data dinamis dari database -->
-                            @foreach($semuaKelas as $item)
+                            @foreach ($semuaKelas as $item)
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <!-- Link berbeda berdasarkan status kelas -->
-                                    @if($item->status_kelas === 'completed')
+                                    @if ($item->status_kelas === 'completed')
                                         <!-- Jika sudah dibeli, link ke halaman belajar -->
-                                        <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
-                                    @else
-                                        <!-- Jika belum dibeli, link ke halaman detail/pembelian -->
-                                        <a href="{{ route('kelas.beli', $item->id_kelas) }}" class="text-decoration-none">
+                                        <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}"
+                                            class="text-decoration-none">
+                                        @else
+                                            <!-- Jika belum dibeli, link ke halaman detail/pembelian -->
+                                            <a href="{{ route('kelas.beli', $item->id_kelas) }}"
+                                                class="text-decoration-none">
                                     @endif
 
-                                        <div class="course-card">
-                                            <div class="course-image">
-                                                {{-- GAMBAR DARI image_path TABEL KELAS --}}
-                                                <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
-                                                    alt="{{ $item->nama_matkul }}"
-                                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
-                                                <div class="course-badge {{ $item->status_kelas === 'completed' ? 'completed' : ($item->status_kelas === 'wishlist' ? 'add' : '') }}">
-                                                    @if($item->status_kelas === 'completed')
-                                                        <i class="bi bi-check-circle-fill"></i>
-                                                    @elseif($item->status_kelas === 'wishlist')
-                                                        <form action="{{ route('wishlist.toggle', $item->id_kelas) }}" method="POST" style="all: unset; cursor: pointer;">
-                                                            @csrf
-                                                            <i class="bi bi-plus-circle-fill"></i>
-                                                        </form>
-                                                    @else
-                                                        <i class="bi bi-play-circle-fill"></i>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="course-info">
-                                                <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                                <p class="course-progress">
-                                                    @if($item->status_kelas === 'completed')
-                                                        <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
-                                                        @php
-                                                            $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
-                                                        @endphp
-                                                        Progress: {{ $progress }}%
-                                                    @elseif($item->status_kelas === 'wishlist')
-                                                        <!-- Tampilkan status wishlist -->
-                                                        Dalam wishlist
-                                                    @else
-                                                        <!-- Tampilkan harga untuk kelas yang belum dibeli -->
-                                                        Rp {{ number_format($item->harga_asli, 0, ',', '.') }}
-                                                    @endif
-                                                </p>
+                                    <div class="course-card">
+                                        <div class="course-image">
+                                            {{-- GAMBAR DARI image_path TABEL KELAS --}}
+                                            <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
+                                                alt="{{ $item->nama_matkul }}"
+                                                onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                            <div
+                                                class="course-badge {{ $item->status_kelas === 'completed' ? 'completed' : ($item->status_kelas === 'wishlist' ? 'add' : '') }}">
+                                                @if ($item->status_kelas === 'completed')
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                @elseif($item->status_kelas === 'wishlist')
+                                                    <form action="{{ route('wishlist.toggle', $item->id_kelas) }}"
+                                                        method="POST" style="all: unset; cursor: pointer;">
+                                                        @csrf
+                                                        <i class="bi bi-plus-circle-fill"></i>
+                                                    </form>
+                                                @else
+                                                    <i class="bi bi-play-circle-fill"></i>
+                                                @endif
                                             </div>
                                         </div>
+                                        <div class="course-info">
+                                            <h3 class="course-title">{{ $item->nama_matkul }}</h3>
+                                            <p class="course-progress">
+                                                @if ($item->status_kelas === 'completed')
+                                                    <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
+                                                    @php
+                                                        $progress = app(
+                                                            App\Http\Controllers\KelasController::class,
+                                                        )->getProgressKelas($item->id_kelas);
+                                                    @endphp
+                                                    Progress: {{ $progress }}%
+                                                @elseif($item->status_kelas === 'wishlist')
+                                                    <!-- Tampilkan status wishlist -->
+                                                    Dalam wishlist
+                                                @else
+                                                    <!-- Tampilkan harga untuk kelas yang belum dibeli -->
+                                                    Rp {{ number_format($item->harga_asli, 0, ',', '.') }}
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
                                     </a>
                                 </div>
                             @endforeach
@@ -290,7 +307,7 @@
                     <div class="section-header mb-3">
                         <h2 class="section-title">Kelas yang Diikuti</h2>
                         <p class="section-subtitle">
-                            @if($kelasDiikuti->count() > 0)
+                            @if ($kelasDiikuti->count() > 0)
                                 Kelas yang sedang Anda ikuti
                             @else
                                 Belum ada kelas yang sedang diikuti
@@ -298,18 +315,19 @@
                         </p>
                     </div>
 
-                    @if($kelasDiikuti->count() > 0)
+                    @if ($kelasDiikuti->count() > 0)
                         <div class="row g-4">
-                            @foreach($kelasDiikuti as $item)
+                            @foreach ($kelasDiikuti as $item)
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <!-- Link ke halaman belajar untuk kelas yang sudah dibeli -->
-                                    <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
+                                    <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}"
+                                        class="text-decoration-none">
                                         <div class="course-card">
                                             <div class="course-image">
                                                 <!-- SESUDAH (PERBAIKAN) -->
-                                                    <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
-                                                     alt="{{ $item->nama_matkul }}"
-                                                     onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                                <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
+                                                    alt="{{ $item->nama_matkul }}"
+                                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
                                                 <div class="course-badge completed">
                                                     <i class="bi bi-check-circle-fill"></i>
                                                 </div>
@@ -317,7 +335,9 @@
                                             <div class="course-info">
                                                 <h3 class="course-title">{{ $item->nama_matkul }}</h3>
                                                 @php
-                                                    $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
+                                                    $progress = app(
+                                                        App\Http\Controllers\KelasController::class,
+                                                    )->getProgressKelas($item->id_kelas);
                                                 @endphp
                                                 <!-- Di tab Diikuti, selalu tampilkan progress -->
                                                 <p class="course-progress">Progress: {{ $progress }}%</p>
@@ -340,17 +360,18 @@
                 <div class="tab-pane fade" id="selesai" role="tabpanel">
                     @php
                         // Ambil kelas yang sudah selesai (progress 100%)
-                        $kelasSelesai = $semuaKelas->where('status_kelas', 'completed')
-                            ->filter(function($item) {
-                                $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
-                                return $progress == 100;
-                            });
+                        $kelasSelesai = $semuaKelas->where('status_kelas', 'completed')->filter(function ($item) {
+                            $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas(
+                                $item->id_kelas,
+                            );
+                            return $progress == 100;
+                        });
                     @endphp
 
                     <div class="section-header mb-3">
                         <h2 class="section-title">Kelas yang Selesai</h2>
                         <p class="section-subtitle">
-                            @if($kelasSelesai->count() > 0)
+                            @if ($kelasSelesai->count() > 0)
                                 Kelas yang sudah Anda selesaikan
                             @else
                                 Belum ada kelas yang diselesaikan
@@ -358,25 +379,27 @@
                         </p>
                     </div>
 
-                    @if($kelasSelesai->count() > 0)
+                    @if ($kelasSelesai->count() > 0)
                         <div class="row g-4">
-                            @foreach($kelasSelesai as $item)
+                            @foreach ($kelasSelesai as $item)
                                 <div class="col-lg-3 col-md-4 col-sm-6">
                                     <!-- Link ke halaman belajar untuk kelas yang sudah selesai -->
-                                    <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}" class="text-decoration-none">
+                                    <a href="{{ route('kelas.detail.beli', $item->id_kelas) }}"
+                                        class="text-decoration-none">
                                         <div class="course-card">
                                             <div class="course-image">
                                                 <!-- SESUDAH (PERBAIKAN) -->
-                                                    <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
-                                                     alt="{{ $item->nama_matkul }}"
-                                                     onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                                <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
+                                                    alt="{{ $item->nama_matkul }}"
+                                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
                                                 <div class="course-badge completed">
                                                     <i class="bi bi-check-circle-fill"></i>
                                                 </div>
                                             </div>
                                             <div class="course-info">
                                                 <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                                <p class="course-instructor">Oleh: {{ $item->nama_mentor ?? 'Instruktur' }}</p>
+                                                <p class="course-instructor">Oleh:
+                                                    {{ $item->nama_mentor ?? 'Instruktur' }}</p>
                                                 <!-- Di tab Selesai, tampilkan status selesai -->
                                                 <p class="course-progress">Selesai</p>
                                             </div>
@@ -395,9 +418,10 @@
                 </div>
 
                 <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-                =========================================================
-                Section: Wishlist Kelas
-                ====================================================== -->
+            =========================================================
+            Section: Tab Wishlist - View Semua Kelas
+            ====================================================== -->
+
                 <div class="tab-pane fade" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
 
                     @php
@@ -407,26 +431,17 @@
                         if ($user) {
                             $userId = $user->id_user ?? $user->id;
 
-                            // Ambil wishlist user + jangan tampilkan kelas yang sudah dibeli
                             $wishlistItems = DB::table('wishlist_kelas as w')
                                 ->join('kelas as k', 'w.id_kelas', '=', 'k.id_kelas')
                                 ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
                                 ->leftJoin('mentor as ment', 'm.id_mentor', '=', 'ment.id_mentor')
                                 ->leftJoin('beli_matkul as b', function ($join) use ($userId) {
-                                    $join->on('b.id_matkul', '=', 'm.id_matkul')
-                                         ->where('b.id_user', '=', $userId);
+                                    $join->on('b.id_matkul', '=', 'm.id_matkul')->where('b.id_user', '=', $userId);
                                 })
                                 ->where('w.id_user', $userId)
+                                // tetap exclude kelas yang sudah dibeli
                                 ->whereNull('b.id_beli_matkul')
-                                ->select(
-                                    'k.id_kelas',
-                                    'm.nama_matkul',
-                                    'm.deskripsi',
-                                    'm.thumbnail',
-                                    'k.preview',
-                                    'k.harga_asli',
-                                    'ment.nama as nama_mentor'
-                                )
+                                ->select('k.id_kelas', 'm.nama_matkul', 'k.image_path')
                                 ->get();
                         }
 
@@ -440,67 +455,63 @@
                         </p>
                     </div>
 
-                    {{-- ====================== KOSONG: HANYA TEKS ====================== --}}
-                    @if($showEmptyState)
-                        <div class="mt-5 text-center">
-                            <p class="text-muted mb-2" style="font-size: 1.1rem;">
-                                Belum ada kelas yang kamu wishlist.
-                            </p>
-                            <p class="mb-3">
-                                Coba eksplor dulu tab <strong>“Semua”</strong> dan tambahkan kelas yang kamu suka. 😊
-                            </p>
-                        </div>
+                    <div class="row g-4">
 
-                    {{-- ====================== ADA DATA: TAMPILKAN CARD WISHLIST ====================== --}}
-                    @else
-                        <div class="row g-4 mt-2">
-                            @foreach($wishlistItems as $item)
+                        @if ($showEmptyState)
+                            <div class="col-12">
+                                <div class="empty-wishlist-box text-center py-5">
+                                    <h3 class="empty-title">Belum ada kelas di wishlist</h3>
+                                    <p class="empty-subtitle">Tambah kelas dari tab "Semua".</p>
+                                </div>
+                            </div>
+                        @else
+                            @foreach ($wishlistItems as $kelas)
                                 <div class="col-lg-3 col-md-4 col-sm-6">
-                                    <div class="course-card">
-                                        <div class="course-image">
-                                            {{-- sementara 1 gambar placeholder, bebas mau ganti --}}
-                                            @php
-                                                $thumb = $item->thumbnail; // URL dari kolom matkul.thumbnail
-                                            @endphp
 
-                                            <img
-                                                src="{{ $thumb && \Illuminate\Support\Str::startsWith($thumb, ['http://', 'https://']) ? $thumb : asset($thumb ?? 'image/lpkelas1.png') }}"
-                                                alt="{{ $item->nama_matkul }}">
+                                    {{-- Dari wishlist: klik card langsung ke halaman detail / pembelian --}}
+                                    <a href="{{ route('kelas.beli', $kelas->id_kelas) }}" class="course-card-link">
 
-                                            {{-- tombol + di pojok kanan atas, buat hapus dari wishlist --}}
-                                            <form action="{{ route('wishlist.toggle', ['id_kelas' => $item->id_kelas]) }}"
-                                                method="POST"
-                                                class="course-badge wishlist-menu">
-                                                @csrf
-                                                <button type="submit" class="wishlist-menu-button">
-                                                    <i class="bi bi-three-dots-vertical"></i>
-                                                </button>
-                                            </form>
+                                        <div class="course-card">
+                                            <div class="course-image">
+                                                <img src="{{ asset($kelas->image_path) }}"
+                                                    alt="{{ $kelas->nama_matkul }}"
+                                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+
+                                                {{-- Ikon plus di pojok kanan atas (sama seperti tab Semua) --}}
+                                                <div class="course-badge add">
+                                                    <form
+                                                        action="{{ route('wishlist.toggle', ['id_kelas' => $kelas->id_kelas]) }}"
+                                                        method="POST" style="all: unset; cursor: pointer;">
+                                                        @csrf
+                                                        <button type="submit" style="all: unset; cursor: pointer;">
+                                                            <i class="bi bi-plus-circle-fill"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="course-info">
+                                                <h3 class="course-title">{{ $kelas->nama_matkul }}</h3>
+                                                <p class="course-progress">Daftar kelas ini</p>
+                                            </div>
                                         </div>
 
-                                        <div class="course-info">
-                                            {{-- JUDUL KELAS --}}
-                                            <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-
-                                            {{-- BAR KECIL “Daftar kelas ini” PERSIS FIGMA --}}
-                                            <p class="course-progress">Daftar kelas ini</p>
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
                             @endforeach
-                        </div>
-                    @endif
+                        @endif
 
+                    </div>
                 </div>
+
                 <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-                =========================================================
-                Section: Wishlist Kelas
-                ====================================================== -->
+            =========================================================
+            Section: Tab Wishlist - View Semua Kelas
+            ====================================================== -->
             </div>
-        </div>
     </section>
 
-<!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="py-5 border-top border-opacity-25" style="border-color:var(--border)!important;">
         <div class="container text-left text-white">
             <div class="row align-items-left">
@@ -594,7 +605,7 @@
 
     <script>
         // Notifikasi untuk wishlist
-        @if(session('success'))
+        @if (session('success'))
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil',
@@ -604,7 +615,7 @@
             });
         @endif
 
-        @if(session('error'))
+        @if (session('error'))
             Swal.fire({
                 icon: 'error',
                 title: 'Gagal',
@@ -615,4 +626,5 @@
         @endif
     </script>
 </body>
+
 </html>

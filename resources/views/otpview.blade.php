@@ -11,10 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>OTP Verification — Jago Teknik</title>
 
-    <!-- Bootstrap & Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
-    <!-- Shared styles -->
     <link rel="stylesheet" href="{{ asset('css/loginregister.css') }}">
 
 </head>
@@ -42,8 +40,7 @@
             <div class="auth-panel">
                 <h4 class="otp-title mb-3">Masukkan kode OTP di Gmail</h4>
                 @isset($email)
-                    <div class="otp-hint small mb-4">Kami mengirimkan kode ke <strong>{{ $email }}</strong>. Cek
-                        inbox/spam ya.</div>
+                    <div class="otp-hint small mb-4">Kami mengirimkan kode ke <strong>{{ $email }}</strong></div>
                 @endisset
 
                 <form id="otpForm" method="POST" action="{{ route('otp.verify') }}" class="mb-3">

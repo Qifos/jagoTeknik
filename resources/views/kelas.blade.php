@@ -19,7 +19,8 @@
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
-            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <!-- Navbar (SAMA seperti homepage/jadwal) -->
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
                 <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
@@ -30,7 +31,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('homepage')}}">Beranda</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
@@ -41,17 +42,19 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
-                            <img src="profile.jpg" alt="Profile" class="profile-img">
+                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
                     </li>
@@ -60,6 +63,7 @@
         </div>
     </nav>
     </header>
+
 
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">
@@ -121,7 +125,13 @@
                                     <div class="custom-progress mt-auto">
                                         <div class="bar" style="width: {{ $item['progress'] }}%"></div>
                                     </div>
-                                    <div class="progress-text mt-2 mb-3">{{ $item['progress_text'] }}</div>
+                                    <div class="progress-text mt-2 mb-3">
+                                        @if($item['is_completed'])
+                                            <span style="color: #28a745; font-weight: bold;">✓ {{ $item['progress_text'] }}</span>
+                                        @else
+                                            <span style="color: #6c757d;">{{ $item['progress_text'] }}</span>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </a>

@@ -1,0 +1,317 @@
+/**
+ * Author : Muhammad Fiqih Soetam Putra (NRP 5026231096)
+ * File   : public/css/kelaspreview.css
+ * Desc   : Styling untuk halaman preview kelas dari jadwal
+ * Date   : 02-12-2025
+ */
+
+/* =============================================
+   GENERAL LAYOUT & COLORS
+   ============================================= */
+:root {
+    --primary-color: #6b4fa0;
+    --secondary-color: #5a3f8f;
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1a1;
+    --bg-dark: #0f0f0f;
+    --border-color: #2a2a2a;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+}
+
+/* =============================================
+   MAIN CONTENT AREA
+   ============================================= */
+main {
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+main .container-fluid {
+    max-width: 1400px;
+}
+
+/* =============================================
+   BACK BUTTON
+   ============================================= */
+.back-btn {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.back-btn:hover {
+    color: var(--secondary-color);
+}
+
+/* =============================================
+   SIDEBAR STYLING
+   ============================================= */
+.video-sidebar {
+    padding: 0;
+}
+
+.video-sidebar .position-relative {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.video-sidebar img {
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Time Badge */
+.time-badge {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* Sidebar Text & Spacing */
+.video-sidebar .small {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.video-sidebar h2 {
+    font-size: 1.75rem;
+    margin: 1rem 0;
+}
+
+.video-sidebar .text-secondary {
+    color: var(--text-secondary);
+}
+
+.video-sidebar hr {
+    border-color: var(--border-color);
+    margin: 1.5rem 0;
+}
+
+/* Description */
+.video-sidebar h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.video-sidebar .text-muted {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* Action Buttons */
+.video-sidebar .btn {
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.video-sidebar .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.video-sidebar .btn-primary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.video-sidebar .btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.video-sidebar .btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: var(--text-primary);
+}
+
+/* =============================================
+   VIDEO PLAYER AREA
+   ============================================= */
+.video-player {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Video Preview Container */
+.video-player .ratio {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.video-player .ratio > div {
+    border-radius: 12px;
+}
+
+.video-player .bi-play-circle {
+    font-size: 4rem;
+    color: var(--text-primary);
+    opacity: 0.9;
+}
+
+/* =============================================
+   DETAIL CARD STYLING
+   ============================================= */
+.video-player .card {
+    background-color: #1a1a1a;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.video-player .card-body {
+    padding: 2rem;
+}
+
+.video-player .card-body h4 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+/* Detail Grid Items */
+.video-player .card-body .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.video-player .card-body p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.video-player .card-body .text-muted {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.video-player .card-body .text-white {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.video-player .card-body i {
+    color: var(--primary-color);
+}
+
+/* Mentor Info Section */
+.video-player .card-body .mt-4 {
+    margin-top: 2rem;
+}
+
+.video-player .card-body .d-flex {
+    align-items: center;
+    gap: 1rem;
+}
+
+.video-player .card-body img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.video-player .card-body .mentor-info {
+    flex: 1;
+}
+
+.video-player .card-body .mentor-info p {
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.video-player .card-body .mentor-info small {
+    color: var(--text-secondary);
+}
+
+/* =============================================
+   RESPONSIVE DESIGN
+   ============================================= */
+
+/* Tablet (768px and below) */
+@media (max-width: 991.98px) {
+    main {
+        padding: 1rem;
+    }
+
+    .video-sidebar {
+        order: 2;
+        margin-top: 2rem;
+    }
+
+    .video-player {
+        order: 1;
+    }
+
+    .video-player .ratio {
+        height: 300px;
+    }
+
+    .video-sidebar img {
+        height: 200px;
+    }
+}
+
+/* Mobile (576px and below) */
+@media (max-width: 575.98px) {
+    main {
+        padding: 0.75rem;
+    }
+
+    .video-sidebar h2 {
+        font-size: 1.5rem;
+    }
+
+    .video-player .card-body {
+        padding: 1.5rem;
+    }
+
+    .video-player .card-body h4 {
+        font-size: 1.25rem;
+    }
+
+    .video-player .ratio {
+        height: 250px;
+    }
+
+    .video-sidebar .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .time-badge {
+        font-size: 0.75rem;
+        padding: 4px 8px;
+    }
+
+    .video-player .bi-play-circle {
+        font-size: 3rem;
+    }
+}
+
+/* =============================================
+   FOOTER STYLING (already using footer.css)
+   ============================================= */
+footer.site-footer {
+    margin-top: auto;
+}

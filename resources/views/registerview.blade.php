@@ -100,12 +100,12 @@
                             <a href="#" class="link-terms">Ketentuan Pengguna</a>
                             dan <a href="#" class="link-terms">Kebijakan Privasi</a> kami
                         </label>
+                        <button type="submit" class="btn btn-login">Daftar</button>
                     </div>
                     @error('terms')
                         <div class="text-danger small">{{ $message }}
                         </div>
                     @enderror
-                    <button type="submit" class="btn btn-login">Daftar Sekarang</button>
                 </form>
             </div>
         </main>

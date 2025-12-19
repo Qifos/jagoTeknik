@@ -7,6 +7,8 @@
     --brand-2: #6e41e2;
     --brand-3: #d4c0ff;
     --brand-4: #d145ed;
+    --brand-5: #e8d1eb;
+    --brand-6: #a3039e;
     --surface: rgba(255, 255, 255, 0.06);
     --border: rgba(255, 255, 255, 0.16);
     --text: #e9e9ee;
@@ -60,6 +62,45 @@ body {
 .navbar .navbar-toggler {
     border: none;
 }
+/* Styling untuk ikon profil dan teks Login */
+.nav-item .login-text {
+    color: var(--text); /* Warna teks default */
+    font-weight: 400;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+.nav-item .login-text:hover {
+    color: var(--brand-1); /* Warna saat hover */
+    cursor: pointer;
+}
+
+.nav-item .profile-icon {
+    width: 30px; /* Ukuran ikon */
+    height: 30px; /* Ukuran ikon */
+    border-radius: 50%; /* Membuat lingkaran */
+    background-color: #fff; /* Warna latar belakang putih */
+    border: 2px solid var(--text); /* Border tipis di sekitar lingkaran */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px; /* Jarak antara ikon dan teks */
+}
+
+.nav-item i.bi-person-circle {
+    color: var(--text); /* Warna ikon */
+    font-size: 1.3rem; /* Ukuran ikon */
+}
+
+.nav-item .profile-icon:hover {
+    background-color: var(--brand-1); /* Ganti warna saat hover */
+    border-color: var(--brand-1); /* Ganti warna border saat hover */
+}
+
+.nav-item .profile-icon i {
+    color: var(--bg); /* Warna ikon dalam lingkaran */
+}
+
 
 
 /* Utilities */
@@ -67,7 +108,7 @@ body {
     color: var(--brand-3);
 }
 .layout {
-    background: linear-gradient(to bottom, var(--brand-4), #fff);
+    background: linear-gradient(to bottom, var(--brand-6), var(--brand-3));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -126,15 +167,17 @@ body {
 }
 
 /* ===================== HERO ===================== */
-/*.landing-hero{position:relative;overflow:hidden;background:#000; background: url('/image/circle.png') no-repeat center center}*/
+.landing-hero{position:relative;overflow:hidden;background:#000; background: url('/image/circle.png') no-repeat center center}
 .landing-hero {
     position: relative;
     padding-top: 10px;
     margin-top: 20px;
     background: url("/image/circle.png") no-repeat top center;
-    background-size: contain; /* Adjust background size as needed */
-    z-index: 0; /* Ensure background is behind content */
+    background-size: contain;
+    z-index: 1;
 }
+
+
 .landing-hero::before {
     content: "";
     position: absoluthe;

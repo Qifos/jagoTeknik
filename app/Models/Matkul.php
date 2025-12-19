@@ -15,6 +15,8 @@ class Matkul extends Model
 
     public function mentor(){ return $this->belongsTo(Mentor::class,'id_mentor','id_mentor'); }
 
+    public function jurusan(){ return $this->belongsTo(Jurusan::class,'id_jurusan','id_jurusan'); }
+
     public function materi(){ return $this->hasMany(Materi::class,'id_matkul','id_matkul'); }
 
     public function beliMatkul(){ return $this->hasMany(BeliMatkul::class,'id_matkul','id_matkul'); }

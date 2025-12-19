@@ -1,0 +1,879 @@
+/**
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * File   : jagoteknik-chatify.css
+  * Date   : 18-12-2025
+ */
+
+/* =========================================================
+   JagoTeknik Theme for Chatify (Figma-style)
+   - FIX: selected contact full width (no blue block)
+   - FIX: jangan ubah table jadi flex
+   ========================================================= */
+
+/* =========================
+   THEME VARIABLES
+   ========================= */
+:root{
+  --jt-bg:#0B0A0F;
+  --jt-bg2:#13121B;
+  --jt-border:#2A2740;
+
+  --jt-left:#3E3366;     /* bubble kiri */
+  --jt-right:#8E74C2;    /* bubble kanan */
+
+  --jt-topA:#6E3C8A;
+  --jt-topB:#53306F;
+
+  --jt-text:#F5F1FA;
+  --jt-muted:#CFC7E6;
+  --jt-muted2:#9F95B9;
+
+  --jt-shadow: 0 8px 30px rgba(0,0,0,.35);
+  --jt-r:18px;
+  --jt-r-lg:26px;
+
+  /* override variabel bawaan chatify (biar konsisten) */
+  --primary-bg-color: var(--jt-bg);
+  --secondary-bg-color: var(--jt-bg2);
+  --border-color: var(--jt-border);
+  --messagingView-bg-color: var(--jt-bg);
+  --scrollbar-thumb-color: #2D2644;
+  --modal-bg-color: #171629;
+  --send-input-icons-color: var(--jt-text);
+  --message-card-color: #171629;
+
+  --dark-primary-bg-color: var(--jt-bg);
+  --dark-secondary-bg-color: var(--jt-bg2);
+  --dark-border-color: var(--jt-border);
+  --dark-messagingView-bg-color: var(--jt-bg);
+  --dark-scrollbar-thumb-color: #2D2644;
+  --dark-modal-bg-color: #171629;
+  --dark-send-input-icons-color: var(--jt-text);
+  --dark-message-card-color: #171629;
+}
+
+html,body{height:100%}
+body{background:var(--jt-bg); color:var(--jt-text);}
+
+/* =========================
+   MAIN WRAPPER
+   ========================= */
+.messenger{
+  background: transparent;
+  height: calc(100vh - 72px) !important; /* kira2 tinggi navbar */
+}
+
+/* =========================
+   LEFT LIST VIEW (panel kiri)
+   ========================= */
+.messenger-listView{
+  width: 380px !important;
+  min-width: 380px !important;
+  background: var(--jt-bg2) !important;
+  border-right: 1px solid var(--jt-border) !important;
+}
+
+/* header kiri */
+.messenger-listView .m-header{
+  height: auto !important;
+  border-bottom: 1px solid var(--jt-border) !important;
+  padding: 16px 18px 12px 18px !important;
+  background: transparent !important;
+}
+
+/* kalau kamu punya custom header element */
+.jt-list-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 10px;
+}
+.jt-head-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.jt-chat-title{
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.jt-badge{
+  background:#D93C62;
+  color:#fff;
+  font-weight:700;
+  font-size:12px;
+  padding:2px 8px;
+  border-radius:999px;
+  transform: translateY(-6px);
+}
+.jt-filter-btn{
+  border:1px solid var(--jt-border);
+  color: var(--jt-text);
+  background: transparent;
+  border-radius:10px;
+  padding:8px 10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+
+/* search pill kiri */
+.jt-search-left{margin-top: 4px;}
+.jt-search-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#2A1F44;
+  padding:10px 14px;
+  border-radius:18px;
+}
+.jt-search-pill i{color: var(--jt-muted2);}
+
+.messenger-search{
+  margin:0 !important;
+  width:100% !important;
+  border:0 !important;
+  outline:0 !important;
+  background: transparent !important;
+  color: var(--jt-text) !important;
+  padding:0 !important;
+}
+.messenger-search::placeholder{color:var(--jt-muted2) !important;}
+
+/* sembunyikan section yg ga dipakai di prototype */
+.favorites-section{display:none !important;}
+.messenger-title{display:none !important;}
+.saved-messages{display:none !important;}
+
+/* =========================
+   CONTACT LIST AREA (IMPORTANT)
+   - jangan flex table
+   - padding list = 0 biar item nempel full sampai pembatas
+   ========================= */
+.messenger-listView .m-body,
+.messenger-listView .m-body .contact-list,
+.messenger-listView .m-body .contact-list .listOfContacts{
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* setiap item tetap table bawaan chatify */
+.messenger-listView table.messenger-list-item{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.08) !important; /* divider figma */
+}
+.messenger-listView table.messenger-list-item tr{
+  cursor: pointer;
+}
+.messenger-listView table.messenger-list-item td{
+  border: 0 !important;
+  background: transparent !important;
+  vertical-align: middle !important;
+}
+
+/* padding biar rapi seperti figma */
+.messenger-listView table.messenger-list-item td:first-child{
+  width: 72px !important;
+  padding: 14px 12px 14px 16px !important;
+}
+.messenger-listView table.messenger-list-item td:nth-child(2){
+  padding: 14px 16px 14px 0 !important;
+}
+
+/* avatar size */
+.messenger-listView .avatar.av-m{
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* nama + preview */
+.messenger-listView table.messenger-list-item p{
+  margin: 0 !important;
+  font-weight: 600 !important;
+  color: var(--jt-text) !important;
+}
+.messenger-listView table.messenger-list-item p .contact-item-time{
+  float:right;
+  font-weight:400 !important;
+  color: var(--jt-muted) !important;
+  opacity: .85 !important;
+  margin-left: 10px !important;
+}
+
+/* preview text */
+.messenger-listView table.messenger-list-item td:nth-child(2) > span{
+  display:block !important;
+  color: var(--jt-muted) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 260px !important;
+}
+
+/* hover lembut */
+.messenger-listView table.messenger-list-item:hover td{
+  background: rgba(255,255,255,0.03) !important;
+}
+
+/* =========================
+   FIX SELECTED CONTACT STYLE (FULL UNGU, NO BLUE BLOCK)
+   ========================= */
+.messenger-listView table.messenger-list-item,
+.messenger-listView table.messenger-list-item tr,
+.messenger-listView table.messenger-list-item td{
+  background: transparent !important; /* reset dulu */
+}
+
+/* Chatify aktif bisa pakai class/class beda, cover semua kemungkinan */
+.messenger-listView table.messenger-list-item.m-list-active,
+.messenger-listView table.messenger-list-item.m-list-active td,
+.messenger-listView table.messenger-list-item.active,
+.messenger-listView table.messenger-list-item.active td,
+.messenger-listView table.messenger-list-item tr.active,
+.messenger-listView table.messenger-list-item tr.active td{
+  background: rgba(110, 60, 138, 0.55) !important; /* ungu */
+}
+
+/* matiin indicator pseudo element bawaan yg kadang muncul jadi bar/biru */
+.messenger-listView table.messenger-list-item::before,
+.messenger-listView table.messenger-list-item::after,
+.messenger-listView table.messenger-list-item tr::before,
+.messenger-listView table.messenger-list-item tr::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* =========================
+   RIGHT HEADER (top chat)
+   ========================= */
+.m-header-messaging{
+  background: linear-gradient(90deg,var(--jt-topA),var(--jt-topB)) !important;
+  border-radius: 0 0 var(--jt-r-lg) var(--jt-r-lg) !important;
+  box-shadow: var(--jt-shadow) !important;
+  border: 0 !important;
+}
+.m-header-messaging .user-name{color:#fff !important; font-weight:700 !important;}
+.m-header-messaging svg,
+.m-header-messaging i{color:#fff !important;}
+
+/* =========================
+   CHAT AREA
+   ========================= */
+.messenger-messagingView{
+  background: var(--jt-bg) !important;
+}
+.messenger-messagingView .m-body{
+  background: var(--jt-bg) !important;
+  padding: 18px 22px 120px 22px !important; /* biar aman ga ketutup composer */
+}
+
+/* hint pill (Hari ini / select chat) */
+.message-hint span{
+  background:#fff !important;
+  color:#000 !important;
+  font-weight:600 !important;
+  font-size:13px !important;
+  padding:6px 12px !important;
+  border-radius:999px !important;
+}
+
+/* bubble kiri/kanan */
+.message-card{margin: 8px 0 !important;}
+.message-card .message{
+  padding:10px 14px !important;
+  border-radius:16px !important;
+  line-height:1.5 !important;
+  color:#fff !important;
+}
+.message-card:not(.mc-sender) .message{
+  background: var(--jt-left) !important;
+  border-bottom-left-radius:6px !important;
+}
+.message-card.mc-sender .message{
+  background: var(--jt-right) !important;
+  border-bottom-right-radius:6px !important;
+}
+
+/* time + seen */
+.message-time{color:#BDAEDD !important; font-size:12px !important;}
+.message-time .fas{margin-right:6px; color:#7FB4FF !important;}
+
+/* =========================
+   COMPOSER (bawah)
+   ========================= */
+.messenger-sendCard{
+  margin:0 !important;
+  border-radius:0 !important;
+  background:#60376B !important;
+  padding:12px 0px 12px 68px !important; /* ruang kiri utk attach */
+  border-top: 1px solid rgba(255,255,255,.06) !important;
+}
+.messenger-sendCard form{
+  position:relative !important;
+  background:#fff !important;
+  border:1px solid var(--jt-border) !important;
+  border-radius:18px !important;
+  padding:10px 10px !important;
+  gap:10px !important;
+}
+
+/* tombol attach “keluar” bar */
+.messenger-sendCard form label{
+  position:absolute !important;
+  left:-56px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:44px !important;
+  height:44px !important;
+  border-radius:12px !important;
+  background:transparent !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  cursor:pointer !important;
+}
+.messenger-sendCard form label span{color:#fff !important; font-size:22px !important;}
+
+/* textarea */
+.messenger-sendCard textarea.m-send{
+  background:transparent !important;
+  border:0 !important;
+  outline:0 !important;
+  color:#1A1827 !important;
+  resize:none !important;
+  max-height:120px !important;
+}
+.messenger-sendCard textarea.m-send::placeholder{color:#8a8a8a !important;}
+
+/* emoji + send */
+.messenger-sendCard .emoji-button{
+  border:0 !important;
+  background:transparent !important;
+}
+.messenger-sendCard .emoji-button span{color:#6256AC !important;}
+
+.messenger-sendCard .send-button{
+  width:46px !important;
+  height:46px !important;
+  border-radius:14px !important;
+  background:#6256AC !important;
+  border:0 !important;
+}
+.messenger-sendCard .send-button span{color:#fff !important;}
+
+/* info panel kanan (ga dipakai di figma) */
+.messenger-infoView{display:none !important;}
+
+/* =========================
+   Navbar (optional - kalau sudah ada global, boleh hapus)
+   ========================= */
+.navbar{
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.brand-logo{height:34px;}
+.search-box{position:relative;}
+.search-box .form-control{
+  padding-right: 38px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  color:#fff;
+}
+.search-box .form-control::placeholder{color:rgba(255,255,255,.65);}
+.search-box i{
+  position:absolute;
+  right: 12px;
+  top:50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.75);
+}
+.profile-img{
+  width:32px;height:32px;border-radius:50%;
+  object-fit:cover;
+}
+/* =========================================================
+   JagoTeknik Theme for Chatify (Figma-style)
+   - FIX: selected contact full width (no blue block)
+   - FIX: jangan ubah table jadi flex
+   ========================================================= */
+
+/* =========================
+   THEME VARIABLES
+   ========================= */
+:root{
+  --jt-bg:#0B0A0F;
+  --jt-bg2:#13121B;
+  --jt-border:#2A2740;
+
+  --jt-left:#3E3366;     /* bubble kiri */
+  --jt-right:#8E74C2;    /* bubble kanan */
+
+  --jt-topA:#6E3C8A;
+  --jt-topB:#53306F;
+
+  --jt-text:#F5F1FA;
+  --jt-muted:#CFC7E6;
+  --jt-muted2:#9F95B9;
+
+  --jt-shadow: 0 8px 30px rgba(0,0,0,.35);
+  --jt-r:18px;
+  --jt-r-lg:26px;
+
+  /* override variabel bawaan chatify (biar konsisten) */
+  --primary-bg-color: var(--jt-bg);
+  --secondary-bg-color: var(--jt-bg2);
+  --border-color: var(--jt-border);
+  --messagingView-bg-color: var(--jt-bg);
+  --scrollbar-thumb-color: #2D2644;
+  --modal-bg-color: #171629;
+  --send-input-icons-color: var(--jt-text);
+  --message-card-color: #171629;
+
+  --dark-primary-bg-color: var(--jt-bg);
+  --dark-secondary-bg-color: var(--jt-bg2);
+  --dark-border-color: var(--jt-border);
+  --dark-messagingView-bg-color: var(--jt-bg);
+  --dark-scrollbar-thumb-color: #2D2644;
+  --dark-modal-bg-color: #171629;
+  --dark-send-input-icons-color: var(--jt-text);
+  --dark-message-card-color: #171629;
+}
+
+html,body{height:100%}
+body{background:var(--jt-bg); color:var(--jt-text);}
+
+/* =========================
+   MAIN WRAPPER
+   ========================= */
+.messenger{
+  background: transparent;
+  height: calc(100vh - 72px) !important; /* kira2 tinggi navbar */
+}
+
+/* =========================
+   LEFT RAIL / SIDEBAR (Figma)
+   ========================= */
+.jt-rail{
+  width: 82px;
+  min-width: 82px;
+  background: #5B357C;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+}
+.jt-rail-back{
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 22px;
+}
+.jt-rail-back:hover{background: rgba(255,255,255,.12);}
+
+.jt-rail-group{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  align-items: center;
+}
+.jt-rail-item{
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,.95);
+  text-decoration: none;
+  position: relative;
+}
+.jt-rail-item i{font-size: 22px;}
+.jt-rail-item:hover{background: rgba(0,0,0,.18);}
+.jt-rail-item.is-active{
+  background: rgba(0,0,0,.22);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.10);
+}
+
+/* =========================
+   LEFT LIST VIEW (panel kiri)
+   ========================= */
+.messenger-listView{
+  width: 380px !important;
+  min-width: 380px !important;
+  background: var(--jt-bg2) !important;
+  border-right: 1px solid var(--jt-border) !important;
+}
+
+/* header kiri */
+.messenger-listView .m-header{
+  height: auto !important;
+  border-bottom: 1px solid var(--jt-border) !important;
+  padding: 16px 18px 12px 18px !important;
+  background: transparent !important;
+}
+
+/* kalau kamu punya custom header element */
+.jt-list-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: 10px;
+}
+.jt-head-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.jt-chat-title{
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+.jt-badge{
+  background:#D93C62;
+  color:#fff;
+  font-weight:700;
+  font-size:12px;
+  padding:2px 8px;
+  border-radius:999px;
+  transform: translateY(-6px);
+}
+.jt-filter-btn{
+  border:1px solid var(--jt-border);
+  color: var(--jt-text);
+  background: transparent;
+  border-radius:10px;
+  padding:8px 10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  cursor:pointer;
+}
+
+/* search pill kiri */
+.jt-search-left{margin-top: 4px;}
+.jt-search-pill{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#2A1F44;
+  padding:10px 14px;
+  border-radius:18px;
+}
+.jt-search-pill i{color: var(--jt-muted2);}
+
+.messenger-search{
+  margin:0 !important;
+  width:100% !important;
+  border:0 !important;
+  outline:0 !important;
+  background: transparent !important;
+  color: var(--jt-text) !important;
+  padding:0 !important;
+}
+.messenger-search::placeholder{color:var(--jt-muted2) !important;}
+
+/* sembunyikan section yg ga dipakai di prototype */
+.favorites-section{display:none !important;}
+.messenger-title{display:none !important;}
+.saved-messages{display:none !important;}
+
+/* =========================
+   CONTACT LIST AREA (IMPORTANT)
+   - jangan flex table
+   - padding list = 0 biar item nempel full sampai pembatas
+   ========================= */
+.messenger-listView .m-body,
+.messenger-listView .m-body .contact-list,
+.messenger-listView .m-body .contact-list .listOfContacts{
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* setiap item tetap table bawaan chatify */
+.messenger-listView table.messenger-list-item{
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 0 !important;
+  border-bottom: 1px solid rgba(255,255,255,.08) !important; /* divider figma */
+}
+.messenger-listView table.messenger-list-item tr{
+  cursor: pointer;
+}
+.messenger-listView table.messenger-list-item td{
+  border: 0 !important;
+  background: transparent !important;
+  vertical-align: middle !important;
+}
+
+/* padding biar rapi seperti figma */
+.messenger-listView table.messenger-list-item td:first-child{
+  width: 72px !important;
+  padding: 14px 12px 14px 16px !important;
+}
+.messenger-listView table.messenger-list-item td:nth-child(2){
+  padding: 14px 16px 14px 0 !important;
+}
+
+/* avatar size */
+.messenger-listView .avatar.av-m{
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 50% !important;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+/* nama + preview */
+.messenger-listView table.messenger-list-item p{
+  margin: 0 !important;
+  font-weight: 600 !important;
+  color: var(--jt-text) !important;
+}
+.messenger-listView table.messenger-list-item p .contact-item-time{
+  float:right;
+  font-weight:400 !important;
+  color: var(--jt-muted) !important;
+  opacity: .85 !important;
+  margin-left: 10px !important;
+}
+
+/* preview text */
+.messenger-listView table.messenger-list-item td:nth-child(2) > span{
+  display:block !important;
+  color: var(--jt-muted) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  max-width: 260px !important;
+}
+
+/* hover lembut */
+.messenger-listView table.messenger-list-item:hover td{
+  background: rgba(255,255,255,0.03) !important;
+}
+
+/* =========================
+   FIX SELECTED CONTACT STYLE (FULL UNGU, NO BLUE BLOCK)
+   ========================= */
+.messenger-listView table.messenger-list-item,
+.messenger-listView table.messenger-list-item tr,
+.messenger-listView table.messenger-list-item td{
+  background: transparent !important; /* reset dulu */
+}
+
+/* Chatify aktif bisa pakai class/class beda, cover semua kemungkinan */
+.messenger-listView table.messenger-list-item.m-list-active,
+.messenger-listView table.messenger-list-item.m-list-active td,
+.messenger-listView table.messenger-list-item.active,
+.messenger-listView table.messenger-list-item.active td,
+.messenger-listView table.messenger-list-item tr.active,
+.messenger-listView table.messenger-list-item tr.active td{
+  background: rgba(110, 60, 138, 0.55) !important; /* ungu */
+}
+
+/* matiin indicator pseudo element bawaan yg kadang muncul jadi bar/biru */
+.messenger-listView table.messenger-list-item::before,
+.messenger-listView table.messenger-list-item::after,
+.messenger-listView table.messenger-list-item tr::before,
+.messenger-listView table.messenger-list-item tr::after{
+  content: none !important;
+  display: none !important;
+}
+
+/* =========================
+   RIGHT HEADER (top chat)
+   ========================= */
+.m-header-messaging{
+  background: linear-gradient(90deg,var(--jt-topA),var(--jt-topB)) !important;
+  border-radius: 0 0 var(--jt-r-lg) var(--jt-r-lg) !important;
+  box-shadow: var(--jt-shadow) !important;
+  border: 0 !important;
+}
+.m-header-messaging .user-name{color:#fff !important; font-weight:700 !important;}
+.m-header-messaging svg,
+.m-header-messaging i{color:#fff !important;}
+
+/* =========================
+   CHAT AREA
+   ========================= */
+.messenger-messagingView{
+  background: var(--jt-bg) !important;
+}
+.messenger-messagingView .m-body{
+  background: var(--jt-bg) !important;
+  padding: 18px 22px 120px 22px !important; /* biar aman ga ketutup composer */
+}
+
+/* hint pill (Hari ini / select chat) */
+.message-hint span{
+  background:#fff !important;
+  color:#000 !important;
+  font-weight:600 !important;
+  font-size:13px !important;
+  padding:6px 12px !important;
+  border-radius:999px !important;
+}
+
+/* bubble kiri/kanan */
+.message-card{margin: 8px 0 !important;}
+.message-card .message{
+  padding:10px 14px !important;
+  border-radius:16px !important;
+  line-height:1.5 !important;
+  color:#fff !important;
+}
+.message-card:not(.mc-sender) .message{
+  background: var(--jt-left) !important;
+  border-bottom-left-radius:6px !important;
+}
+.message-card.mc-sender .message{
+  background: var(--jt-right) !important;
+  border-bottom-right-radius:6px !important;
+}
+
+/* time + seen */
+.message-time{color:#BDAEDD !important; font-size:12px !important;}
+.message-time .fas{margin-right:6px; color:#7FB4FF !important;}
+
+/* =========================
+   COMPOSER (bawah)
+   ========================= */
+.messenger-sendCard{
+  margin:0 !important;
+  border-radius:0 !important;
+  background:#60376B !important;
+  padding:12px 0px 12px 68px !important; /* ruang kiri utk attach */
+  border-top: 1px solid rgba(255,255,255,.06) !important;
+}
+.messenger-sendCard form{
+  position:relative !important;
+  background:#fff !important;
+  border:1px solid var(--jt-border) !important;
+  border-radius:18px !important;
+  padding:10px 10px !important;
+  gap:10px !important;
+}
+
+/* tombol attach “keluar” bar */
+.messenger-sendCard form label{
+  position:absolute !important;
+  left:-56px !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  width:44px !important;
+  height:44px !important;
+  border-radius:12px !important;
+  background:transparent !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  cursor:pointer !important;
+}
+.messenger-sendCard form label span{color:#fff !important; font-size:22px !important;}
+
+/* textarea */
+.messenger-sendCard textarea.m-send{
+  background:transparent !important;
+  border:0 !important;
+  outline:0 !important;
+  color:#1A1827 !important;
+  resize:none !important;
+  max-height:120px !important;
+}
+.messenger-sendCard textarea.m-send::placeholder{color:#8a8a8a !important;}
+
+/* emoji + send */
+.messenger-sendCard .emoji-button{
+  border:0 !important;
+  background:transparent !important;
+}
+.messenger-sendCard .emoji-button span{color:#6256AC !important;}
+
+.messenger-sendCard .send-button{
+  width:46px !important;
+  height:46px !important;
+  border-radius:14px !important;
+  background:#6256AC !important;
+  border:0 !important;
+}
+.messenger-sendCard .send-button span,
+.messenger-sendCard .send-button i,
+.messenger-sendCard .send-button svg{
+  color:#fff !important;
+  fill:#fff !important;
+}
+
+/* info panel kanan (ga dipakai di figma) */
+.messenger-infoView{display:none !important;}
+
+/* =========================
+   Navbar (optional - kalau sudah ada global, boleh hapus)
+   ========================= */
+.navbar{
+  backdrop-filter: saturate(150%) blur(8px);
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 18, 0.80),
+    rgba(10, 10, 18, 0.40)
+  );
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.brand-logo{height:34px;}
+.search-box{position:relative;}
+.search-box .form-control{
+  padding-right: 40px;
+  border-radius: 14px;
+  background: #000;
+  border: 1px solid #fff;
+  color:#fff;
+}
+.search-box .form-control::placeholder{color:rgba(255,255,255,.65);}
+.search-box i{
+  position:absolute;
+  right: 12px;
+  top:50%;
+  transform: translateY(-50%);
+  color: rgba(255,255,255,.75);
+}
+.profile-img{
+  width:32px;height:32px;border-radius:50%;
+  object-fit:cover;
+}
+/* Icon gambar di sidebar */
+.jt-rail .jt-rail-icon-img{
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+
+  /* bikin PNG jadi putih */
+  filter: brightness(0) invert(1);
+  opacity: .95;
+}
+
+/* saat hover/active biar lebih “nyala” */
+.jt-rail .jt-rail-item:hover .jt-rail-icon-img,
+.jt-rail .jt-rail-item.active .jt-rail-icon-img{
+  opacity: 1;
+}
