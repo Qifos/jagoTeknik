@@ -382,16 +382,16 @@ body {
 }
 
 .explore-card-final__title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0;
+    font-size: 0.9rem;
     line-height: 1.3;
     color: #fff;
     letter-spacing: -0.3px;
+    margin-bottom: -12px;
 }
 
 .explore-card-final__subtitle {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: rgba(255, 255, 255, 0.9);
     margin: 0;
     font-weight: 500;
@@ -400,19 +400,31 @@ body {
 .explore-card-final__mentor {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    flex-direction: row !important;
+    gap: 10px;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.85);
     margin: 0.5rem 0 0 0;
+    margin-top: 18px;
+    margin-bottom: -12px;
+    flex-wrap: nowrap;
 }
 
-.explore-card-final__dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.8);
-    flex-shrink: 0;
+.explore-card-final__mentor-avatar{
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 24px;
 }
+
+.explore-card-final__mentor-name{
+  display: inline-block;
+  line-height: 1;
+  margin: 0;
+}
+
+
 
 .explore-card-final__progress {
     font-size: 0.8rem;

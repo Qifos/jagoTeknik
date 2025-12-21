@@ -10,17 +10,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Jago Teknik - Kelas</title>
+    <!-- Samakan navbar & style dengan Homepage -->
+    <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/personalisasi.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
 
     <!-- CSS Links -->
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kelas.css') }}">
 </head>
 <body class="min-vh-100 d-flex flex-column">
-    <header class="bg-transparent">
-        <!-- Navbar (SAMA seperti homepage/jadwal) -->
-        <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
                 <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
@@ -34,10 +36,10 @@
                         <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
+                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                        <a class="nav-link active" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
@@ -62,7 +64,6 @@
             </div>
         </div>
     </nav>
-    </header>
 
 
     <main class="flex-grow-1">

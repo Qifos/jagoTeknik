@@ -49,6 +49,7 @@ class KelasController extends Controller
                 'k.rating_kelas',
                 'k.harga_asli',
                 'ment.nama as nama_mentor',
+                'ment.image_mentor',
                 'bm.id_beli_matkul',
                 'wl.id_wishlist_kelas',
                 DB::raw('CASE
@@ -173,6 +174,8 @@ class KelasController extends Controller
             'k.image_path',
             'k.harga_asli',
             'k.preview',
+            'ment.image_mentor',
+            'ment.nama as nama_mentor',
             'm.id_matkul',
             'm.nama_matkul',
             'm.deskripsi',

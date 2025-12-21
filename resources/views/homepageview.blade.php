@@ -187,6 +187,7 @@
                             'm.nama_matkul',
                             'k.image_path',
                             'mt.nama as mentor_name',
+                            'mt.image_mentor',
                             'ump.progress_percentage',
                             'ump.last_accessed_at',
                         )
@@ -221,9 +222,15 @@
 
                                     <!-- Mentor Info -->
                                     <div class="explore-card-final__mentor">
-                                        <span class="explore-card-final__dot"></span>
-                                        <span>{{ $kelas->mentor_name ?? 'Mentor' }}</span>
-                                    </div>
+                                        <img
+                                            src="{{ $kelas->image_mentor ? asset($kelas->image_mentor) : asset('images/default-mentor.jpg') }}"
+                                            alt="{{ $kelas->mentor_name ?? 'Mentor' }}"
+                                            class="explore-card-final__mentor-avatar"
+                                            onerror="this.src='{{ asset('images/default-mentor.jpg') }}'"
+                                        >
+                                        <span class="explore-card-final__mentor-name">{{ $kelas->mentor_name ?? 'Mentor' }}</span>
+                                        </div>
+
 
                                     <!-- Progress -->
                                     <div class="explore-card-final__progress">
