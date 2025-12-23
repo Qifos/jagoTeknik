@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+<!--
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * Desc   : Package View Chatify dan beberapa custom manual
+-->
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
 <script src="https://js.pusher.com/7.2.0/pusher.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@3.0.3/dist/index.min.js"></script>
 <script >

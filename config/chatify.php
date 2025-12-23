@@ -1,4 +1,12 @@
 <?php
+<<<<<<< HEAD
+=======
+/**
+ * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
+ * File   : Chatify.php
+  * Date   : 18-12-2025
+ */
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
 use App\Models\User;
 
 return [
@@ -26,13 +34,22 @@ return [
         'custom' => env('CHATIFY_CUSTOM_ROUTES', false),
         'prefix' => env('CHATIFY_ROUTES_PREFIX', 'chatify'),
         'middleware' => env('CHATIFY_ROUTES_MIDDLEWARE', ['web','auth']),
+<<<<<<< HEAD
         'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'Chatify\Http\Controllers'),
+=======
+        'namespace' => env('CHATIFY_ROUTES_NAMESPACE', 'App\Http\Controllers\Chatify'),
+
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
         'user' => App\Models\User::class,
     ],
     'api_routes' => [
         'prefix' => env('CHATIFY_API_ROUTES_PREFIX', 'chatify/api'),
         'middleware' => env('CHATIFY_API_ROUTES_MIDDLEWARE', ['api']),
+<<<<<<< HEAD
         'namespace' => env('CHATIFY_API_ROUTES_NAMESPACE', 'Chatify\Http\Controllers\Api'),
+=======
+        'namespace' => env('CHATIFY_API_ROUTES_NAMESPACE', 'App\Http\Controllers\Chatify\Api'),
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
     ],
 
     /*

@@ -15,44 +15,53 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Samakan navbar & style dengan Homepage -->
+    <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/personalisasi.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/belikelas.css') }}">
 </head>
 <body class="min-vh-100 d-flex flex-column">
-    <header class="bg-transparent">
-         <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-                <div class="container-fluid px-4">
-                    <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                        <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Beranda</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
+                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                        <a class="nav-link active" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
                     <li class="nav-item">
+<<<<<<< HEAD
                         <a class="nav-link d-flex align-items-center" href="#">
+=======
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                             <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -61,7 +70,6 @@
             </div>
         </div>
     </nav>
-    </header>
 
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">

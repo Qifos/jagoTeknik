@@ -24,6 +24,7 @@
     <header class="bg-transparent">
         <!-- Navbar (SAMA seperti homepage/jadwal) -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+<<<<<<< HEAD
             <div class="container-fluid px-4">
                 <a class="navbar-brand ms-2 ms-lg-3" href="#">
                     <img src="{{ asset('image/jagoteknik.png') }}" alt="Jago Teknik" class="brand-logo">
@@ -75,6 +76,56 @@
         <div class="container-fluid px-lg-5 py-4">
             <div class="mb-3">
                 <a href="{{ route('jadwal.index') }}" class="back-btn">&lt; Kembali</a>
+=======
+        <div class="container-fluid px-4">
+            <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
+                    </li>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                    class="bi bi-search"></i></span>
+                            </div>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
+                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
+                            <span class="ms-2">Profil</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    </header>
+
+
+    <main class="flex-grow-1 text-white">
+        <div class="container-fluid px-lg-5 py-4">
+            <div class="mb-3">
+                <a href="javascript:void(0);" onclick="handleBackButton()" class="back-btn">&lt; Back</a>
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
             </div>
 
             <div class="row g-4">
@@ -94,7 +145,11 @@
                         </div>
 
                         <!-- Class Info -->
+<<<<<<< HEAD
                         <p class="small text-muted mb-1">Jadwal Kelas</p>
+=======
+                        <p class="small text-white-50 mb-1">Jadwal Kelas</p>
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                         <h2 class="h3 text-white fw-bold">
                             {{ $kelas->nama_matkul }}
                         </h2>
@@ -118,7 +173,11 @@
 
                         <!-- Description -->
                         <h5 class="text-white mb-3">Deskripsi Kelas</h5>
+<<<<<<< HEAD
                         <p class="text-muted">
+=======
+                        <p class="text-white-50">
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                             {{ $kelas->deskripsi ?? 'Deskripsi kelas tidak tersedia.' }}
                         </p>
 
@@ -154,7 +213,11 @@
 
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                                         <p class="text-muted mb-1">
+=======
+                                        <p class="text-white-50 mb-1">
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                                             <i class="bi bi-calendar-event me-2"></i>Tanggal
                                         </p>
                                         <p class="text-white fw-bold">
@@ -162,7 +225,11 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                                         <p class="text-muted mb-1">
+=======
+                                        <p class="text-white-50 mb-1">
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                                             <i class="bi bi-clock me-2"></i>Durasi Kelas
                                         </p>
                                         <p class="text-white fw-bold">
@@ -178,7 +245,11 @@
 
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                                         <p class="text-muted mb-1">
+=======
+                                        <p class="text-white-50 mb-1">
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                                             <i class="bi bi-geo-alt me-2"></i>Tempat
                                         </p>
                                         <p class="text-white fw-bold">
@@ -186,7 +257,11 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6 mb-3">
+<<<<<<< HEAD
                                         <p class="text-muted mb-1">
+=======
+                                        <p class="text-white-50 mb-1">
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                                             <i class="bi bi-bookmark me-2"></i>Kategori
                                         </p>
                                         <p class="text-white fw-bold">
@@ -208,7 +283,11 @@
                                              height="50">
                                         <div>
                                             <p class="text-white fw-bold mb-0">{{ $matkul->mentor->nama ?? 'Mentor' }}</p>
+<<<<<<< HEAD
                                             <small class="text-muted">Instruktur</small>
+=======
+                                            <small class="text-white-50">Instruktur</small>
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                                         </div>
                                     </div>
                                 </div>
@@ -272,5 +351,19 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<<<<<<< HEAD
+=======
+    <script>
+        function handleBackButton() {
+            // Check if there's a previous page in history
+            if (history.length > 1) {
+                history.back();
+            } else {
+                // Fallback to homepage if no previous page
+                window.location.href = '{{ route('homepage') }}';
+            }
+        }
+    </script>
+>>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
 </body>
 </html>

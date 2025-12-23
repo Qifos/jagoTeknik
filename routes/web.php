@@ -9,9 +9,11 @@ use App\Http\Controllers\KelasController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\ProgressController;
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\RekomendasiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Http\Controllers\MentorController;
 
 Route::redirect('/', '/landingpage');
 
@@ -127,7 +129,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::view('/personalisasi', 'personalisasi')->name('personalisasi.view');
-// Route untuk menampilkan halaman password
 
 Route::middleware('auth')->group(function () {
     Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
@@ -151,6 +152,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/progress/content/{materiId}', [ProgressController::class, 'recordContentRead'])
         ->name('progress.content.record');
 
+    // Record content scroll progress
+    Route::post('/api/progress/scroll/{materiId}', [ProgressController::class, 'recordContentScroll'])
+        ->name('progress.scroll.record');
+
+    // Record video completion
+    Route::post('/api/progress/video-complete/{materiId}', [ProgressController::class, 'recordVideoCompletion'])
+        ->name('progress.video.complete');
+
     // Complete materi
     Route::post('/api/materi/complete/{materiId}', [ProgressController::class, 'completeMateri'])
         ->name('materi.complete');
@@ -162,4 +171,36 @@ Route::middleware('auth')->group(function () {
     // Get matkul progress
     Route::get('/api/progress/matkul/{matkulId}', [ProgressController::class, 'getMatkulProgress'])
         ->name('progress.matkul');
+
+    // Get all materi progress for a matkul
+    Route::get('/api/progress/matkul/{matkulId}/materi', [ProgressController::class, 'getMateriProgressList'])
+        ->name('progress.matkul.materi');
 });
+
+// ============================================
+// 7. QUIZ ROUTES (Auth required)
+// ============================================
+Route::middleware('auth')->group(function () {
+    // Get quiz questions for a materi
+    Route::get('/api/quiz/materi/{materiId}', [QuizController::class, 'getQuestions'])
+        ->name('quiz.questions');
+
+    // Submit quiz answer
+    Route::post('/api/quiz/answer/{materiId}', [QuizController::class, 'submitAnswer'])
+        ->name('quiz.submit.answer');
+
+    // Complete quiz and finalize score
+    Route::post('/api/quiz/complete/{materiId}', [QuizController::class, 'completeQuiz'])
+        ->name('quiz.complete');
+
+    // Start new quiz attempt
+    Route::post('/api/quiz/attempt/{materiId}', [QuizController::class, 'startNewAttempt'])
+        ->name('quiz.attempt');
+
+    // Get quiz results
+    Route::get('/api/quiz/results/{materiId}', [QuizController::class, 'getResults'])
+        ->name('quiz.results');
+});
+
+Route::get('/mentor', [MentorController::class, 'index'])->name('mentor.index');
+Route::get('/mentor/{id}', [MentorController::class, 'show'])->name('mentor.show');

@@ -3,9 +3,7 @@
 /**
  * Author : Sinta Dewi Rahmawati (NRP 5026231231)
  * File   : app/Http/Controllers/UserController.php
- * Desc   : user controller untuk register, OTP, login, logout
- * Date   : 2025-11-04
- */
+*/
 
 namespace App\Http\Controllers;
 
@@ -20,11 +18,9 @@ use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
-    // REGISTER
     public function register(Request $request)
     {
         $data = $request->validate([
-            // pakai 'nama' (bukan 'name') agar match dengan form
             'nama'     => ['required','string','max:255'],
             'email'    => ['required','email','max:255', Rule::unique('user', 'email')],
             'password' => ['required','confirmed', Pwd::min(8)->letters()->mixedCase()->numbers()->symbols()->uncompromised()],
@@ -33,7 +29,6 @@ class UserController extends Controller
 
         $otp = str_pad((string) random_int(0, 9999), 4, '0', STR_PAD_LEFT);
 
-        // NOTE: username belum diisi di sini -> pastikan kolomnya nullable (lihat bagian D)
         $user = User::create([
             'nama'       => $data['nama'],
             'email'      => $data['email'],
@@ -80,7 +75,6 @@ class UserController extends Controller
 
     public function showUsernameView()
     {
-        // pastikan model Jurusan sudah benar (lihat bagian C)
         $jurusanList = Jurusan::select('id_jurusan','nama_jurusan')->get();
         return view('usernameview', compact('jurusanList'));
     }
@@ -88,10 +82,10 @@ class UserController extends Controller
     public function setUsername(Request $request)
     {
         $request->validate([
-            'username'      => ['required','string','max:255','unique:user,username'], // tabel 'user' (bukan 'users')
+            'username'      => ['required','string','max:255','unique:user,username'],
             'angkatan'      => ['required','numeric','digits:4'],
             'tanggal_lahir' => ['required','date'],
-            'id_jurusan'    => ['required','exists:jurusan,id_jurusan'], // tabel & PK custom
+            'id_jurusan'    => ['required','exists:jurusan,id_jurusan'],
             'no_hp'         => ['required','numeric','digits_between:10,15'],
         ]);
 
@@ -132,7 +126,6 @@ class UserController extends Controller
 
 public function showPersonalisasi()
 {
-    // Mengambil data user yang sedang login
     $user = Auth::user();
     return view('personalisasi', ['user' => $user]);
 }

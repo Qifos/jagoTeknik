@@ -73,19 +73,32 @@
     margin-bottom: 8px;
     line-height: 1.35;
   }
-  .custom-card .instructor {
+  .explore-card-final__mentor {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-top: auto;
-  }
-  .custom-card .instructor img {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-  }
+    flex-direction: row !important;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0.5rem 0 0 0;
+    margin-top: 18px;
+    margin-bottom: -12px;
+    flex-wrap: nowrap;
+}
+
+.explore-card-final__mentor-avatar{
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 24px;
+}
+
+.explore-card-final__mentor-name{
+  display: inline-block;
+  line-height: 1;
+  margin: 0;
+}
   .custom-progress {
     height: 4px;
     background: rgba(255, 255, 255, 0.2);

@@ -28,32 +28,29 @@
 </head>
 
 <body>
-
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                <img src="{{ asset('image/jagoteknik.png') }}" alt="Jago Teknik" class="brand-logo">
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
+    <!-- Navbar -->
+            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+                <div class="container-fluid px-4">
+                    <a class="navbar-brand ms-2 ms-lg-3" href="#">
+                        <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Chat</a>
+                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-
                     <li class="nav-item">
                         <form class="d-flex mx-3">
                             <div class="search-box">
@@ -65,7 +62,7 @@
 
                     <li class="nav-item">
                         <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
-                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
+                            <img src="profile.jpg" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
                     </li>
@@ -250,48 +247,44 @@
                                                 class="text-decoration-none">
                                     @endif
 
-                                    <div class="course-card">
-                                        <div class="course-image">
-                                            {{-- GAMBAR DARI image_path TABEL KELAS --}}
-                                            <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
-                                                alt="{{ $item->nama_matkul }}"
-                                                onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
-                                            <div
-                                                class="course-badge {{ $item->status_kelas === 'completed' ? 'completed' : ($item->status_kelas === 'wishlist' ? 'add' : '') }}">
-                                                @if ($item->status_kelas === 'completed')
-                                                    <i class="bi bi-check-circle-fill"></i>
-                                                @elseif($item->status_kelas === 'wishlist')
-                                                    <form action="{{ route('wishlist.toggle', $item->id_kelas) }}"
-                                                        method="POST" style="all: unset; cursor: pointer;">
-                                                        @csrf
-                                                        <i class="bi bi-plus-circle-fill"></i>
-                                                    </form>
-                                                @else
-                                                    <i class="bi bi-play-circle-fill"></i>
-                                                @endif
+                                        <div class="course-card">
+                                            <div class="course-image">
+                                                {{-- GAMBAR DARI image_path TABEL KELAS --}}
+                                                <img src="{{ $item->image_path ? asset($item->image_path) : asset('images/kelas/default.jpg') }}"
+                                                    alt="{{ $item->nama_matkul }}"
+                                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                                <div class="course-badge {{ $item->status_kelas === 'completed' ? 'completed' : ($item->status_kelas === 'wishlist' ? 'add' : '') }}">
+                                                    @if($item->status_kelas === 'completed')
+                                                        <i class="bi bi-check-circle-fill"></i>
+                                                    @elseif($item->status_kelas === 'wishlist')
+                                                        <form action="{{ route('wishlist.toggle', $item->id_kelas) }}" method="POST" style="all: unset; cursor: pointer;">
+                                                            @csrf
+                                                            <i class="bi bi-plus-circle-fill"></i>
+                                                        </form>
+                                                    @else
+                                                        <i class="bi bi-play-circle-fill"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="course-info">
+                                                <h3 class="course-title">{{ $item->nama_matkul }}</h3>
+                                                <p class="course-progress">
+                                                    @if($item->status_kelas === 'completed')
+                                                        <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
+                                                        @php
+                                                            $progress = app(App\Http\Controllers\KelasController::class)->getProgressKelas($item->id_kelas);
+                                                        @endphp
+                                                        Progress: {{ $progress }}%
+                                                    @elseif($item->status_kelas === 'wishlist')
+                                                        <!-- Tampilkan status wishlist -->
+                                                        Dalam wishlist
+                                                    @else
+                                                        <!-- Tampilkan harga untuk kelas yang belum dibeli -->
+                                                        Rp {{ number_format($item->harga_asli, 0, ',', '.') }}
+                                                    @endif
+                                                </p>
                                             </div>
                                         </div>
-                                        <div class="course-info">
-                                            <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                            <p class="course-progress">
-                                                @if ($item->status_kelas === 'completed')
-                                                    <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
-                                                    @php
-                                                        $progress = app(
-                                                            App\Http\Controllers\KelasController::class,
-                                                        )->getProgressKelas($item->id_kelas);
-                                                    @endphp
-                                                    Progress: {{ $progress }}%
-                                                @elseif($item->status_kelas === 'wishlist')
-                                                    <!-- Tampilkan status wishlist -->
-                                                    Dalam wishlist
-                                                @else
-                                                    <!-- Tampilkan harga untuk kelas yang belum dibeli -->
-                                                    Rp {{ number_format($item->harga_asli, 0, ',', '.') }}
-                                                @endif
-                                            </p>
-                                        </div>
-                                    </div>
                                     </a>
                                 </div>
                             @endforeach
@@ -341,8 +334,15 @@
                                                         App\Http\Controllers\KelasController::class,
                                                     )->getProgressKelas($item->id_kelas);
                                                 @endphp
-                                                <!-- Di tab Diikuti, selalu tampilkan progress -->
-                                                <p class="course-progress">Progress: {{ $progress }}%</p>
+                                                <div class="progress mb-2" style="height: 6px; background-color: #e9ecef;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                        style="width: {{ $progress }}%; background-color: #6b4fa0;"
+                                                        aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <p class="course-progress" style="font-size: 0.85rem; color: #666;">
+                                                    Progress: {{ $progress }}%
+                                                </p>
                                             </div>
                                         </div>
                                     </a>
