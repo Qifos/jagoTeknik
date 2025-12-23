@@ -66,10 +66,10 @@
     </header>
 
 
-    <main class="flex-grow-1">
+    <main class="flex-grow-1 text-white">
         <div class="container-fluid px-lg-5 py-4">
             <div class="mb-3">
-                <a href="{{ route('media.materi', ['id' => $materi->id_materi]) }}" class="back-btn">&lt; Back</a>
+                <a href="javascript:void(0);" onclick="handleVideoBackButton()" class="back-btn">&lt; Back</a>
             </div>
 
             <div class="row g-4">
@@ -81,7 +81,7 @@
                             <span class="time-badge">{{ $video->durasi ?? 'Video' }}</span>
                         </div>
 
-                        <p class="small text-muted mb-1">{{ $materi->nama_materi }}</p>
+                        <p class="small text-white-50 mb-1">{{ $materi->nama_materi }}</p>
                         <h2 class="h3 text-white fw-bold d-flex justify-content-between align-items-center">
                             {{ $video->nama_video }}
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrows-angle-expand" viewBox="0 0 16 16">
@@ -89,7 +89,7 @@
                                 <path fill-rule="evenodd" d="M10.828 5.828a.5.5 0 0 0-.707 0l-4 4a.5.5 0 0 0 0 .707l4 4a.5.5 0 0 0 .707-.707L7.207 6.5H10.5a.5.5 0 0 0 0-1H7.207l3.62-3.62a.5.5 0 0 0 0-.707z"/>
                             </svg>
                         </h2>
-                        <p class="text-muted">{{ $video->deskripsi ?? 'Deskripsi video tidak tersedia.' }}</p>
+                        <p class="text-white-50">{{ $video->deskripsi ?? 'Deskripsi video tidak tersedia.' }}</p>
 
                         <hr class="border-secondary my-4">
 
@@ -97,7 +97,7 @@
                             <img src="https://placehold.co/40x40/888/white?text={{ urlencode(substr($matkul->mentor->nama ?? 'Mentor', 0, 2)) }}" class="rounded-circle" alt="{{ $matkul->mentor->nama ?? 'Mentor' }}">
                             <div class="ms-3">
                                 <p class="text-white mb-0 fw-bold">{{ $matkul->mentor->nama ?? 'Mentor' }}</p>
-                                <small class="text-muted">{{ $matkul->nama_matkul }}</small>
+                                <small class="text-white-50">{{ $matkul->nama_matkul }}</small>
                             </div>
                         </div>
 
@@ -112,7 +112,7 @@
                                             <img src="https://placehold.co/60x40/000/fff?text=V" class="rounded me-2" alt="{{ $relatedVideo->nama_video }}">
                                             <div class="text-start flex-grow-1">
                                                 <p class="mb-1 small text-white fw-bold">{{ substr($relatedVideo->nama_video, 0, 20) }}...</p>
-                                                <small class="text-muted">{{ $relatedVideo->durasi ?? 'Video' }}</small>
+                                                <small class="text-white-50">{{ $relatedVideo->durasi ?? 'Video' }}</small>
                                             </div>
                                         </a>
                                     @endif
@@ -328,6 +328,16 @@
             setTimeout(() => {
                 notification.remove();
             }, 10000);
+        }
+
+        function handleVideoBackButton() {
+            // Check if there's a previous page in history
+            if (history.length > 1) {
+                history.back();
+            } else {
+                // Fallback to homepage if no previous page
+                window.location.href = '{{ route('homepage') }}';
+            }
         }
     </script>
 </body>

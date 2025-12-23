@@ -68,10 +68,10 @@
     </header>
 
 
-    <main class="flex-grow-1">
+    <main class="flex-grow-1 text-white">
         <div class="container-fluid px-lg-5 py-4">
             <div class="mb-3">
-                <a href="{{ route('jadwal.index') }}" class="back-btn">&lt; Kembali</a>
+                <a href="javascript:void(0);" onclick="handleBackButton()" class="back-btn">&lt; Back</a>
             </div>
 
             <div class="row g-4">
@@ -91,7 +91,7 @@
                         </div>
 
                         <!-- Class Info -->
-                        <p class="small text-muted mb-1">Jadwal Kelas</p>
+                        <p class="small text-white-50 mb-1">Jadwal Kelas</p>
                         <h2 class="h3 text-white fw-bold">
                             {{ $kelas->nama_matkul }}
                         </h2>
@@ -115,7 +115,7 @@
 
                         <!-- Description -->
                         <h5 class="text-white mb-3">Deskripsi Kelas</h5>
-                        <p class="text-muted">
+                        <p class="text-white-50">
                             {{ $kelas->deskripsi ?? 'Deskripsi kelas tidak tersedia.' }}
                         </p>
 
@@ -151,7 +151,7 @@
 
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
+                                        <p class="text-white-50 mb-1">
                                             <i class="bi bi-calendar-event me-2"></i>Tanggal
                                         </p>
                                         <p class="text-white fw-bold">
@@ -159,7 +159,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
+                                        <p class="text-white-50 mb-1">
                                             <i class="bi bi-clock me-2"></i>Durasi Kelas
                                         </p>
                                         <p class="text-white fw-bold">
@@ -175,7 +175,7 @@
 
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
+                                        <p class="text-white-50 mb-1">
                                             <i class="bi bi-geo-alt me-2"></i>Tempat
                                         </p>
                                         <p class="text-white fw-bold">
@@ -183,7 +183,7 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
+                                        <p class="text-white-50 mb-1">
                                             <i class="bi bi-bookmark me-2"></i>Kategori
                                         </p>
                                         <p class="text-white fw-bold">
@@ -205,7 +205,7 @@
                                              height="50">
                                         <div>
                                             <p class="text-white fw-bold mb-0">{{ $matkul->mentor->nama ?? 'Mentor' }}</p>
-                                            <small class="text-muted">Instruktur</small>
+                                            <small class="text-white-50">Instruktur</small>
                                         </div>
                                     </div>
                                 </div>
@@ -269,5 +269,16 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function handleBackButton() {
+            // Check if there's a previous page in history
+            if (history.length > 1) {
+                history.back();
+            } else {
+                // Fallback to homepage if no previous page
+                window.location.href = '{{ route('homepage') }}';
+            }
+        }
+    </script>
 </body>
 </html>

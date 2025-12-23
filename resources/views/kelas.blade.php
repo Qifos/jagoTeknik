@@ -69,23 +69,12 @@
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">
             <div class="mb-3">
-                <a href="#" onclick="if(history.length > 1) { history.back(); return false; } else { window.location = '{{ route('kelas.index') }}'; }" class="back-btn">&lt; Back</a>
+                <a href="javascript:void(0);" onclick="handleBackButton()" class="back-btn">&lt; Back</a>
             </div>
 
             <header class="text-center">
                 <h1 class="display-5 title-hero">{{ $matkul->nama_matkul }}</h1>
                 <p class="text-muted">{{ $matkul->mentor->nama ?? 'Instruktur' }}</p>
-                <div class="mt-4">
-                    @if($sudahDibeli)
-                        <a href="{{ route('kelas.detail.beli', $matkul->id_matkul) }}" class="btn btn-primary btn-lg">
-                            <i class="bi bi-play-fill"></i> Mulai Belajar
-                        </a>
-                    @else
-                        <a href="{{ route('kelas.beli', $matkul->id_matkul) }}" class="btn btn-warning btn-lg">
-                            <i class="bi bi-cart-plus"></i> Beli Kelas
-                        </a>
-                    @endif
-                </div>
             </header>
 
             <div style="height: 30px;"></div>
@@ -103,39 +92,78 @@
                 <div class="h-scroll" id="materi-scroll">
                     @foreach($materiItems as $item)
                     <div class="card-item">
-                        <a href="{{ route('media.materi', ['id' => $item['id']]) }}" class="text-decoration-none">
-                            <div class="custom-card">
-                                <div class="media-container mb-3">
-                                    @if(isset($item['thumb']) && $item['thumb'])
-                                        <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
-                                    @else
-                                        <div class="media-empty">
-                                            <span>{{ $item['title'] }}</span>
-                                        </div>
-                                    @endif
-                                    <span class="small-pill">{{ $item['tag'] }}</span>
-                                </div>
+                        @php
+                            $isMateriUnlocked = isset($item['is_unlocked']) ? $item['is_unlocked'] : ($loop->first ? true : false);
+                        @endphp
 
-                                <div style="padding: 0 12px;">
-                                    <div class="card-title mb-2">{{ $item['title'] }}</div>
-                                    <div class="instructor mb-2">
-                                        <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
-                                        <span>{{ $item['instructor'] }}</span>
-                                    </div>
-
-                                    <div class="custom-progress mt-auto">
-                                        <div class="bar" style="width: {{ $item['progress'] }}%"></div>
-                                    </div>
-                                    <div class="progress-text mt-2 mb-3">
-                                        @if($item['is_completed'])
-                                            <span style="color: #28a745; font-weight: bold;">✓ {{ $item['progress_text'] }}</span>
+                        @if($isMateriUnlocked)
+                            <a href="{{ route('media.materi', ['id' => $item['id']]) }}" class="text-decoration-none">
+                                <div class="custom-card">
+                                    <div class="media-container mb-3">
+                                        @if(isset($item['thumb']) && $item['thumb'])
+                                            <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
                                         @else
-                                            <span style="color: #6c757d;">{{ $item['progress_text'] }}</span>
+                                            <div class="media-empty">
+                                                <span>{{ $item['title'] }}</span>
+                                            </div>
                                         @endif
+                                        <span class="small-pill">{{ $item['tag'] }}</span>
+                                    </div>
+
+                                    <div style="padding: 0 12px;">
+                                        <div class="card-title mb-2">{{ $item['title'] }}</div>
+                                        <div class="instructor mb-2">
+                                            <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
+                                            <span>{{ $item['instructor'] }}</span>
+                                        </div>
+
+                                        <div class="custom-progress mt-auto">
+                                            <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                        </div>
+                                        <div class="progress-text mt-2 mb-3">
+                                            @if($item['is_completed'])
+                                                <span style="color: #28a745; font-weight: bold;">✓ {{ $item['progress_text'] }}</span>
+                                            @else
+                                                <span style="color: #6c757d;">{{ $item['progress_text'] }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        @else
+                            <div onclick="showLockedMateriWarning()" style="cursor: not-allowed; display: block;">
+                                <div class="custom-card" style="opacity: 0.6;">
+                                    <div class="media-container mb-3" style="position: relative;">
+                                        @if(isset($item['thumb']) && $item['thumb'])
+                                            <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
+                                        @else
+                                            <div class="media-empty">
+                                                <span>{{ $item['title'] }}</span>
+                                            </div>
+                                        @endif
+                                        <span class="small-pill">{{ $item['tag'] }}</span>
+                                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 8px 12px; border-radius: 4px; font-size: 0.85rem; white-space: nowrap; z-index: 10;">
+                                            🔒 Terkunci
+                                        </div>
+                                    </div>
+
+                                    <div style="padding: 0 12px;">
+                                        <div class="card-title mb-2">{{ $item['title'] }}</div>
+                                        <div class="instructor mb-2">
+                                            <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
+                                            <span>{{ $item['instructor'] }}</span>
+                                        </div>
+
+                                        <div class="custom-progress mt-auto">
+                                            <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                        </div>
+                                        <div class="progress-text mt-2 mb-3">
+                                            <span style="color: #6c757d;">Selesaikan materi sebelumnya</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        @endif
                     </div>
                     @endforeach
                 </div>
@@ -172,11 +200,6 @@
                                         <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
                                         <span>{{ $video['instructor'] }}</span>
                                     </div>
-
-                                    <div class="custom-progress mt-auto">
-                                        <div class="bar" style="width: {{ $video['progress'] }}%"></div>
-                                    </div>
-                                    <div class="progress-text mt-2 mb-3">{{ $video['progress_text'] }}</div>
                                 </div>
                             </div>
                         </a>
@@ -243,5 +266,35 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Alpine.js for small interactions -->
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        /**
+         * Show warning popup when user tries to click locked materi
+         */
+        function showLockedMateriWarning() {
+            alert('🔒 Materi ini belum terbuka.\n\nSelesaikan materi sebelumnya terlebih dahulu untuk membuka materi ini.');
+        }
+
+        /**
+         * Handle back button logic
+         * If coming from materi or video view, go to semuakelas
+         * Otherwise, go back or to semuakelas as default
+         */
+        function handleBackButton() {
+            const referrer = document.referrer;
+
+            // Check if referrer contains 'materi' or 'video' route
+            if (referrer && (referrer.includes('/materi/') || referrer.includes('/video/'))) {
+                // Go to semuakelas view
+                window.location.href = '{{ route('kelas.semua') }}';
+            } else if (history.length > 1) {
+                // Go back in history
+                history.back();
+            } else {
+                // Fallback to semuakelas
+                window.location.href = '{{ route('kelas.semua') }}';
+            }
+        }
+    </script>
 </body>
 </html>

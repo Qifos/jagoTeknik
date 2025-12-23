@@ -395,6 +395,9 @@ class ProgressController extends Controller
                     'is_completed' => $progress ? $progress->is_completed : false,
                     'content_read' => $progress ? $progress->content_read : false,
                     'video_completed' => $progress ? $progress->video_completed : false,
+                    'quiz_passed' => $progress ? $progress->quiz_passed : false,
+                    'highest_quiz_score' => $progress ? $progress->highest_quiz_score : 0,
+                    'recent_quiz_score' => $progress ? $progress->recent_quiz_score : 0,
                     'status_text' => $progress && $progress->is_completed ? 'Sudah dibaca' : 'Belum dibaca',
                 ];
             });

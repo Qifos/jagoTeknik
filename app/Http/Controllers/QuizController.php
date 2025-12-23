@@ -264,16 +264,17 @@ class QuizController extends Controller
 
             // Always update recent score
             $progress->recent_quiz_score = $score;
-            $progress->quiz_completed = true;
-            $progress->quiz_passed = $passed;
-            $progress->last_quiz_attempt = now();
 
-            // Only mark complete if passed the quiz
+            // CRITICAL FIX: Only update quiz_passed to true if passed, never revert to false
             if ($passed) {
+                $progress->quiz_passed = true;
                 $progress->is_completed = true;
                 $progress->completed_at = now();
             }
+            // Logic: If they passed before but fail this time, they still "passed" the module historically.
 
+            $progress->quiz_completed = true;
+            $progress->last_quiz_attempt = now();
             $progress->save();
 
             return response()->json([
@@ -281,7 +282,8 @@ class QuizController extends Controller
                 'score' => (int)$score,
                 'highest_score' => (int)($progress->highest_quiz_score ?? 0),
                 'recent_score' => (int)($progress->recent_quiz_score ?? 0),
-                'passed' => (bool)$passed,
+                'passed' => (bool)$progress->quiz_passed, // Return the persisted state
+                'current_attempt_passed' => $passed, // Return this attempt's result
                 'correct_answers' => (int)$correctAnswers,
                 'total_questions' => (int)$totalQuestions,
                 'message' => $passed

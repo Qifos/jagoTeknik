@@ -87,15 +87,34 @@ class KelasController extends Controller
         $materiList = Materi::where('id_matkul', $id)->orderBy('id_materi', 'asc')->get();
 
         // Build materials array with their videos and progress status
-        $materiItems = $materiList->map(function($materi, $index) use ($matkul, $user) {
+        $materiItems = $materiList->map(function($materi, $index) use ($matkul, $user, $materiList) {
             $videos = Video::where('id_materi', $materi->id_materi)->get();
 
             // Get user progress for this materi
             $progress = null;
+            $isUnlocked = false;
+
             if ($user) {
                 $progress = UserMateriProgress::where('id_user', $user->id_user)
                     ->where('id_materi', $materi->id_materi)
                     ->first();
+
+                // Check if materi is unlocked
+                // First materi is always unlocked
+                if ($index === 0) {
+                    $isUnlocked = true;
+                } else {
+                    // For other materies, check if all previous materies are completed with quiz passed
+                    $previousMateri = $materiList->slice(0, $index);
+                    $previousCompleted = UserMateriProgress::where('id_user', $user->id_user)
+                        ->whereIn('id_materi', $previousMateri->pluck('id_materi'))
+                        ->where('quiz_passed', true)
+                        ->count();
+                    $isUnlocked = $previousCompleted === $previousMateri->count();
+                }
+            } else {
+                // If not logged in, only first materi is unlocked
+                $isUnlocked = ($index === 0);
             }
 
             // Determine status text
@@ -112,6 +131,7 @@ class KelasController extends Controller
                 'progress' => $progressValue,
                 'progress_text' => $statusText,
                 'is_completed' => $isCompleted,
+                'is_unlocked' => $isUnlocked,
                 'content_read' => $progress ? $progress->content_read : false,
                 'video_completed' => $progress ? $progress->video_completed : false,
                 'videos_count' => $videos->count()
@@ -124,11 +144,10 @@ class KelasController extends Controller
             if (!$videos) return null;
             return [
                 'id' => $videos->id_video,
-                'title' => $videos->nama_video ?? 'Video ' . $videos->id_video,
+                'title' => 'Video ' . ($materi->nama_materi ?? 'Materi'),
                 'thumb' => $videos->thumbnail_path ?? 'https://placehold.co/600x400/e11d48/white?text=Video',
                 'instructor' => $matkul->mentor->nama ?? 'Instruktur',
-                'progress' => rand(0, 100),
-                'progress_text' => 'Lesson ' . rand(1, 7) . ' of 7'
+                'materi_id' => $materi->id_materi
             ];
         })->filter()->values();
 
@@ -294,19 +313,36 @@ class KelasController extends Controller
         $user = Auth::user();
 
         if (!$user) {
-            // Return progress default untuk demo
-            return rand(0, 100);
+            // Return 0 progress for anonymous users
+            return 0;
         }
 
-        // Query untuk mendapatkan progress
-        $progress = DB::table('history as h')
-            ->join('materi as m', 'h.id_status', '=', 'm.id_materi')
-            ->join('kelas as k', 'm.id_kelas', '=', 'k.id_kelas')
-            ->where('k.id_kelas', $id_kelas)
-            ->where('h.id_status', $user->id_user)
-            ->avg('h.progres_precentage');
+        try {
+            // Get the matkul associated with this kelas
+            $kelas = DB::table('kelas')->where('id_kelas', $id_kelas)->first();
+            if (!$kelas) {
+                return 0;
+            }
 
-        return $progress ? round($progress) : rand(0, 100);
+            // Get total number of materies in this matkul
+            $totalMateri = Materi::where('id_matkul', $kelas->id_matkul)->count();
+            if ($totalMateri === 0) {
+                return 0;
+            }
+
+            // Get number of completed materies (quiz_passed = true)
+            $completedMateri = UserMateriProgress::where('id_user', $user->id_user)
+                ->where('id_matkul', $kelas->id_matkul)
+                ->where('quiz_passed', true)
+                ->count();
+
+            // Calculate progress percentage
+            $progress = round(($completedMateri / $totalMateri) * 100);
+            return $progress;
+
+        } catch (\Exception $e) {
+            return 0;
+        }
     }
 
     /**

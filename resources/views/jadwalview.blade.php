@@ -73,7 +73,7 @@
     <main class="container py-4 py-lg-5">
         <!-- Back Button -->
         <div class="mb-3">
-            <a href="#" class="btn btn-sm btn-outline-light"><i class="bi bi-chevron-left"></i> Back</a>
+            <a href="javascript:void(0);" onclick="handleBackButton()" class="btn btn-sm btn-outline-light"><i class="bi bi-chevron-left"></i> Back</a>
         </div>
 
         <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
@@ -415,6 +415,16 @@ $nextClasses = DB::table('jadwal as j')
 
             render();
         });
+
+        function handleBackButton() {
+            // Check if there's a previous page in history
+            if (history.length > 1) {
+                history.back();
+            } else {
+                // Fallback to homepage if no previous page
+                window.location.href = '{{ route('homepage') }}';
+            }
+        }
     </script>
 </body>
 

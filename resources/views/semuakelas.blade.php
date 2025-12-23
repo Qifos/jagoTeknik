@@ -271,23 +271,29 @@
                                         </div>
                                         <div class="course-info">
                                             <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                            <p class="course-progress">
-                                                @if ($item->status_kelas === 'completed')
-                                                    <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
-                                                    @php
-                                                        $progress = app(
-                                                            App\Http\Controllers\KelasController::class,
-                                                        )->getProgressKelas($item->id_kelas);
-                                                    @endphp
+                                            @if ($item->status_kelas === 'completed')
+                                                <!-- Tampilkan progress bar untuk kelas yang sudah dibeli -->
+                                                @php
+                                                    $progress = app(
+                                                        App\Http\Controllers\KelasController::class,
+                                                    )->getProgressKelas($item->id_kelas);
+                                                @endphp
+                                                <div class="progress mb-2" style="height: 6px; background-color: #e9ecef;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                        style="width: {{ $progress }}%; background-color: #6b4fa0;"
+                                                        aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <p class="course-progress" style="font-size: 0.85rem; color: #666;">
                                                     Progress: {{ $progress }}%
-                                                @elseif($item->status_kelas === 'wishlist')
-                                                    <!-- Tampilkan status wishlist -->
-                                                    Dalam wishlist
-                                                @else
-                                                    <!-- Tampilkan harga untuk kelas yang belum dibeli -->
-                                                    Rp {{ number_format($item->harga_asli, 0, ',', '.') }}
-                                                @endif
-                                            </p>
+                                                </p>
+                                            @elseif($item->status_kelas === 'wishlist')
+                                                <!-- Tampilkan status wishlist -->
+                                                <p class="course-progress">Dalam wishlist</p>
+                                            @else
+                                                <!-- Tampilkan harga untuk kelas yang belum dibeli -->
+                                                <p class="course-progress">Rp {{ number_format($item->harga_asli, 0, ',', '.') }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                     </a>
@@ -339,8 +345,15 @@
                                                         App\Http\Controllers\KelasController::class,
                                                     )->getProgressKelas($item->id_kelas);
                                                 @endphp
-                                                <!-- Di tab Diikuti, selalu tampilkan progress -->
-                                                <p class="course-progress">Progress: {{ $progress }}%</p>
+                                                <div class="progress mb-2" style="height: 6px; background-color: #e9ecef;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                        style="width: {{ $progress }}%; background-color: #6b4fa0;"
+                                                        aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <p class="course-progress" style="font-size: 0.85rem; color: #666;">
+                                                    Progress: {{ $progress }}%
+                                                </p>
                                             </div>
                                         </div>
                                     </a>

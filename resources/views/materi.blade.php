@@ -274,38 +274,51 @@
 
         // ===== QUIZ FUNCTIONS =====
 
-        async function loadQuestions() {
-    const container = document.getElementById('questionsContent');
+        /**
+         * Load quiz status on page load
+         * Checks if user has already passed the quiz for this materi
+         */
+        async function loadQuizStatus() {
+            try {
+                const response = await fetch(`/api/progress/matkul/${matkulId}/materi`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
+                    }
+                });
 
-    try {
-        const response = await fetch(`/api/quiz/materi/${materiId}`, {
-            headers: {
-                // ADD THESE TWO LINES:
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                // This ensures you get the CSRF token we added in Step 1
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || ''
-            }
-        });
+                const data = await response.json();
 
-        const data = await response.json();
+                if (data.success && data.materi_progress) {
+                    const materiProgress = data.materi_progress.find(m => m.id_materi === materiId);
 
-                if (data.success && data.questions.length > 0) {
-                    // Quiz exists, check if user has attempted it
-                    checkPreviousAttempts();
+                    if (materiProgress && materiProgress.quiz_passed) {
+                        // Quiz already passed, set state and enable next button
+                        quizPassed = true;
+                        highestScore = materiProgress.highest_quiz_score || 0;
+                        recentScore = materiProgress.recent_quiz_score || 0;
+
+                        // Show quiz results
+                        document.getElementById('scorePercentage').textContent = recentScore + '%';
+                        document.getElementById('highestScore').textContent = highestScore;
+                        document.getElementById('recentScore').textContent = recentScore;
+                        document.getElementById('scoreStatus').textContent = '✓ LULUS';
+                        document.getElementById('scoreStatus').style.color = '#28a745';
+                        document.getElementById('quizScoreDisplay').className = 'alert alert-success mb-3';
+                        document.getElementById('quizScoreDisplay').style.display = 'block';
+                        document.getElementById('reAttemptBtn').style.display = 'inline-block';
+                        document.getElementById('quizToggleBtn').textContent = '📝 Lihat Kuis Lagi';
+
+                        // Enable next button
+                        if (nextMateriId) {
+                            document.getElementById('nextMateriBtn').disabled = false;
+                            document.getElementById('nextMateriBtn').textContent = 'Lanjut ke Materi Selanjutnya →';
+                            document.getElementById('nextMateriBtn').style.cursor = 'pointer';
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Error loading quiz status:', error);
-            }
-        }
-
-        async function checkPreviousAttempts() {
-            // Check if user has already attempted this quiz
-            try {
-                // We'll check via completeQuiz endpoint to get progress data
-                // For now, just load questions if they open the quiz
-            } catch (error) {
-                console.error('Error checking attempts:', error);
             }
         }
 
@@ -504,11 +517,6 @@
         }
 
         function goToNextMateri() {
-            if (!quizPassed) {
-                alert('Silakan selesaikan kuis dengan skor minimal 70% terlebih dahulu');
-                return;
-            }
-
             if (nextMateriId) {
                 window.location.href = `/materi/${nextMateriId}`;
             }
