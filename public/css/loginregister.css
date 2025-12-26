@@ -129,18 +129,12 @@ body {
     align-items: center;
     justify-content: center;
     padding: 28px;
-<<<<<<< HEAD
-<<<<<<< HEAD
     background: none;
     color: none;
-=======
     background: #000;
     color: var(--bg);
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
     background: #000;
     color: var(--bg);
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 }
 
 .auth-panel,
@@ -148,15 +142,9 @@ body {
     width: 100%;
     max-width: 520px;
     margin: 0 auto;
-<<<<<<< HEAD
-<<<<<<< HEAD
     background: none;
-=======
     background: #000;
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
     background: #000;
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     border-radius: var(--bg);
     padding: 28px;
     box-shadow: none;
