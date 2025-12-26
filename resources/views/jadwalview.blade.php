@@ -26,8 +26,6 @@
 </head>
 
 <body>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <!-- Navbar (SAMA seperti homepage) -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
@@ -78,9 +76,6 @@
         <!-- Back Button -->
         <div class="mb-3">
             <a href="#" class="btn btn-sm btn-outline-light"><i class="bi bi-chevron-left"></i> Back</a>
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
@@ -128,13 +123,9 @@
     <main class="container py-4 py-lg-5">
         <!-- Back Button -->
         <div class="mb-3">
-<<<<<<< HEAD
             <a href="javascript:void(0);" onclick="handleBackButton()" class="btn btn-sm btn-outline-light"><i class="bi bi-chevron-left"></i> Back</a>
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
             <a href="javascript:void(0);" onclick="handleBackButton()" class="btn btn-sm btn-outline-light"><i
                     class="bi bi-chevron-left"></i> Back</a>
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         </div>
 
         <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
@@ -266,8 +257,6 @@
 
         <!-- Next classes -->
         <h2 class="display-6 headline mt-5 mb-4">Jadwal Kelas Selanjutnya</h2>
-<<<<<<< HEAD
-<<<<<<< HEAD
 
         @php
             $nextClasses = collect();
@@ -282,9 +271,6 @@ $nextClasses = DB::table('jadwal as j')
     ->where(function ($q) use ($today, $currentTime) {
         $q->where('j.tanggal', '>', $today)->orWhere(function ($q2) use ($today, $currentTime) {
             $q2->where('j.tanggal', '=', $today)->where('j.jam_mulai', '>=', $currentTime);
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
         @php
             $nextClasses = collect();
@@ -494,14 +480,8 @@ $nextClasses = DB::table('jadwal as j')
             });
 
             render();
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         <div class="row g-4">
             @forelse($nextClasses as $kelas)
                 <div class="col-md-6 col-lg-4">
@@ -678,9 +658,6 @@ $nextClasses = DB::table('jadwal as j')
 
             render();
         });
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         function handleBackButton() {
             // Check if there's a previous page in history
             if (history.length > 1) {
@@ -690,10 +667,6 @@ $nextClasses = DB::table('jadwal as j')
                 window.location.href = '{{ route('homepage') }}';
             }
         }
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     </script>
 </body>
 

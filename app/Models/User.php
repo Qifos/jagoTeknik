@@ -37,14 +37,8 @@ class User extends Authenticatable
         'id_jurusan', 'nama', 'username', 'email',
         'password', 'no_hp', 'angkatan', 'tanggal_lahir',
         'jenis_kelamin', 'foto_profil', 'otp', 'is_active',
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
         'jenis_kelamin', 'foto_profil', 'otp', 'is_active', 'is_mentor',
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
         'jenis_kelamin', 'foto_profil', 'otp', 'is_active', 'is_mentor',
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         'avatar', 'dark_mode', 'messenger_color', 'active_status', 'last_seen',
     ];
 

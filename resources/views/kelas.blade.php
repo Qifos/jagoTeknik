@@ -73,11 +73,8 @@
         </nav>
 
     </header>
-=======
         <!-- Navbar -->
-=======
     <!-- Navbar -->
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
@@ -120,12 +117,6 @@
             </div>
         </div>
     </nav>
-
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">

@@ -69,8 +69,6 @@
                 </div>
             </div>
         </nav>
-<<<<<<< HEAD
-=======
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
@@ -114,22 +112,11 @@
             </div>
         </div>
     </nav>
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
-
     </header>
 
-
-<<<<<<< HEAD
-<<<<<<< HEAD
     <main class="flex-grow-1">
-=======
     <main class="flex-grow-1 text-white">
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
     <main class="flex-grow-1 text-white">
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         <div class="container-fluid px-lg-5 py-4">
             <div class="mb-3">
                 <a href="javascript:void(0);" onclick="handleVideoBackButton()" class="back-btn">&lt; Back</a>

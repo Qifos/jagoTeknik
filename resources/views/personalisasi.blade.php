@@ -58,15 +58,9 @@
                         </form>
                     </li>
                     <li class="nav-item">
-<<<<<<< HEAD
-<<<<<<< HEAD
                         <a class="nav-link active d-flex align-items-center" href="{{ url('/personalisasi') }}">
-=======
                         <a class="nav-link d-flex align-items-center active" href="{{ route('personalisasi.view') }}">
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
                         <a class="nav-link d-flex align-items-center active" href="{{ route('personalisasi.view') }}">
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                             <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -249,13 +243,7 @@
                                             for="notif_promosi">Promosi</label>
                                     </div>
                                 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 <!-- Save Button -->
-=======
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                                 <div class="text-center mt-5">
                                     <button type="button" class="btn btn-save"
                                         onclick="redirectToHome()">Save</button>

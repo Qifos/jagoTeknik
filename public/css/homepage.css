@@ -5,11 +5,6 @@
     --dark-bg: #0a0a0a;
     --card-bg: #1a1a1a;
     --panel-purple: #6b2fa0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     --brand-1: #b784f5;
     --brand-2: #6e41e2;
     --brand-3: #d4c0ff;
@@ -21,10 +16,6 @@
     --text: #e9e9ee;
     --muted: #b6b6c6;
     --bg: #000000;
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 }
 
 body {
@@ -297,15 +288,6 @@ body {
     margin-top: 0px;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*=========================================================
-   ✅ Section: Jelajahi Kelas Kamu (IMPROVED - SESUAI GAMBAR)
-   ====================================================== */
-
-/* =========================================================
-   ✅ Section: Jelajahi Kelas Kamu (SESUAI GAMBAR KIRI)
-   ====================================================== */
 
 .section-explore-classes {
     margin-top: 80px;
@@ -590,16 +572,14 @@ body {
 
 .section-match {
   margin-top: 100px;
-=======
+}
 .section-explore-classes {
     margin-top: 0px;
     margin-bottom: 0px;
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
+}
 .section-explore-classes {
     margin-top: 0px;
     margin-bottom: 0px;
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 }
 
 .section-header-with-link {
@@ -846,11 +826,6 @@ body {
     }
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 @media (max-width: 576px) {
     .explore-card-final {
         flex: 0 0 180px;
@@ -880,8 +855,6 @@ body {
     }
 }
 
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
 /* Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
 =======
 /* ======================================================

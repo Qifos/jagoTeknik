@@ -291,8 +291,6 @@
                         </button>
                     </div>
                 </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
             </section>
 
             <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
@@ -306,9 +304,6 @@
         <div class="section-header-with-link">
             <h2 class="section-title">Jelajahi kelas kamu</h2>
             <a href="{{ route('kelas.semua') }}" class="view-more-link">Lihat lebih banyak</a>
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             @else
                 <div class="empty-state-final">
                     <i class="bi bi-book" style="font-size: 3rem; color: #6c757d; margin-bottom: 1rem;"></i>
@@ -316,10 +311,6 @@
                     <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-3">Jelajahi Kelas</a>
                 </div>
             @endif
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         </div>
     </section>
 
@@ -331,36 +322,26 @@
 
             @if (isset($recommendations) && $recommendations->count())
                 <div class="row g-4">
-<<<<<<< HEAD
-<<<<<<< HEAD
                     @foreach($recommendations as $index => $kelas)
                         <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
                            class="col-md-4 text-decoration-none d-block">
-=======
                     @foreach ($recommendations as $index => $kelas)
                         <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
                             class="col-md-4 text-decoration-none d-block">
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                             <div class="match-card">
                                 {{-- Top label: kategori & durasi --}}
                                 <div class="match-card__top">
                                     <span class="match-card__category">
-<<<<<<< HEAD
                                         {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan
                                             ?? 'Kelas Teknik' }}
-=======
                                         {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan ?? 'Kelas Teknik' }}
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
                                     </span>
                                     <span class="match-card__duration">3 Bulan</span>
                                 </div>
-=======
                     @foreach ($recommendations as $kelas)
                         <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
                             class="col-md-4 text-decoration-none d-block match-card-link">
                             <div class="match-card">
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
-
                                 @php
                                     // ✅ Gambar kelas dari DB (kelas.image_path)
                                     $fotoKelas = $kelas->image_path ?? null;
@@ -394,19 +375,13 @@
                                     </h4>
 
                                     <p class="match-card__desc">
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         {{ $kelas->deskripsi
                                             ?? optional($kelas->matkul)->deskripsi
                                             ?? 'Belajar materi teknik dengan cara yang mudah dipahami.' }}
-=======
                                         {{ $kelas->deskripsi ??
                                             (optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.') }}
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
                                         {{ $kelas->deskripsi ??
                                             (optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.') }}
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                                     </p>
                                 </div>
 
@@ -442,15 +417,8 @@
             @endif
         </div>
     </section>
-<<<<<<< HEAD
     </section>
-<<<<<<< HEAD
     <!-- Batas Rekomendasi -->
-=======
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
-
     <!-- Menampilkan Pesan Sukses -->
     @if (session('success'))
         <div class="alert alert-success" role="alert">
@@ -598,55 +566,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-<<<<<<< HEAD
-<<<<<<< HEAD
         // Initialize scroll navigation for "Jelajahi Kelas Kamu" section
-=======
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         document.addEventListener('DOMContentLoaded', function() {
             const scrollContainer = document.getElementById('exploreClassesScroll');
             const prevBtn = document.getElementById('explorePrevBtn');
             const nextBtn = document.getElementById('exploreNextBtn');
 
             if (!scrollContainer || !prevBtn || !nextBtn) {
-<<<<<<< HEAD
-<<<<<<< HEAD
                 return; // Exit if elements not found
-=======
                 return;
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
                 return;
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             }
 
             const updateButtonStates = () => {
                 const isAtStart = scrollContainer.scrollLeft <= 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
                 const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 10;
-=======
                 const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer
                     .scrollWidth - 10;
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
                 const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer
                     .scrollWidth - 10;
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
-
                 prevBtn.disabled = isAtStart;
                 nextBtn.disabled = isAtEnd;
             };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
             const scrollAmount = 250; // pixels to scroll
-=======
             const scrollAmount = 250;
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
             const scrollAmount = 250;
 >>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
@@ -665,8 +609,6 @@
                 });
                 setTimeout(updateButtonStates, 300);
             });
-<<<<<<< HEAD
-<<<<<<< HEAD
 
             // Update button states on scroll
             scrollContainer.addEventListener('scroll', updateButtonStates);
@@ -676,17 +618,10 @@
         });
 
         // Set current year in footer
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             scrollContainer.addEventListener('scroll', updateButtonStates);
             updateButtonStates();
         });
 
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
