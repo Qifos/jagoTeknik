@@ -566,7 +566,8 @@ body {
     }
 }
 
-/* Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+/* ======================================================
+   Bagian Ni Kadek Adelia Paramita Putri (5026231196)
    Section: Kelas yang cocok buat kamu
    ====================================================== */
 
@@ -574,6 +575,12 @@ body {
     margin-top: 20px;
 }
 
+/* link wrapper supaya hover terasa walau mouse di area link */
+.match-card-link {
+    display: block;
+}
+
+/* CARD */
 .match-card {
     background: linear-gradient(0deg, #60376B 0%, #AB00C1 100%);
     border-radius: 24px;
@@ -585,22 +592,27 @@ body {
     display: flex;
     flex-direction: column;
     box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
+
+    /* ✅ hover aktif (desktop & mobile) */
+    transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
+    cursor: pointer;
 }
 
-.match-card__top {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.8rem;
-    opacity: 0.9;
-    margin-bottom: 0.75rem;
+.match-card-link:hover .match-card {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(139, 92, 246, .35);
+    filter: brightness(1.03);
 }
 
+/* IMAGE */
 .match-card__image-wrapper {
     border-radius: 18px;
     overflow: hidden;
     margin-bottom: 1rem;
     background: rgba(0, 0, 0, 0.25);
-    min-height: 140px;
+
+    /* biar tinggi konsisten */
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -610,60 +622,85 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
-.placeholder-image {
-    width: 100%;
-    height: 100%;
-    font-size: 2rem;
+/* TOP label bawah gambar */
+.match-card__top {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    opacity: 0.7;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: 0.75rem;
 }
 
+/* BODY */
 .match-card__body {
     margin-bottom: 1rem;
 }
 
 .match-card__title {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     margin-bottom: 0.35rem;
+    font-weight: 700;
 }
 
 .match-card__desc {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #f9fafb;
     opacity: 0.85;
+    margin: 0;
 }
 
+/* FOOTER */
 .match-card__footer {
     margin-top: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.85rem;
+    gap: 14px;
+    font-size: 0.95rem;
 }
 
+/* mentor row */
 .match-card__mentor {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 10px;
+    min-width: 0;
 }
 
-.match-card__mentor-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.8);
+/* ✅ avatar bulat kecil */
+.match-card__mentor-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 28px;
+    display: block;
+    background: rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, .25);
+}
+
+.match-card__mentor-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .match-card__price {
-    font-weight: 600;
+    font-weight: 700;
+    opacity: .9;
 }
 
+/* Responsive */
 @media (max-width: 767.98px) {
     .section-match {
         margin-top: 48px;
+    }
+
+    .match-card__image-wrapper {
+        height: 160px;
     }
 }

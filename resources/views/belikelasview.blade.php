@@ -202,7 +202,22 @@
 
                         <hr class="my-4">
 
-                        <h5 class="mb-3 text-center">Bagikan Kelas Ini</h5>
+                        <div class="share-head-row mb-3">
+                            <h5 class="mb-0">Bagikan Kelas Ini</h5>
+                            <!--Tambahan Section wishlist kelas- Adelia (5026231196)-->
+                            <form method="POST"
+                                action="{{ route('wishlist.toggle', ['id_kelas' => $kelas->id_kelas]) }}"
+                                class="m-0">
+                                @csrf
+                                <button type="submit" class="btn-wishlist" aria-label="Tambahkan ke wishlist">
+                                    <i class="bi {{ !empty($isWishlisted) ? 'bi-heart-fill' : 'bi-heart' }}"></i>
+                                    <span class="ms-2 d-none d-sm-inline">
+                                        {{ !empty($isWishlisted) ? 'Hapus dari wishlist' : 'Tambahkan ke wishlist' }}
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
+                        <!--Batas Section wishlist kelas- Adelia (5026231196)-->
                         <div class="share-icons">
                             <a href="#"><i class="bi bi-facebook"></i></a>
                             <a href="#"><i class="bi bi-instagram"></i></a>

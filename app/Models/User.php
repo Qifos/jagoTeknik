@@ -15,6 +15,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 
@@ -73,9 +74,17 @@ class User extends Authenticatable
         return $this->getAttribute('nama');
     }
 
-    // (opsional) kalau avatar kadang null, fallback ke foto_profil
+    //avatar
     public function getAvatarAttribute($value)
     {
-        return $value ?: $this->getAttribute('foto_profil');
+    $value = $value ?: $this->foto_profil;
+
+    if (!$value) return asset('image/default-avatar.png');
+
+    // sudah URL absolut
+    if (Str::startsWith($value, ['http://', 'https://', '//'])) return $value;
+
+    // kalau mulai dari /, buang / biar asset() rapi
+    return asset(ltrim($value, '/'));
     }
 }

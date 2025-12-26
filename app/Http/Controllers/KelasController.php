@@ -230,11 +230,19 @@ class KelasController extends Controller
     $harga = $kelas->harga_asli ?? 0;
     $image = $kelas->image_path;
 
+    // Cek apakah kelas ini sudah ada di wishlist user
+    // (dipakai untuk state tombol "Tambahkan ke wishlist")
+    $isWishlisted = DB::table('wishlist_kelas')
+        ->where('id_user', $user->id_user)
+        ->where('id_kelas', $kelas->id_kelas)
+        ->exists();
+
     return view('belikelasview', [
         'kelas' => $kelas,
         'benefits' => $benefits,
         'harga' => $harga,
-        'image' => $image
+        'image' => $image,
+        'isWishlisted' => $isWishlisted,
     ]);
 }
 

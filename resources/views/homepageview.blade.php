@@ -272,11 +272,31 @@
 
             @if (isset($recommendations) && $recommendations->count())
                 <div class="row g-4">
-                    @foreach ($recommendations as $index => $kelas)
+                    @foreach ($recommendations as $kelas)
                         <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
-                            class="col-md-4 text-decoration-none d-block">
+                            class="col-md-4 text-decoration-none d-block match-card-link">
                             <div class="match-card">
-                                {{-- Top label: kategori & durasi --}}
+
+                                @php
+                                    // ✅ Gambar kelas dari DB (kelas.image_path)
+                                    $fotoKelas = $kelas->image_path ?? null;
+                                    $fotoKelasUrl = $fotoKelas ? asset($fotoKelas) : asset('images/kelas/default.jpg');
+
+                                    // ✅ Avatar mentor (bukan gambar kelas)
+                                    $mentorAvatar = optional(optional($kelas->matkul)->mentor)->image_mentor;
+                                    $mentorAvatarUrl = $mentorAvatar
+                                        ? asset($mentorAvatar)
+                                        : asset('images/default-mentor.jpg');
+                                @endphp
+
+                                <div class="match-card__image-wrapper">
+                                    <img src="{{ $fotoKelasUrl }}"
+                                        alt="{{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}"
+                                        class="match-card__image"
+                                        onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                </div>
+
+                                {{-- ✅ Top label: kategori & durasi (di bawah foto) --}}
                                 <div class="match-card__top">
                                     <span class="match-card__category">
                                         {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan ?? 'Kelas Teknik' }}
@@ -284,25 +304,11 @@
                                     <span class="match-card__duration">3 Bulan</span>
                                 </div>
 
-                                @php
-                                    $staticImages = [
-                                        'image/rekomkelas1.png',
-                                        'image/rekomkelas2.png',
-                                        'image/rekomkelas3.png',
-                                    ];
-                                    $foto = $staticImages[$index % count($staticImages)];
-                                @endphp
-
-                                <div class="match-card__image-wrapper">
-                                    <img src="{{ asset($foto) }}"
-                                        alt="{{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}"
-                                        class="match-card__image">
-                                </div>
-
                                 <div class="match-card__body">
                                     <h4 class="match-card__title">
                                         {{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}
                                     </h4>
+
                                     <p class="match-card__desc">
                                         {{ $kelas->deskripsi ??
                                             (optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.') }}
@@ -311,11 +317,16 @@
 
                                 <div class="match-card__footer">
                                     <div class="match-card__mentor">
-                                        <span class="match-card__mentor-dot"></span>
-                                        <span>
+                                        <img src="{{ $mentorAvatarUrl }}"
+                                            alt="{{ optional(optional($kelas->matkul)->mentor)->nama ?? 'Mentor' }}"
+                                            class="match-card__mentor-avatar"
+                                            onerror="this.src='{{ asset('images/default-mentor.jpg') }}'">
+
+                                        <span class="match-card__mentor-name">
                                             {{ optional(optional($kelas->matkul)->mentor)->nama ?? 'Mentor JagoTeknik' }}
                                         </span>
                                     </div>
+
                                     <div class="match-card__price">
                                         @if (!is_null($kelas->harga))
                                             Rp {{ number_format($kelas->harga, 0, ',', '.') }}
@@ -324,6 +335,7 @@
                                         @endif
                                     </div>
                                 </div>
+
                             </div>
                         </a>
                     @endforeach
@@ -334,7 +346,6 @@
                 </p>
             @endif
         </div>
-    </section>
     </section>
 
     <!-- Menampilkan Pesan Sukses -->

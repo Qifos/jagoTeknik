@@ -58,7 +58,8 @@ body {
     border-radius: 18px;
     overflow: hidden;
     background-color: #000;
-    aspect-ratio: 16/9;  /* ✅ LEBIH LEBAR - sesuai gambar */
+    aspect-ratio: 16/9;
+    /* ✅ LEBIH LEBAR - sesuai gambar */
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
     margin-bottom: 2rem;
 }
@@ -72,7 +73,8 @@ body {
 /* Sidebar Image - LEBIH KECIL */
 .sidebar-image {
     width: 100%;
-    aspect-ratio: 16/10;  /* ✅ SEDIKIT LEBIH SQUARE dari hero */
+    aspect-ratio: 16/10;
+    /* ✅ SEDIKIT LEBIH SQUARE dari hero */
     object-fit: cover;
     border-radius: 12px;
     margin-bottom: 1.5rem;
@@ -90,7 +92,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
     color: #fff;
     padding: 2rem 1.5rem;
     font-size: 1.8rem;
@@ -278,6 +280,47 @@ body {
     color: #fff;
     transform: translateY(-2px);
 }
+
+/* Section wishlist kelas- Adelia (5026231196)*/
+.share-head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.btn-wishlist {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #fff;
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-wishlist:hover {
+    background: rgba(0, 0, 0, 0.35);
+    border-color: rgba(255, 255, 255, 0.55);
+    transform: translateY(-1px);
+}
+
+.btn-wishlist:active {
+    transform: translateY(0);
+}
+
+.btn-wishlist i {
+    font-size: 1rem;
+    line-height: 1;
+}
+
+/* Batas Section wishlist kelas- Adelia (5026231196)*/
 
 /* Share Icons */
 .share-icons {
