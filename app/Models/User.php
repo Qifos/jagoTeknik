@@ -15,6 +15,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 
@@ -37,9 +38,13 @@ class User extends Authenticatable
         'password', 'no_hp', 'angkatan', 'tanggal_lahir',
         'jenis_kelamin', 'foto_profil', 'otp', 'is_active',
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         'jenis_kelamin', 'foto_profil', 'otp', 'is_active', 'is_mentor',
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+        'jenis_kelamin', 'foto_profil', 'otp', 'is_active', 'is_mentor',
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         'avatar', 'dark_mode', 'messenger_color', 'active_status', 'last_seen',
     ];
 
@@ -76,9 +81,17 @@ class User extends Authenticatable
         return $this->getAttribute('nama');
     }
 
-    // (opsional) kalau avatar kadang null, fallback ke foto_profil
+    //avatar
     public function getAvatarAttribute($value)
     {
-        return $value ?: $this->getAttribute('foto_profil');
+    $value = $value ?: $this->foto_profil;
+
+    if (!$value) return asset('image/default-avatar.png');
+
+    // sudah URL absolut
+    if (Str::startsWith($value, ['http://', 'https://', '//'])) return $value;
+
+    // kalau mulai dari /, buang / biar asset() rapi
+    return asset(ltrim($value, '/'));
     }
 }

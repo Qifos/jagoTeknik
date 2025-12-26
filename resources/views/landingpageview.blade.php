@@ -23,12 +23,17 @@
 <body>
     <!-- NAVBAR -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container py-2">
 =======
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             <a class="navbar-brand fw-bold d-flex align-items-center gap-0">
                 <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
             </a>
@@ -46,12 +51,13 @@
                                 <input class="form-control border-start-1" type="search"
                                     placeholder="Cari di JagoTeknik" aria-label="Cari" />
                                 <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
-                                    class="bi bi-search"></i></span>
+                                        class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
                     <li class="nav-item d-flex align-items-center">
-                        <a href="{{ route('login.view') }}" class="nav-link d-flex align-items-center text-decoration-none">
+                        <a href="{{ route('login.view') }}"
+                            class="nav-link d-flex align-items-center text-decoration-none">
                             <div class="profile-icon"></div>
                             <span class="login-text">Login</span>
                         </a>
@@ -63,10 +69,14 @@
 
     <!-- LANDING -->
 <<<<<<< HEAD
+<<<<<<< HEAD
     <header class="landing-hero pt-9">
 =======
     <header class="landing-hero pt-9 container-fluid px-4">
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+    <header class="landing-hero pt-9 container-fluid px-4">
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         <div class="container position-relative" style="z-index:1;">
             <div class="row align-items-center min-vh-100 pb-5 pb-lg-0">
 

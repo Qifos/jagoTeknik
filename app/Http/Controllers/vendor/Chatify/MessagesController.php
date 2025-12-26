@@ -1,18 +1,15 @@
 <?php
 /**
  * Author : Ni Kadek Adelia Paramita Putri (NRP 5026231196)
- * File   : MessageController.php
-  * Date   : 18-12-2025
+ * File   : MessagesController.php
+ * Date   : 18-12-2025
  */
 namespace App\Http\Controllers\vendor\Chatify;
 
 use App\Models\User;
-use App\Models\ChMessage as LocalMessage; // kalau kamu butuh versi lokal (opsional)
-
 use Chatify\Facades\ChatifyMessenger as Chatify;
 use Chatify\Http\Controllers\MessagesController as BaseMessagesController;
 use App\Models\ChFavorite as Favorite;
-use App\Models\ChMessage as Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -31,7 +28,56 @@ class MessagesController extends BaseMessagesController
 
     private function authId()
     {
-        return Auth::id(); // aman utk PK custom
+        // Auth::id() sudah aman kalau model auth kamu sudah diset benar
+        return Auth::id();
+    }
+
+    /**
+     * Convert avatar field to a valid URL for Chatify UI.
+     * Supports:
+     * - absolute URL (http/https)
+     * - Chatify default avatar file
+     * - public path like "image/gambar_mentor/hafidz.png" or "/image/gambar_mentor/hafidz.png"
+     */
+    private function jtAvatarUrl($user): string
+    {
+        $raw = $user->getRawOriginal('avatar') ?: $user->getRawOriginal('foto_profil');
+
+        if (empty($raw)) {
+            // default Chatify avatar.png
+            $raw = config('chatify.user_avatar.default');
+        }
+
+        // absolute URL
+        if (preg_match('#^https?://|^//#', $raw)) {
+            return $raw;
+        }
+
+        // default Chatify avatar file -> storage/users-avatar/avatar.png
+        if ($raw === config('chatify.user_avatar.default')) {
+            return asset('storage/' . config('chatify.user_avatar.folder') . '/' . $raw);
+        }
+
+        // public path
+        return asset(ltrim($raw, '/'));
+    }
+
+    /**
+     * Ensure these attributes exist for Chatify JS:
+     * - id
+     * - name
+     * - avatar (URL)
+     */
+    private function hydrateChatifyUser(User $u): User
+    {
+        // Chatify JS expects "id" + "name"
+        $u->setAttribute('id', $u->getAttribute($this->userKey()));
+        $u->setAttribute('name', $u->nama ?? $u->name ?? '');
+
+        // Avatar URL for UI
+        $u->setAttribute('avatar', $this->jtAvatarUrl($u));
+
+        return $u;
     }
 
     public function idFetchData(Request $request)
@@ -48,18 +94,17 @@ class MessagesController extends BaseMessagesController
             ], 200);
         }
 
-        // pastikan avatar dan name kebentuk
-        $fetchWithAvatar = Chatify::getUserWithAvatar($fetch);
+        $fetch = $this->hydrateChatifyUser($fetch);
 
-        // PENTING: paksa 'name' & 'id' ada di JSON (untuk JS Chatify)
-        $fetchArr = $fetchWithAvatar->toArray();
-        $fetchArr['id'] = $fetchWithAvatar->id;     // dari accessor
-        $fetchArr['name'] = $fetchWithAvatar->name; // dari accessor
+        $fetchArr = $fetch->toArray();
+        $fetchArr['id'] = $fetch->id;
+        $fetchArr['name'] = $fetch->name;
+        $fetchArr['avatar'] = $fetch->avatar;
 
         return Response::json([
             'favorite' => $favorite,
             'fetch' => $fetchArr,
-            'user_avatar' => $fetchWithAvatar->avatar,
+            'user_avatar' => $fetch->avatar,
         ], 200);
     }
 
@@ -79,9 +124,11 @@ class MessagesController extends BaseMessagesController
             ->paginate($request->per_page ?? $this->perPage);
 
         foreach ($records->items() as $record) {
+            $record = $this->hydrateChatifyUser($record);
+
             $getRecords .= view('Chatify::layouts.listItem', [
                 'get' => 'search_item',
-                'user' => Chatify::getUserWithAvatar($record),
+                'user' => $record,
             ])->render();
         }
 
@@ -106,7 +153,8 @@ class MessagesController extends BaseMessagesController
         foreach ($favorites->get() as $favorite) {
             $user = User::where($this->userKey(), $favorite->favorite_id)->first();
             if ($user) {
-                $favoritesList .= view('Chatify::layouts.favorite', ['user' => $user]);
+                $user = $this->hydrateChatifyUser($user);
+                $favoritesList .= view('Chatify::layouts.favorite', ['user' => $user])->render();
             }
         }
 
@@ -123,15 +171,32 @@ class MessagesController extends BaseMessagesController
             return Response::json(['message' => 'User not found!'], 401);
         }
 
+        $user = $this->hydrateChatifyUser($user);
+
+        // Ambil last message + unseen (mengikuti cara Chatify)
+        $lastMessage = Chatify::getLastMessageQuery($user->id);
+        $unseenCounter = Chatify::countUnseenMessages($user->id);
+
+        if ($lastMessage) {
+            $lastMessage->created_at = $lastMessage->created_at->toIso8601String();
+            $lastMessage->timeAgo = $lastMessage->created_at->diffForHumans();
+        }
+
+        $contactItem = view('Chatify::layouts.listItem', [
+            'get' => 'users',
+            'user' => $user,
+            'lastMessage' => $lastMessage,
+            'unseenCounter' => $unseenCounter,
+        ])->render();
+
         return Response::json([
-            'contactItem' => Chatify::getContactItem($user),
+            'contactItem' => $contactItem,
         ], 200);
     }
 
     /**
-     * ✅ FIX UTAMA:
-     * - jangan pakai GROUP BY ch_messages dulu (bikin error only_full_group_by)
-     * - tampilkan mentor dari tabel user (hasil seeding) supaya list kiri langsung muncul
+     * Contacts list: tampilkan mentor dari tabel user.
+     * FIX: inject avatar URL dari DB (public/image/gambar_mentor) agar tampil di Chatify.
      */
     public function getContacts(Request $request)
     {
@@ -147,9 +212,11 @@ class MessagesController extends BaseMessagesController
         $contacts = '';
 
         foreach ($users->items() as $u) {
+            $u = $this->hydrateChatifyUser($u);
+
             $contacts .= view('Chatify::layouts.listItem', [
                 'get'  => 'users',
-                'user' => Chatify::getUserWithAvatar($u),
+                'user' => $u,
             ])->render();
         }
 

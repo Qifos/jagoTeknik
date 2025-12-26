@@ -6,6 +6,7 @@
 -->
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +21,9 @@
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/kelas.css') }}">
 </head>
+
 <body class="min-vh-100 d-flex flex-column">
+<<<<<<< HEAD
 <<<<<<< HEAD
     <header class="bg-transparent">
         <!-- Navbar (SAMA seperti homepage/jadwal) -->
@@ -72,6 +75,9 @@
     </header>
 =======
         <!-- Navbar -->
+=======
+    <!-- Navbar -->
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
@@ -100,7 +106,7 @@
                                 <input class="form-control border-start-1" type="search"
                                     placeholder="Cari di JagoTeknik" aria-label="Cari" />
                                 <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
-                                    class="bi bi-search"></i></span>
+                                        class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
@@ -115,8 +121,11 @@
         </div>
     </nav>
 
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
 
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
     <main class="flex-grow-1">
         <div class="container-fluid px-lg-5 py-4">
@@ -136,87 +145,96 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2 class="h5 fw-bold mb-0">Materi Belajar</h2>
                     <div class="d-none d-md-block">
-                        <button class="btn btn-sm btn-light me-2" onclick="document.getElementById('materi-scroll').scrollBy({ left: -280, behavior: 'smooth' })">&lt;</button>
-                        <button class="btn btn-sm btn-light" onclick="document.getElementById('materi-scroll').scrollBy({ left: 280, behavior: 'smooth' })">&gt;</button>
+                        <button class="btn btn-sm btn-light me-2"
+                            onclick="document.getElementById('materi-scroll').scrollBy({ left: -280, behavior: 'smooth' })">&lt;</button>
+                        <button class="btn btn-sm btn-light"
+                            onclick="document.getElementById('materi-scroll').scrollBy({ left: 280, behavior: 'smooth' })">&gt;</button>
                     </div>
                 </div>
 
                 <div class="h-scroll" id="materi-scroll">
-                    @foreach($materiItems as $item)
-                    <div class="card-item">
-                        @php
-                            $isMateriUnlocked = isset($item['is_unlocked']) ? $item['is_unlocked'] : ($loop->first ? true : false);
-                        @endphp
+                    @foreach ($materiItems as $item)
+                        <div class="card-item">
+                            @php
+                                $isMateriUnlocked = isset($item['is_unlocked'])
+                                    ? $item['is_unlocked']
+                                    : ($loop->first
+                                        ? true
+                                        : false);
+                            @endphp
 
-                        @if($isMateriUnlocked)
-                            <a href="{{ route('media.materi', ['id' => $item['id']]) }}" class="text-decoration-none">
-                                <div class="custom-card">
-                                    <div class="media-container mb-3">
-                                        @if(isset($item['thumb']) && $item['thumb'])
-                                            <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
-                                        @else
-                                            <div class="media-empty">
-                                                <span>{{ $item['title'] }}</span>
-                                            </div>
-                                        @endif
-                                        <span class="small-pill">{{ $item['tag'] }}</span>
-                                    </div>
-
-                                    <div style="padding: 0 12px;">
-                                        <div class="card-title mb-2">{{ $item['title'] }}</div>
-                                        <div class="instructor mb-2">
-                                            <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
-                                            <span>{{ $item['instructor'] }}</span>
-                                        </div>
-
-                                        <div class="custom-progress mt-auto">
-                                            <div class="bar" style="width: {{ $item['progress'] }}%"></div>
-                                        </div>
-                                        <div class="progress-text mt-2 mb-3">
-                                            @if($item['is_completed'])
-                                                <span style="color: #28a745; font-weight: bold;">✓ {{ $item['progress_text'] }}</span>
+                            @if ($isMateriUnlocked)
+                                <a href="{{ route('media.materi', ['id' => $item['id']]) }}"
+                                    class="text-decoration-none">
+                                    <div class="custom-card">
+                                        <div class="media-container mb-3">
+                                            @if (isset($item['thumb']) && $item['thumb'])
+                                                <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
                                             @else
-                                                <span style="color: #6c757d;">{{ $item['progress_text'] }}</span>
+                                                <div class="media-empty">
+                                                    <span>{{ $item['title'] }}</span>
+                                                </div>
                                             @endif
+                                            <span class="small-pill">{{ $item['tag'] }}</span>
                                         </div>
-                                    </div>
-                                </div>
-                            </a>
-                        @else
-                            <div onclick="showLockedMateriWarning()" style="cursor: not-allowed; display: block;">
-                                <div class="custom-card" style="opacity: 0.6;">
-                                    <div class="media-container mb-3" style="position: relative;">
-                                        @if(isset($item['thumb']) && $item['thumb'])
-                                            <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
-                                        @else
-                                            <div class="media-empty">
-                                                <span>{{ $item['title'] }}</span>
+
+                                        <div style="padding: 0 12px;">
+                                            <div class="card-title mb-2">{{ $item['title'] }}</div>
+                                            <div class="instructor mb-2">
+                                                <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
+                                                <span>{{ $item['instructor'] }}</span>
                                             </div>
-                                        @endif
-                                        <span class="small-pill">{{ $item['tag'] }}</span>
-                                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 8px 12px; border-radius: 4px; font-size: 0.85rem; white-space: nowrap; z-index: 10;">
-                                            🔒 Terkunci
+
+                                            <div class="custom-progress mt-auto">
+                                                <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                            </div>
+                                            <div class="progress-text mt-2 mb-3">
+                                                @if ($item['is_completed'])
+                                                    <span style="color: #28a745; font-weight: bold;">✓
+                                                        {{ $item['progress_text'] }}</span>
+                                                @else
+                                                    <span style="color: #6c757d;">{{ $item['progress_text'] }}</span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div style="padding: 0 12px;">
-                                        <div class="card-title mb-2">{{ $item['title'] }}</div>
-                                        <div class="instructor mb-2">
-                                            <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
-                                            <span>{{ $item['instructor'] }}</span>
+                                </a>
+                            @else
+                                <div onclick="showLockedMateriWarning()" style="cursor: not-allowed; display: block;">
+                                    <div class="custom-card" style="opacity: 0.6;">
+                                        <div class="media-container mb-3" style="position: relative;">
+                                            @if (isset($item['thumb']) && $item['thumb'])
+                                                <img src="{{ $item['thumb'] }}" alt="{{ $item['title'] }}">
+                                            @else
+                                                <div class="media-empty">
+                                                    <span>{{ $item['title'] }}</span>
+                                                </div>
+                                            @endif
+                                            <span class="small-pill">{{ $item['tag'] }}</span>
+                                            <div
+                                                style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.7); color: white; padding: 8px 12px; border-radius: 4px; font-size: 0.85rem; white-space: nowrap; z-index: 10;">
+                                                🔒 Terkunci
+                                            </div>
                                         </div>
 
-                                        <div class="custom-progress mt-auto">
-                                            <div class="bar" style="width: {{ $item['progress'] }}%"></div>
-                                        </div>
-                                        <div class="progress-text mt-2 mb-3">
-                                            <span style="color: #6c757d;">Selesaikan materi sebelumnya</span>
+                                        <div style="padding: 0 12px;">
+                                            <div class="card-title mb-2">{{ $item['title'] }}</div>
+                                            <div class="instructor mb-2">
+                                                <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
+                                                <span>{{ $item['instructor'] }}</span>
+                                            </div>
+
+                                            <div class="custom-progress mt-auto">
+                                                <div class="bar" style="width: {{ $item['progress'] }}%"></div>
+                                            </div>
+                                            <div class="progress-text mt-2 mb-3">
+                                                <span style="color: #6c757d;">Selesaikan materi sebelumnya</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endif
-                    </div>
+                            @endif
+                        </div>
                     @endforeach
                 </div>
             </section>
@@ -226,36 +244,39 @@
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h2 class="h5 fw-bold mb-0">Video Kelas</h2>
                     <div class="d-none d-md-block">
-                        <button class="btn btn-sm btn-light me-2" onclick="document.getElementById('video-scroll').scrollBy({ left: -280, behavior: 'smooth' })">&lt;</button>
-                        <button class="btn btn-sm btn-light" onclick="document.getElementById('video-scroll').scrollBy({ left: 280, behavior: 'smooth' })">&gt;</button>
+                        <button class="btn btn-sm btn-light me-2"
+                            onclick="document.getElementById('video-scroll').scrollBy({ left: -280, behavior: 'smooth' })">&lt;</button>
+                        <button class="btn btn-sm btn-light"
+                            onclick="document.getElementById('video-scroll').scrollBy({ left: 280, behavior: 'smooth' })">&gt;</button>
                     </div>
                 </div>
 
                 <div class="h-scroll" id="video-scroll">
-                    @foreach($videoItems as $video)
-                    <div class="card-item">
-                        <a href="{{ route('media.video.detail', ['id' => $video['id']]) }}" class="text-decoration-none">
-                            <div class="custom-video-card">
-                                <div class="media-container mb-3">
-                                    @if(isset($video['thumb']) && $video['thumb'])
-                                        <img src="{{ $video['thumb'] }}" alt="{{ $video['title'] }}">
-                                    @else
-                                        <div class="media-empty">
-                                            <span>{{ $video['title'] }}</span>
-                                        </div>
-                                    @endif
-                                </div>
+                    @foreach ($videoItems as $video)
+                        <div class="card-item">
+                            <a href="{{ route('media.video.detail', ['id' => $video['id']]) }}"
+                                class="text-decoration-none">
+                                <div class="custom-video-card">
+                                    <div class="media-container mb-3">
+                                        @if (isset($video['thumb']) && $video['thumb'])
+                                            <img src="{{ $video['thumb'] }}" alt="{{ $video['title'] }}">
+                                        @else
+                                            <div class="media-empty">
+                                                <span>{{ $video['title'] }}</span>
+                                            </div>
+                                        @endif
+                                    </div>
 
-                                <div style="padding: 0 12px; display: flex; flex-direction: column; flex: 1;">
-                                    <div class="card-title mb-2">{{ $video['title'] }}</div>
-                                    <div class="instructor mb-2">
-                                        <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
-                                        <span>{{ $video['instructor'] }}</span>
+                                    <div style="padding: 0 12px; display: flex; flex-direction: column; flex: 1;">
+                                        <div class="card-title mb-2">{{ $video['title'] }}</div>
+                                        <div class="instructor mb-2">
+                                            <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
+                                            <span>{{ $video['instructor'] }}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
                     @endforeach
                 </div>
             </section>
@@ -308,7 +329,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center mt-4 border-top border-secondary-subtle pt-4">
+            <div
+                class="d-flex justify-content-between align-items-center mt-4 border-top border-secondary-subtle pt-4">
                 <p class="mb-0">&copy; 2025 Jago Teknik</p>
             </div>
         </div>
@@ -349,4 +371,5 @@
         }
     </script>
 </body>
+
 </html>

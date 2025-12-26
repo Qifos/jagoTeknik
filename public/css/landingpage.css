@@ -21,6 +21,7 @@ body {
     height: 100%;
     margin: 0;
 }
+
 body {
     background: var(--bg);
     color: var(--text);
@@ -30,22 +31,24 @@ body {
 /* Navbar */
 .navbar {
     backdrop-filter: saturate(150%) blur(8px);
-    background: linear-gradient(
-        180deg,
-        rgba(10, 10, 18, 0.8),
-        rgba(10, 10, 18, 0.4)
-    );
+    background: linear-gradient(180deg,
+            rgba(10, 10, 18, 0.8),
+            rgba(10, 10, 18, 0.4));
 }
+
 /* Menghilangkan border pada input dan hanya memberikan border di luar */
 .navbar .form-control {
     background: var(--bg);
-    border: none; /* Menghapus border pada input field */
+    border: none;
+    /* Menghapus border pada input field */
     color: var(--muted);
 }
 
 .navbar .input-group {
-    border: 1px solid var(--text); /* Menambahkan border di luar input */
-    border-radius: 5px; /* Memberikan border melingkar di luar */
+    border: 1px solid var(--text);
+    /* Menambahkan border di luar input */
+    border-radius: 5px;
+    /* Memberikan border melingkar di luar */
 }
 
 .navbar .form-control::placeholder {
@@ -54,76 +57,103 @@ body {
 
 /* Styling untuk ikon pencarian */
 .navbar .input-group-text {
-    background: var(--bg); /* Warna background untuk icon */
-    border: none; /* Menghapus border pada icon */
-    color: var(--text); /* Warna icon */
+    background: var(--bg);
+    /* Warna background untuk icon */
+    border: none;
+    /* Menghapus border pada icon */
+    color: var(--text);
+    /* Warna icon */
 }
 
 .navbar .navbar-toggler {
     border: none;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 /* Styling untuk ikon profil dan teks Login */
 .nav-item .login-text {
-    color: var(--text); /* Warna teks default */
+    color: var(--text);
+    /* Warna teks default */
     font-weight: 400;
     font-size: 1rem;
     transition: color 0.2s ease;
 }
 
 .nav-item .login-text:hover {
-    color: var(--brand-1); /* Warna saat hover */
+    color: var(--brand-1);
+    /* Warna saat hover */
     cursor: pointer;
 }
 
 .nav-item .profile-icon {
-    width: 30px; /* Ukuran ikon */
-    height: 30px; /* Ukuran ikon */
-    border-radius: 50%; /* Membuat lingkaran */
-    background-color: #fff; /* Warna latar belakang putih */
-    border: 2px solid var(--text); /* Border tipis di sekitar lingkaran */
+    width: 30px;
+    /* Ukuran ikon */
+    height: 30px;
+    /* Ukuran ikon */
+    border-radius: 50%;
+    /* Membuat lingkaran */
+    background-color: #fff;
+    /* Warna latar belakang putih */
+    border: 2px solid var(--text);
+    /* Border tipis di sekitar lingkaran */
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px; /* Jarak antara ikon dan teks */
+    margin-right: 8px;
+    /* Jarak antara ikon dan teks */
 }
 
 .nav-item i.bi-person-circle {
-    color: var(--text); /* Warna ikon */
-    font-size: 1.3rem; /* Ukuran ikon */
+    color: var(--text);
+    /* Warna ikon */
+    font-size: 1.3rem;
+    /* Ukuran ikon */
 }
 
 .nav-item .profile-icon:hover {
-    background-color: var(--brand-1); /* Ganti warna saat hover */
-    border-color: var(--brand-1); /* Ganti warna border saat hover */
+    background-color: var(--brand-1);
+    /* Ganti warna saat hover */
+    border-color: var(--brand-1);
+    /* Ganti warna border saat hover */
 }
 
 .nav-item .profile-icon i {
-    color: var(--bg); /* Warna ikon dalam lingkaran */
+    color: var(--bg);
+    /* Warna ikon dalam lingkaran */
 }
 
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
 
 /* Utilities */
 .accent {
     color: var(--brand-3);
 }
+
 .layout {
     background: linear-gradient(to bottom, var(--brand-6), var(--brand-3));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
+
 .muted {
     color: var(--muted);
 }
+
 .display-title {
     font-weight: 800;
     letter-spacing: 0.5px;
     line-height: 1.05;
 }
+
 .desc-text {
     font-size: 1.2rem;
     font-weight: 300;
@@ -135,24 +165,25 @@ body {
     --bs-btn-padding-y: 0.9rem;
     --bs-btn-padding-x: 2rem;
     --bs-btn-border-radius: 12px;
-    background: linear-gradient(
-        to bottom,
-        rgb(159, 149, 204),
-        rgb(213, 193, 227)
-    );
+    background: linear-gradient(to bottom,
+            rgb(159, 149, 204),
+            rgb(213, 193, 227));
     color: #000;
     border: #fff solid 4px;
     transition: transform 0.15s ease, filter 0.2s ease, box-shadow 0.2s ease;
     font-weight: 600;
 }
+
 .btn-gradient:hover {
     filter: brightness(1.1);
     transform: translateY(-2px);
 }
+
 .btn-gradient:focus-visible {
     outline: 2px solid var(--brand-3);
     outline-offset: 2px;
 }
+
 .d-grid {
     width: 100%;
 }
@@ -165,12 +196,19 @@ body {
     transition: background-color 0.3s ease, transform 0.3s ease;
     border-radius: 10px;
 }
+
 .btn-murid:hover {
     transform: translateY(-5px);
 }
 
 /* ===================== HERO ===================== */
-.landing-hero{position:relative;overflow:hidden;background:#000; background: url('/image/circle.png') no-repeat center center}
+.landing-hero {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    background: url('/image/circle.png') no-repeat center center
+}
+
 .landing-hero {
     position: relative;
     padding-top: 10px;
@@ -186,22 +224,20 @@ body {
     position: absoluthe;
     inset: -20%;
     z-index: 0;
-    background: radial-gradient(
-            50rem 50rem at 70% 50%,
+    background: radial-gradient(50rem 50rem at 70% 50%,
             rgba(110, 65, 226, 0.15),
-            transparent 45%
-        ),
-        radial-gradient(
-            35rem 35rem at 20% 30%,
+            transparent 45%),
+        radial-gradient(35rem 35rem at 20% 30%,
             rgba(183, 132, 245, 0.12),
-            transparent 40%
-        );
+            transparent 40%);
     animation: glowShift 12s ease-in-out infinite alternate;
 }
+
 @keyframes glowShift {
     from {
         opacity: 0.8;
     }
+
     to {
         opacity: 1;
     }
@@ -215,12 +251,10 @@ body {
     aspect-ratio: 1/1;
     margin-inline: auto;
     border-radius: 50%;
-    background: radial-gradient(
-        circle at 50% 50%,
-        rgba(110, 65, 226, 0.25),
-        rgba(110, 65, 226, 0.1) 50%,
-        transparent 70%
-    );
+    background: radial-gradient(circle at 50% 50%,
+            rgba(110, 65, 226, 0.25),
+            rgba(110, 65, 226, 0.1) 50%,
+            transparent 70%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 0 80px rgba(110, 65, 226, 0.3),
         inset 0 0 60px rgba(110, 65, 226, 0.2);
@@ -229,20 +263,24 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 @keyframes orbBreath {
     0% {
         box-shadow: 0 0 80px rgba(110, 65, 226, 0.3),
             inset 0 0 60px rgba(110, 65, 226, 0.2);
     }
+
     50% {
         box-shadow: 0 0 100px rgba(110, 65, 226, 0.4),
             inset 0 0 80px rgba(110, 65, 226, 0.25);
     }
+
     100% {
         box-shadow: 0 0 80px rgba(110, 65, 226, 0.3),
             inset 0 0 60px rgba(110, 65, 226, 0.2);
     }
 }
+
 .landing-orb-image {
     position: absolute;
     top: 52%;
@@ -255,10 +293,12 @@ body {
     z-index: 2;
     pointer-events: none;
 }
+
 .landing-logo {
     text-align: center;
     z-index: 3;
 }
+
 .landing-logo .logo-j {
     font-size: 8rem;
     font-weight: 900;
@@ -270,6 +310,7 @@ body {
     letter-spacing: -0.05em;
     margin-bottom: -1rem;
 }
+
 .landing-logo .logo-text {
     font-size: 4.5rem;
     font-weight: 900;
@@ -280,6 +321,7 @@ body {
     -webkit-text-fill-color: transparent;
     text-shadow: 0 0 30px rgba(183, 132, 245, 0.3);
 }
+
 .landing-logo .logo-url {
     font-size: 1rem;
     color: rgba(255, 255, 255, 0.7);
@@ -294,17 +336,21 @@ body {
     min-width: 120px;
     z-index: 3;
 }
+
 @keyframes floatY {
     0% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-8px);
     }
+
     100% {
         transform: translateY(0);
     }
 }
+
 .landing-stat-card .icon-wrapper {
     width: 42px;
     height: 42px;
@@ -316,17 +362,20 @@ body {
     margin-bottom: 0.5rem;
     overflow: hidden;
 }
+
 .landing-stat-card .icon-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .landing-stat-card .title {
     font-size: 0.85rem;
     color: rgba(0, 0, 0, 0.6);
     font-weight: 500;
     margin-bottom: 0.2rem;
 }
+
 .landing-stat-card .value {
     font-size: 1.6rem;
     font-weight: 800;
@@ -335,14 +384,17 @@ body {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
 .landing-stat-tutor {
     left: -6rem;
     top: 5%;
 }
+
 .landing-stat-kelas {
     right: -4rem;
     top: -10%;
 }
+
 .landing-stat-video {
     right: -6rem;
     bottom: -10%;
@@ -359,10 +411,12 @@ body {
     transition: transform 0.2s ease, background-color 0.25s ease;
     font-weight: 500;
 }
+
 .feature-pill i {
     font-size: 1.1rem;
     color: var(--brand-3);
 }
+
 .feature-pill:hover {
     transform: translateY(-2px);
     background: rgba(255, 255, 255, 0.08);
@@ -371,6 +425,7 @@ body {
 #apa-jagoteknik .section-title {
     letter-spacing: 0.2px;
 }
+
 #apa-jagoteknik .section-desc {
     max-width: 900px;
 }
@@ -380,6 +435,7 @@ body {
     overflow: hidden;
     border-radius: 1rem;
 }
+
 .image-card img {
     display: block;
     width: 100%;
@@ -410,9 +466,11 @@ body {
     padding: 1rem;
     pointer-events: none;
 }
+
 .image-overlay-center .btn {
     pointer-events: auto;
 }
+
 .image-overlay-center h3 {
     color: #fff;
     font-weight: 700;
@@ -426,32 +484,40 @@ body {
         transform: scale(0.85);
         min-width: 110px;
     }
+
     .landing-stat-tutor {
         left: -0.5rem;
         top: 5%;
     }
+
     .landing-stat-kelas {
         right: -0.5rem;
         top: 2%;
     }
+
     .landing-stat-video {
         right: -0.5rem;
         bottom: 8%;
     }
+
     .landing-logo .logo-j {
         font-size: 5rem;
     }
+
     .landing-logo .logo-text {
         font-size: 3rem;
     }
 }
+
 @media (max-width: 575.98px) {
     .landing-logo .logo-j {
         font-size: 4rem;
     }
+
     .landing-logo .logo-text {
         font-size: 2.5rem;
     }
+
     .landing-stat-card .value {
         font-size: 1.3rem;
     }
@@ -460,6 +526,7 @@ body {
 #milestone {
     background: #000;
 }
+
 .milestone-title {
     font-size: 3rem;
     font-weight: 200;
@@ -481,6 +548,7 @@ body {
     color: var(--text);
     opacity: 0.85;
 }
+
 .feature-section {
     margin-bottom: 3rem;
 }
@@ -553,6 +621,7 @@ body {
     width: 40px;
     height: 40px;
 }
+
 .position-relative {
     position: relative;
 }
@@ -598,6 +667,7 @@ body {
     border-radius: 8px;
     margin-right: 20px;
 }
+
 .news-card-img-vertical {
     width: 55%;
     height: auto;
@@ -610,6 +680,7 @@ body {
     flex-direction: column;
     align-items: center;
 }
+
 .news-content {
     flex: 1;
 }

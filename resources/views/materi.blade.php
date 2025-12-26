@@ -6,6 +6,7 @@
 -->
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,46 +19,48 @@
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/materi.css') }}">
 </head>
+
 <body class="min-vh-100 d-flex flex-column">
     <header class="bg-transparent">
         <!-- Navbar (SAMA seperti homepage/jadwal) -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             <div class="container-fluid px-4">
                 <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                    <img src="{{ asset('image/jagoteknik.png') }}" alt="Jago Teknik" class="brand-logo">
+                    <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
                 </a>
-
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto align-items-center">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
+                            <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
+                            <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
+                            <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Chat</a>
+                            <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                         </li>
-
-                        <li class="nav-item">
-                            <form class="d-flex mx-3">
-                                <div class="search-box">
-                                    <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                    <i class="bi bi-search"></i>
+                        <li class="nav-item d-none d-lg-block">
+                            <form class="d-flex" role="search" onsubmit="return false;">
+                                <div class="input-group">
+                                    <input class="form-control border-start-1" type="search"
+                                        placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                    <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                            class="bi bi-search"></i></span>
                                 </div>
                             </form>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
+                            <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
                                 <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                                 <span class="ms-2">Profil</span>
                             </a>
@@ -66,6 +69,7 @@
                 </div>
             </div>
         </nav>
+<<<<<<< HEAD
 
 =======
         <div class="container-fluid px-4">
@@ -110,6 +114,8 @@
         </div>
     </nav>
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     </header>
 
 
@@ -145,19 +151,24 @@
                     </div>
 
                     <div class="d-flex gap-2 mb-3">
-                        <button id="quizToggleBtn" class="btn btn-sm" style="background: #6b4fa0; color: #fff; border: none;" onclick="toggleQuizContainer()">
+                        <button id="quizToggleBtn" class="btn btn-sm"
+                            style="background: #6b4fa0; color: #fff; border: none;" onclick="toggleQuizContainer()">
                             📝 Mulai Kuis Pemahaman
                         </button>
-                        <button id="reAttemptBtn" class="btn btn-sm" style="background: #8b5cf6; color: #fff; border: none; display: none;" onclick="startNewAttempt()">
+                        <button id="reAttemptBtn" class="btn btn-sm"
+                            style="background: #8b5cf6; color: #fff; border: none; display: none;"
+                            onclick="startNewAttempt()">
                             🔄 Coba Lagi
                         </button>
                     </div>
 
                     <!-- Quiz Container -->
-                    <div id="quizContainer" style="display: none; background: #2a2a3e; border: 2px solid #6b4fa0; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
+                    <div id="quizContainer"
+                        style="display: none; background: #2a2a3e; border: 2px solid #6b4fa0; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h5 class="mb-0" style="color: #fff;">Kuis Pemahaman Materi</h5>
-                            <button type="button" class="btn-close btn-close-white" onclick="toggleQuizContainer()"></button>
+                            <button type="button" class="btn-close btn-close-white"
+                                onclick="toggleQuizContainer()"></button>
                         </div>
 
                         <div id="questionsContent" class="mb-3">
@@ -170,10 +181,12 @@
                         </div>
 
                         <div class="d-flex gap-2">
-                            <button id="submitQuizBtn" class="btn" style="background: #6b4fa0; color: #fff; border: none;" onclick="submitQuiz()">
+                            <button id="submitQuizBtn" class="btn"
+                                style="background: #6b4fa0; color: #fff; border: none;" onclick="submitQuiz()">
                                 ✓ Selesaikan Kuis
                             </button>
-                            <button type="button" class="btn" style="background: #444; color: #fff; border: none;" onclick="toggleQuizContainer()">
+                            <button type="button" class="btn"
+                                style="background: #444; color: #fff; border: none;" onclick="toggleQuizContainer()">
                                 Batal
                             </button>
                         </div>
@@ -181,14 +194,16 @@
                 </div>
 
                 <!-- Video List -->
-                @if($videos && $videos->count() > 0)
+                @if ($videos && $videos->count() > 0)
                     <h5 class="mt-4 mb-3">Video Pembelajaran</h5>
                     <div class="video-grid">
-                        @foreach($videos as $video)
+                        @foreach ($videos as $video)
                             <div class="teaser-card">
                                 <div class="thumb">
-                                    <img src="https://placehold.co/400x225/000/fff?text={{ urlencode($video->nama_video ?? 'Video') }}" alt="{{ $video->nama_video }}">
-                                    <a href="{{ route('media.video.detail', ['id' => $video->id_video]) }}" class="play-large">▶</a>
+                                    <img src="https://placehold.co/400x225/000/fff?text={{ urlencode($video->nama_video ?? 'Video') }}"
+                                        alt="{{ $video->nama_video }}">
+                                    <a href="{{ route('media.video.detail', ['id' => $video->id_video]) }}"
+                                        class="play-large">▶</a>
                                 </div>
                                 <div>
                                     <div class="fw-bold video-title">
@@ -211,25 +226,28 @@
                 <!-- Navigation Button to Next Materi -->
                 @php
                     $currentMateriId = $materi->id_materi ?? null;
-                    $nextMateri = $materi->matkul->materi()
+                    $nextMateri = $materi->matkul
+                        ->materi()
                         ->where('id_materi', '>', $currentMateriId)
                         ->orderBy('id_materi', 'asc')
                         ->first();
-                    $previousMateri = $materi->matkul->materi()
+                    $previousMateri = $materi->matkul
+                        ->materi()
                         ->where('id_materi', '<', $currentMateriId)
                         ->orderBy('id_materi', 'desc')
                         ->first();
                 @endphp
 
                 <!-- Previous Button -->
-                @if($previousMateri)
-                    <a href="{{ route('media.materi', ['id' => $previousMateri->id_materi]) }}" class="materi-prev-button">
+                @if ($previousMateri)
+                    <a href="{{ route('media.materi', ['id' => $previousMateri->id_materi]) }}"
+                        class="materi-prev-button">
                         ← Materi Sebelumnya
                     </a>
                 @endif
 
                 <!-- Next or Complete Button -->
-                @if($nextMateri)
+                @if ($nextMateri)
                     <button id="nextMateriBtn" class="materi-nav-button" onclick="goToNextMateri()" disabled>
                         Lanjut ke Materi Selanjutnya → (Selesaikan kuis dulu)
                     </button>
@@ -288,7 +306,8 @@
                     </ul>
                 </div>
             </div>
-            <div class="d-flex justify-content-between align-items-center mt-4 border-top border-secondary-subtle pt-4">
+            <div
+                class="d-flex justify-content-between align-items-center mt-4 border-top border-secondary-subtle pt-4">
                 <p class="mb-0">&copy; 2025 Jago Teknik</p>
             </div>
         </div>
@@ -302,10 +321,10 @@
     <script>
         const materiId = {{ $materi->id_materi ?? 0 }};
         const matkulId = {{ $matkul->id_matkul ?? 0 }};
-        @if($nextMateri)
-        const nextMateriId = {{ $nextMateri->id_materi ?? 0 }};
+        @if ($nextMateri)
+            const nextMateriId = {{ $nextMateri->id_materi ?? 0 }};
         @else
-        const nextMateriId = null;
+            const nextMateriId = null;
         @endif
 
         let currentAttempt = 1;
@@ -475,7 +494,8 @@
                 const answeredQuestions = Object.keys(quizAnswers).length;
 
                 if (answeredQuestions < totalQuestions) {
-                    alert('Mohon jawab semua pertanyaan sebelum submit (' + answeredQuestions + ' dari ' + Math.ceil(totalQuestions) + ')');
+                    alert('Mohon jawab semua pertanyaan sebelum submit (' + answeredQuestions + ' dari ' + Math.ceil(
+                        totalQuestions) + ')');
                     return;
                 }
 
@@ -604,4 +624,5 @@
         }
     </script>
 </body>
+
 </html>

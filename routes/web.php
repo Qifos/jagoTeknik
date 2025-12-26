@@ -204,3 +204,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/mentor', [MentorController::class, 'index'])->name('mentor.index');
 Route::get('/mentor/{id}', [MentorController::class, 'show'])->name('mentor.show');
+

@@ -1,5 +1,6 @@
 @include('Chatify::layouts.headLinks')
 <<<<<<< HEAD
+<<<<<<< HEAD
 <div class="messenger">
     {{-- ----------------------Users/Groups lists side---------------------- --}}
     <div class="messenger-listView {{ !!$id ? 'conversation-active' : '' }}">
@@ -9,6 +10,8 @@
                 <a href="#"><i class="fas fa-inbox"></i> <span class="messenger-headTitle">MESSAGES</span> </a>
                 {{-- header buttons --}}
 =======
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 {{-- Bootstrap & Icons (biar sama kayak homepage) --}}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -123,11 +126,15 @@
                     <i class="fas fa-sliders-h"></i> Filter
                 </button>
 
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                 <nav class="m-header-right">
                     <a href="#"><i class="fas fa-cog settings-btn"></i></a>
                     <a href="#" class="listView-x"><i class="fas fa-times"></i></a>
                 </nav>
+<<<<<<< HEAD
 <<<<<<< HEAD
             </nav>
             {{-- Search input --}}
@@ -159,6 +166,8 @@
            <div class="messenger-tab search-tab app-scroll" data-view="search">
                 {{-- items --}}
 =======
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             </div>
 
             <div class="jt-search-left">
@@ -188,21 +197,29 @@
 
             {{-- ---------------- [ Search Tab ] ---------------- --}}
             <div class="messenger-tab search-tab app-scroll" data-view="search">
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                 <p class="messenger-title"><span>Search</span></p>
                 <div class="search-records">
                     <p class="message-hint center-el"><span>Type to search..</span></p>
                 </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
              </div>
 =======
             </div>
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+            </div>
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         </div>
     </div>
 
     {{-- ----------------------Messaging side---------------------- --}}
     <div class="messenger-messagingView">
+<<<<<<< HEAD
 <<<<<<< HEAD
         {{-- header title [conversation name] amd buttons --}}
         <div class="m-header m-header-messaging">
@@ -216,6 +233,8 @@
                 </div>
                 {{-- header buttons --}}
 =======
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
         <div class="m-header m-header-messaging">
             <nav class="chatify-d-flex chatify-justify-content-between chatify-align-items-center">
@@ -226,7 +245,10 @@
                     <a href="#" class="user-name">{{ config('chatify.name') }}</a>
                 </div>
 
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                 <nav class="m-header-right">
                     <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
                     <a href="/"><i class="fas fa-home"></i></a>
@@ -234,10 +256,14 @@
                 </nav>
             </nav>
 <<<<<<< HEAD
+<<<<<<< HEAD
             {{-- Internet connection --}}
 =======
 
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             <div class="internet-connection">
                 <span class="ic-connected">Connected</span>
                 <span class="ic-connecting">Connecting...</span>
@@ -246,18 +272,25 @@
         </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         {{-- Messaging area --}}
 =======
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         <div class="m-body messages-container app-scroll">
             <div class="messages">
                 <p class="message-hint center-el"><span>Please select a chat to start messaging</span></p>
             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
             {{-- Typing indicator --}}
 =======
 
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             <div class="typing-indicator">
                 <div class="message-card typing">
                     <div class="message">
@@ -272,6 +305,7 @@
 
         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
         {{-- Send Message Form --}}
         @include('Chatify::layouts.sendForm')
     </div>
@@ -279,13 +313,18 @@
     <div class="messenger-infoView app-scroll">
         {{-- nav actions --}}
 =======
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
         @include('Chatify::layouts.sendForm')
     </div>
 
     {{-- ---------------------- Info side ---------------------- --}}
     <div class="messenger-infoView app-scroll">
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
         <nav>
             <p>User Details</p>
             <a href="#"><i class="fas fa-times"></i></a>
@@ -297,7 +336,10 @@
 @include('Chatify::layouts.modals')
 @include('Chatify::layouts.footerLinks')
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
 {{-- Update badge total unread (otomatis ikut berubah saat contact list berubah/seen/ada pesan baru) --}}
 <script>
@@ -330,4 +372,7 @@
 
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375

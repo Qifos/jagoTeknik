@@ -6,7 +6,10 @@
     --card-bg: #1a1a1a;
     --panel-purple: #6b2fa0;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
     --brand-1: #b784f5;
     --brand-2: #6e41e2;
     --brand-3: #d4c0ff;
@@ -18,7 +21,10 @@
     --text: #e9e9ee;
     --muted: #b6b6c6;
     --bg: #000000;
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 }
 
 body {
@@ -30,7 +36,13 @@ body {
 }
 
 /* ===================== HERO ===================== */
-.landing-hero-hp{position:relative;overflow:hidden;background:#000; background: url('/image/circle.png') no-repeat center center}
+.landing-hero-hp {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    background: url('/image/circle.png') no-repeat center center
+}
+
 .landing-hero-hp {
     position: relative;
     background: url("/image/circle.png") no-repeat top center;
@@ -46,16 +58,12 @@ body {
     position: absoluthe;
     inset: -20%;
     z-index: 0;
-    background: radial-gradient(
-            50rem 50rem at 70% 50%,
+    background: radial-gradient(50rem 50rem at 70% 50%,
             rgba(110, 65, 226, 0.15),
-            transparent 45%
-        ),
-        radial-gradient(
-            35rem 35rem at 20% 30%,
+            transparent 45%),
+        radial-gradient(35rem 35rem at 20% 30%,
             rgba(183, 132, 245, 0.12),
-            transparent 40%
-        );
+            transparent 40%);
     animation: glowShift 12s ease-in-out infinite alternate;
 }
 
@@ -63,10 +71,12 @@ body {
     position: relative;
     overflow: hidden;
 }
+
 .hero-content {
     position: relative;
     z-index: 2;
 }
+
 .hero {
     padding: 56px 0 24px;
     position: relative;
@@ -85,6 +95,7 @@ body {
         margin-top: 0;
     }
 }
+
 .hero__title .accent {
     background: var(--brand-3);
     -webkit-background-clip: text;
@@ -92,6 +103,7 @@ body {
     color: transparent;
     margin-top: 0;
 }
+
 .hero__subtitle {
     color: #fff !important;
     opacity: 0.95;
@@ -105,15 +117,14 @@ body {
     width: 360px;
     height: 360px;
     border-radius: 50%;
-    background: radial-gradient(
-        closest-side,
-        rgba(139, 92, 246, 0.18),
-        transparent 60%
-    );
+    background: radial-gradient(closest-side,
+            rgba(139, 92, 246, 0.18),
+            transparent 60%);
     filter: drop-shadow(0 12px 40px rgba(139, 92, 246, 0.2));
     pointer-events: none;
     z-index: 1;
 }
+
 .hero__orbit::before {
     content: "";
     position: absolute;
@@ -121,6 +132,7 @@ body {
     border-radius: 50%;
     border: 2px solid rgba(139, 92, 246, 0.22);
 }
+
 .hero__orbit::after {
     content: "";
     position: absolute;
@@ -128,6 +140,7 @@ body {
     border-radius: 50%;
     border: 2px solid rgba(139, 92, 246, 0.14);
 }
+
 @media (max-width: 992px) {
     .hero__orbit {
         display: none;
@@ -142,6 +155,7 @@ body {
     align-items: flex-start;
     justify-content: flex-end;
 }
+
 .bubble {
     display: flex;
     flex-direction: column;
@@ -152,11 +166,9 @@ body {
     width: 128px;
     height: 128px;
     border-radius: 50%;
-    background: radial-gradient(
-            circle at 32% 30%,
+    background: radial-gradient(circle at 32% 30%,
             rgba(255, 255, 255, 0.18),
-            rgba(255, 255, 255, 0) 60%
-        ),
+            rgba(255, 255, 255, 0) 60%),
         linear-gradient(135deg, #8b5cf6, #6d28d9);
     position: relative;
     display: flex;
@@ -165,9 +177,11 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     transition: transform 0.25s ease;
 }
+
 .bubble__ring:hover {
     transform: translateY(-4px);
 }
+
 .bubble__ring::before {
     content: "";
     position: absolute;
@@ -175,6 +189,7 @@ body {
     border-radius: 50%;
     border: 1.6px solid rgba(139, 92, 246, 0.28);
 }
+
 .bubble__ring::after {
     content: "";
     position: absolute;
@@ -193,6 +208,7 @@ body {
     justify-content: center;
     font-size: 1.3rem;
 }
+
 .bubble__dot {
     position: absolute;
     top: 8px;
@@ -208,12 +224,14 @@ body {
     margin-top: 0.55rem;
     text-align: center;
 }
+
 .bubble__title {
     font-size: 1rem;
     font-weight: 600;
     color: #fff;
     line-height: 1.2;
 }
+
 .bubble__time {
     font-size: 0.92rem;
     color: #fff;
@@ -225,6 +243,7 @@ body {
         width: 118px;
         height: 118px;
     }
+
     .bubble__icon {
         width: 48px;
         height: 48px;
@@ -235,11 +254,13 @@ body {
 .bubbles {
     gap: 100px;
 }
+
 @media (min-width: 1200px) {
     .bubbles {
         gap: 80px;
     }
 }
+
 @media (max-width: 576px) {
     .bubbles {
         gap: 18px;
@@ -267,6 +288,7 @@ body {
 .hero__subtitle {
     margin-bottom: 40px !important;
 }
+
 .hero .section-title {
     margin-top: 10px;
 }
@@ -275,6 +297,7 @@ body {
     margin-top: 0px;
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*=========================================================
    ✅ Section: Jelajahi Kelas Kamu (IMPROVED - SESUAI GAMBAR)
@@ -572,6 +595,11 @@ body {
     margin-top: 0px;
     margin-bottom: 0px;
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
+=======
+.section-explore-classes {
+    margin-top: 0px;
+    margin-bottom: 0px;
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 }
 
 .section-header-with-link {
@@ -707,18 +735,18 @@ body {
     flex-wrap: nowrap;
 }
 
-.explore-card-final__mentor-avatar{
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex: 0 0 24px;
+.explore-card-final__mentor-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 24px;
 }
 
-.explore-card-final__mentor-name{
-  display: inline-block;
-  line-height: 1;
-  margin: 0;
+.explore-card-final__mentor-name {
+    display: inline-block;
+    line-height: 1;
+    margin: 0;
 }
 
 
@@ -819,7 +847,10 @@ body {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 @media (max-width: 576px) {
     .explore-card-final {
         flex: 0 0 180px;
@@ -849,105 +880,146 @@ body {
     }
 }
 
+<<<<<<< HEAD
 >>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
 /* Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+=======
+/* ======================================================
+   Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+>>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
    Section: Kelas yang cocok buat kamu
    ====================================================== */
 
 .section-match {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
+/* link wrapper supaya hover terasa walau mouse di area link */
+.match-card-link {
+    display: block;
+}
+
+/* CARD */
 .match-card {
-  background: linear-gradient(0deg,#60376B 0%, #AB00C1 100%);
-  border-radius: 24px;
-  padding: 1.5rem;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(0deg, #60376B 0%, #AB00C1 100%);
+    border-radius: 24px;
+    padding: 1.5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
+
+    /* ✅ hover aktif (desktop & mobile) */
+    transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
+    cursor: pointer;
 }
 
-.match-card__top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  opacity: 0.9;
-  margin-bottom: 0.75rem;
+.match-card-link:hover .match-card {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(139, 92, 246, .35);
+    filter: brightness(1.03);
 }
 
+/* IMAGE */
 .match-card__image-wrapper {
-  border-radius: 18px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  background: rgba(0, 0, 0, 0.25);
-  min-height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.25);
+
+    /* biar tinggi konsisten */
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .match-card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
-.placeholder-image {
-  width: 100%;
-  height: 100%;
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.7;
+/* TOP label bawah gambar */
+.match-card__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin-bottom: 0.75rem;
 }
 
+/* BODY */
 .match-card__body {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .match-card__title {
-  font-size: 1.05rem;
-  margin-bottom: 0.35rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.35rem;
+    font-weight: 700;
 }
 
 .match-card__desc {
-  font-size: 0.85rem;
-  color: #f9fafb;
-  opacity: 0.85;
+    font-size: 0.9rem;
+    color: #f9fafb;
+    opacity: 0.85;
+    margin: 0;
 }
 
+/* FOOTER */
 .match-card__footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    font-size: 0.95rem;
 }
 
+/* mentor row */
 .match-card__mentor {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
 }
 
-.match-card__mentor-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
+/* ✅ avatar bulat kecil */
+.match-card__mentor-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex: 0 0 28px;
+    display: block;
+    background: rgba(255, 255, 255, .15);
+    border: 1px solid rgba(255, 255, 255, .25);
+}
+
+.match-card__mentor-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .match-card__price {
-  font-weight: 600;
+    font-weight: 700;
+    opacity: .9;
 }
 
+/* Responsive */
 @media (max-width: 767.98px) {
-  .section-match {
-    margin-top: 48px;
-  }
+    .section-match {
+        margin-top: 48px;
+    }
+
+    .match-card__image-wrapper {
+        height: 160px;
+    }
 }
