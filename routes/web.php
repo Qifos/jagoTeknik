@@ -129,7 +129,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::view('/personalisasi', 'personalisasi')->name('personalisasi.view');
-// Route untuk menampilkan halaman password
 
 Route::middleware('auth')->group(function () {
     Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');

@@ -11,60 +11,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kelas Jago Teknik</title>
 
-        <!-- Bootstrap 5 CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- Bootstrap Icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-        <!-- Samakan navbar & style dengan Homepage & Jadwal -->
-        <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/personalisasi.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+    <!-- Samakan navbar & style dengan Homepage & Jadwal -->
+    <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/personalisasi.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
 
-        <!-- Style khusus halaman Kelas (card, layout, dsb) -->
-        <link rel="stylesheet" href="{{ asset('css/kelas-style.css') }}">
+    <!-- Style khusus halaman Kelas (card, layout, dsb) -->
+    <link rel="stylesheet" href="{{ asset('css/kelas-style.css') }}">
 
 </head>
 
 <body>
-
+    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                <img src="{{ asset('image/jagoteknik.png') }}" alt="Jago Teknik" class="brand-logo">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
             </a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
+                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                        class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
                             <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -273,23 +272,32 @@
                                         </div>
                                         <div class="course-info">
                                             <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                            <p class="course-progress">
-                                                @if ($item->status_kelas === 'completed')
-                                                    <!-- Tampilkan progress untuk kelas yang sudah dibeli -->
-                                                    @php
-                                                        $progress = app(
-                                                            App\Http\Controllers\KelasController::class,
-                                                        )->getProgressKelas($item->id_kelas);
-                                                    @endphp
+                                            @if ($item->status_kelas === 'completed')
+                                                <!-- Tampilkan progress bar untuk kelas yang sudah dibeli -->
+                                                @php
+                                                    $progress = app(
+                                                        App\Http\Controllers\KelasController::class,
+                                                    )->getProgressKelas($item->id_kelas);
+                                                @endphp
+                                                <div class="progress mb-2"
+                                                    style="height: 6px; background-color: #e9ecef;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                        style="width: {{ $progress }}%; background-color: #6b4fa0;"
+                                                        aria-valuenow="{{ $progress }}" aria-valuemin="0"
+                                                        aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <p class="course-progress" style="font-size: 0.85rem; color: #666;">
                                                     Progress: {{ $progress }}%
-                                                @elseif($item->status_kelas === 'wishlist')
-                                                    <!-- Tampilkan status wishlist -->
-                                                    Dalam wishlist
-                                                @else
-                                                    <!-- Tampilkan harga untuk kelas yang belum dibeli -->
-                                                    Rp {{ number_format($item->harga_asli, 0, ',', '.') }}
-                                                @endif
-                                            </p>
+                                                </p>
+                                            @elseif($item->status_kelas === 'wishlist')
+                                                <!-- Tampilkan status wishlist -->
+                                                <p class="course-progress">Dalam wishlist</p>
+                                            @else
+                                                <!-- Tampilkan harga untuk kelas yang belum dibeli -->
+                                                <p class="course-progress">Rp
+                                                    {{ number_format($item->harga_asli, 0, ',', '.') }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                     </a>
@@ -341,8 +349,17 @@
                                                         App\Http\Controllers\KelasController::class,
                                                     )->getProgressKelas($item->id_kelas);
                                                 @endphp
-                                                <!-- Di tab Diikuti, selalu tampilkan progress -->
-                                                <p class="course-progress">Progress: {{ $progress }}%</p>
+                                                <div class="progress mb-2"
+                                                    style="height: 6px; background-color: #e9ecef;">
+                                                    <div class="progress-bar" role="progressbar"
+                                                        style="width: {{ $progress }}%; background-color: #6b4fa0;"
+                                                        aria-valuenow="{{ $progress }}" aria-valuemin="0"
+                                                        aria-valuemax="100">
+                                                    </div>
+                                                </div>
+                                                <p class="course-progress" style="font-size: 0.85rem; color: #666;">
+                                                    Progress: {{ $progress }}%
+                                                </p>
                                             </div>
                                         </div>
                                     </a>

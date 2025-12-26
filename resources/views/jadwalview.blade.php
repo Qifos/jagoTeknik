@@ -26,43 +26,41 @@
 </head>
 
 <body>
-    <!-- Navbar (SAMA seperti homepage) -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                <img src="{{ asset('image/jagoteknik.png') }}" alt="Jago Teknik" class="brand-logo">
+                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
             </a>
-
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
+                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
+                        <a class="nav-link active" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                        class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
-
                     <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
+                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
                             <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -75,7 +73,8 @@
     <main class="container py-4 py-lg-5">
         <!-- Back Button -->
         <div class="mb-3">
-            <a href="#" class="btn btn-sm btn-outline-light"><i class="bi bi-chevron-left"></i> Back</a>
+            <a href="javascript:void(0);" onclick="handleBackButton()" class="btn btn-sm btn-outline-light"><i
+                    class="bi bi-chevron-left"></i> Back</a>
         </div>
 
         <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
@@ -417,6 +416,16 @@ $nextClasses = DB::table('jadwal as j')
 
             render();
         });
+
+        function handleBackButton() {
+            // Check if there's a previous page in history
+            if (history.length > 1) {
+                history.back();
+            } else {
+                // Fallback to homepage if no previous page
+                window.location.href = '{{ route('homepage') }}';
+            }
+        }
     </script>
 </body>
 

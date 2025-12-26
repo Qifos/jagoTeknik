@@ -91,8 +91,8 @@
 
             <!-- Right Side: Summary -->
             <div class="col-lg-5">
-                <h5 class="my-3 my-lg-0 fw-bold">Ringkasan</h5>
-                <div class="summary-card">
+                <h5 class="my-3 my-lg-0 fw-bold mb-6">Ringkasan</h5>
+                <div class="summary-card mt-2">
                     @foreach($summary['items'] as $item)
                     <div class="summary-item">
                         <img src="{{ $item['image'] }}" alt="{{ $item['title'] }}">

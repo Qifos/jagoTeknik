@@ -5,6 +5,7 @@
 -->
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/personalisasi.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/landingpage.css">
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
@@ -33,27 +36,29 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/homepage') }}">Beranda</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/semuakelas') }}">Kelas</a>
+                        <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/jadwal') }}">Jadwal</a>
+                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                        class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active d-flex align-items-center" href="{{ url('/personalisasi') }}">
+                        <a class="nav-link d-flex align-items-center active" href="{{ route('personalisasi.view') }}">
                             <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
                             <span class="ms-2">Profil</span>
                         </a>
@@ -77,26 +82,26 @@
             <!-- Tabs Navigation -->
             <ul class="nav nav-tabs custom-tabs justify-content-center mb-1" id="accountTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="profil-tab" data-bs-toggle="tab"
-                            data-bs-target="#profil" type="button" role="tab">
+                    <button class="nav-link active" id="profil-tab" data-bs-toggle="tab" data-bs-target="#profil"
+                        type="button" role="tab">
                         Profil
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="personalisasi-tab" data-bs-toggle="tab"
-                            data-bs-target="#personalisasi" type="button" role="tab">
+                    <button class="nav-link" id="personalisasi-tab" data-bs-toggle="tab" data-bs-target="#personalisasi"
+                        type="button" role="tab">
                         Personalisasi
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="notifikasi-tab" data-bs-toggle="tab"
-                            data-bs-target="#notifikasi" type="button" role="tab">
+                    <button class="nav-link" id="notifikasi-tab" data-bs-toggle="tab" data-bs-target="#notifikasi"
+                        type="button" role="tab">
                         Notifikasi
                     </button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="privasi-tab" data-bs-toggle="tab"
-                            data-bs-target="#privasi" type="button" role="tab">
+                    <button class="nav-link" id="privasi-tab" data-bs-toggle="tab" data-bs-target="#privasi"
+                        type="button" role="tab">
                         Privasi
                     </button>
                 </li>
@@ -109,7 +114,6 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
                             <div class="profile-form">
-                                <!-- Profile Photo -->
                                 <div class="text-center mb-4">
                                     <div class="profile-photo-wrapper">
                                         <img src="profile.jpg" alt="Profile Photo" class="profile-photo">
@@ -118,35 +122,35 @@
                                         </button>
                                     </div>
                                 </div>
-
-                                <!-- Form Fields -->
                                 <form>
                                     <div class="mb-4">
                                         <label for="nama" class="form-label">Nama</label>
-                                        <input type="text" class="form-control custom-input" id="nama" placeholder="Masukkan nama Anda">
+                                        <input type="text" class="form-control custom-input" id="nama"
+                                            placeholder="Masukkan nama Anda">
                                     </div>
 
                                     <div class="mb-4">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control custom-input" id="email" placeholder="Masukkan email Anda">
+                                        <input type="email" class="form-control custom-input" id="email"
+                                            placeholder="Masukkan email Anda">
                                     </div>
 
                                     <div class="mb-4">
                                         <label for="nomor-hp" class="form-label">Nomor HP</label>
-                                        <input type="tel" class="form-control custom-input" id="nomor-hp" placeholder="Masukkan nomor HP Anda">
+                                        <input type="tel" class="form-control custom-input" id="nomor-hp"
+                                            placeholder="Masukkan nomor HP Anda">
                                     </div>
 
                                     <div class="mb-4">
                                         <label for="angkatan" class="form-label">Angkatan</label>
-                                        <input type="text" class="form-control custom-input" id="angkatan" placeholder="Masukkan angkatan Anda">
+                                        <input type="text" class="form-control custom-input" id="angkatan"
+                                            placeholder="Masukkan angkatan Anda">
                                     </div>
 
                                     <div class="mb-4">
                                         <label for="tanggal-lahir" class="form-label">Tanggal lahir</label>
                                         <input type="date" class="form-control custom-input" id="tanggal-lahir">
                                     </div>
-
-                                    <!-- Save Button -->
                                     <div class="text-center mt-5">
                                         <button type="submit" class="btn btn-save">Save</button>
                                     </div>
@@ -156,7 +160,7 @@
                     </div>
                 </div>
 
-                  <!-- Personalisasi Tab -->
+                <!-- Personalisasi Tab -->
                 <div class="tab-pane fade" id="personalisasi" role="tabpanel">
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
@@ -164,12 +168,14 @@
                                 <form>
                                     <div class="mb-4">
                                         <label for="jurusan" class="form-label">Jurusan</label>
-                                        <input type="text" class="form-control custom-input" id="jurusan" placeholder="Masukkan jurusan Anda">
+                                        <input type="text" class="form-control custom-input" id="jurusan"
+                                            placeholder="Masukkan jurusan Anda">
                                     </div>
 
                                     <div class="mb-4">
                                         <label for="universitas" class="form-label">Universitas</label>
-                                        <input type="text" class="form-control custom-input" id="universitas" placeholder="Masukkan universitas anda">
+                                        <input type="text" class="form-control custom-input" id="universitas"
+                                            placeholder="Masukkan universitas anda">
                                     </div>
 
                                     <div class="mb-4">
@@ -190,8 +196,6 @@
                                             <option value="mandarin">Mandarin</option>
                                         </select>
                                     </div>
-
-                                    <!-- Save Button -->
                                     <div class="text-center mt-5">
                                         <button type="submit" class="btn btn-save">Save</button>
                                     </div>
@@ -210,79 +214,81 @@
 
                                 <div class="notif-list">
                                     <div class="form-check form-switch notif-row">
-                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_reminder_kelas">
-                                        <label class="form-check-label notif-label" for="notif_reminder_kelas">Reminder kelas</label>
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch"
+                                            id="notif_reminder_kelas">
+                                        <label class="form-check-label notif-label"
+                                            for="notif_reminder_kelas">Reminder kelas</label>
                                     </div>
 
                                     <div class="form-check form-switch notif-row">
-                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_reminder_belajar">
-                                        <label class="form-check-label notif-label" for="notif_reminder_belajar">Reminder belajar</label>
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch"
+                                            id="notif_reminder_belajar">
+                                        <label class="form-check-label notif-label"
+                                            for="notif_reminder_belajar">Reminder belajar</label>
                                     </div>
 
                                     <div class="form-check form-switch notif-row">
-                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_live_chat">
-                                        <label class="form-check-label notif-label" for="notif_live_chat">Live chat</label>
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch"
+                                            id="notif_live_chat">
+                                        <label class="form-check-label notif-label" for="notif_live_chat">Live
+                                            chat</label>
                                     </div>
 
                                     <div class="form-check form-switch notif-row">
-                                        <input class="form-check-input notif-switch" type="checkbox" role="switch" id="notif_promosi">
-                                        <label class="form-check-label notif-label" for="notif_promosi">Promosi</label>
+                                        <input class="form-check-input notif-switch" type="checkbox" role="switch"
+                                            id="notif_promosi">
+                                        <label class="form-check-label notif-label"
+                                            for="notif_promosi">Promosi</label>
                                     </div>
                                 </div>
-                                <!-- Save Button -->
                                 <div class="text-center mt-5">
-                                    <button type="button" class="btn btn-save" onclick="redirectToHome()">Save</button>
+                                    <button type="button" class="btn btn-save"
+                                        onclick="redirectToHome()">Save</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-
-
-
                 <!-- Privasi Tab. Sinta Dewi Rahmawati (5026231231) -->
                 <div class="tab-pane fade" id="privasi" role="tabpanel">
                     <div class="row justify-content-center">
                         <div class="col-lg-6 col-md-8">
+
                             <div class="profile-form">
-                                <!-- Password Hash Field with Eye Icon -->
                                 <div class="mb-1 position-relative">
                                     <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control custom-input password-field" id="password" value="********" readonly>
-                                    <i class="bi bi-eye-slash toggle-password" id="togglePassword" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
-                                </div>
-                                <!-- Privacy Settings -->
-                                <div class="mb-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="share-browser-data">
-                                        <label class="form-check-label" for="share-browser-data">
-                                            Bagikan data browser untuk personalisasi yang lebih baik
-                                        </label>
-                                    </div>
+                                    <input type="password" class="form-control custom-input password-field"
+                                        id="password" value="********" readonly>
+                                    <i class="bi bi-eye-slash toggle-password" id="togglePassword"
+                                        style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer;"></i>
                                 </div>
 
-                                <div class="mb-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="disable-read" checked>
-                                        <label class="form-check-label" for="disable-read">
-                                            Matikan Read dalam chat
-                                        </label>
+                                <div class="privasi-list">
+                                    <div class="form-check form-switch privasi-row">
+                                        <input class="form-check-input privasi-switch" type="checkbox" role="switch"
+                                            id="share-browser-data">
+                                        <label class="form-check-label privasi-label" for="share-browser-data">Bagikan
+                                            data browser untuk personalisasi yang lebih baik</label>
+                                    </div>
+
+                                    <div class="form-check form-switch privasi-row">
+                                        <input class="form-check-input privasi-switch" type="checkbox" role="switch"
+                                            id="disable-read">
+                                        <label class="form-check-label privasi-label" for="disable-read">Matikan Read
+                                            dalam chat</label>
+                                    </div>
+
+                                    <div class="form-check form-switch privasi-row">
+                                        <input class="form-check-input privasi-switch" type="checkbox" role="switch"
+                                            id="hide-status">
+                                        <label class="form-check-label privasi-label" for="hide-status">Sembunyikan
+                                            status saat online</label>
                                     </div>
                                 </div>
-
-                                <div class="mb-4">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="hide-status">
-                                        <label class="form-check-label" for="hide-status">
-                                            Sembunyikan status saat online
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Save Button -->
                                 <div class="text-center mt-5">
-                                    <button type="button" class="btn btn-save" onclick="redirectToHome()">Save</button>
+                                    <button type="button" class="btn btn-save"
+                                        onclick="redirectToHome()">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -384,38 +390,40 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordField = document.getElementById('password');
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordField = document.getElementById('password');
 
-        if (togglePassword && passwordField) {
-            togglePassword.addEventListener('click', function() {
-                const type = passwordField.type === 'password' ? 'text' : 'password';
-                passwordField.type = type;
+            if (togglePassword && passwordField) {
+                togglePassword.addEventListener('click', function() {
+                    const type = passwordField.type === 'password' ? 'text' : 'password';
+                    passwordField.type = type;
 
-                this.classList.toggle('bi-eye');
-                this.classList.toggle('bi-eye-slash');
-            });
-        }
-        const checkboxIds = ['share-browser-data', 'disable-read', 'hide-status'];
-        checkboxIds.forEach(id => {
-            const checkbox = document.getElementById(id);
-            if (!checkbox) return;
-
-            const storageKey = 'privacy_' + id;
-            const savedValue = localStorage.getItem(storageKey);
-            if (savedValue !== null) {
-                checkbox.checked = savedValue === 'true';
+                    this.classList.toggle('bi-eye');
+                    this.classList.toggle('bi-eye-slash');
+                });
             }
-            checkbox.addEventListener('change', function () {
-                localStorage.setItem(storageKey, this.checked);
+            const checkboxIds = ['share-browser-data', 'disable-read', 'hide-status'];
+            checkboxIds.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (!checkbox) return;
+
+                const storageKey = 'privacy_' + id;
+                const savedValue = localStorage.getItem(storageKey);
+                if (savedValue !== null) {
+                    checkbox.checked = savedValue === 'true';
+                }
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(storageKey, this.checked);
+                });
             });
         });
-    });
-    function redirectToHome() {
-        window.location.href = "{{ route('homepage') }}";
-    }
+
+        function redirectToHome() {
+            window.location.href = "{{ route('homepage') }}";
+        }
     </script>
 
 </body>
+
 </html>

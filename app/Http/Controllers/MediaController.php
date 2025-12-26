@@ -17,7 +17,7 @@ use App\Models\Matkul;
 use App\Models\BeliMatkul;
 use App\Models\Question;
 use App\Models\UserQuizAnswer;
-
+use App\Models\UserMateriProgress; // Added missing import
 
 class MediaController extends Controller
 {
@@ -46,17 +46,103 @@ class MediaController extends Controller
                     ->with('error', 'Silakan beli kelas terlebih dahulu untuk mengakses materi ini.');
             }
         } else {
-            return redirect()->route('login.view');
+            return redirect()->route('login.view')->with('error', 'Silakan login terlebih dahulu.');
+        }
+
+        // Check if materi is unlocked
+        if (!$this->isMateriUnlocked($user->id_user, $materi->id_matkul, $id)) {
+            return redirect()->route('kelas.detail.beli', $materi->id_matkul)
+                ->with('error', 'Materi ini belum terbuka. Selesaikan materi sebelumnya terlebih dahulu.');
         }
 
         // Get videos for this materi
         $videos = Video::where('id_materi', $id)->get();
 
+        // --- NEW LOGIC START ---
+
+        // 1. Get User Progress to check if quiz is already passed
+        $progress = null;
+        if ($user) {
+            $progress = UserMateriProgress::where('id_user', $user->id_user)
+                ->where('id_materi', $id)
+                ->first();
+        }
+
+        // 2. Find Next Materi (for the Next button)
+        $nextMateri = Materi::where('id_matkul', $materi->id_matkul)
+            ->where('id_materi', '>', $id)
+            ->orderBy('id_materi', 'asc')
+            ->first();
+
+        // 3. Find Previous Materi (Optional, good for navigation)
+        $prevMateri = Materi::where('id_matkul', $materi->id_matkul)
+            ->where('id_materi', '<', $id)
+            ->orderBy('id_materi', 'desc')
+            ->first();
+
+        // --- NEW LOGIC END ---
+
         return view('materi', [
             'materi' => $materi,
             'matkul' => $matkul,
-            'videos' => $videos
+            'videos' => $videos,
+            'progress' => $progress,    // Pass progress to view
+            'nextMateri' => $nextMateri, // Pass next materi to view
+            'prevMateri' => $prevMateri
         ]);
+    }
+
+    /**
+     * Check if materi is unlocked for user
+     * First materi is always unlocked, others need previous materi to be completed
+     */
+    private function isMateriUnlocked($userId, $matkulId, $materiId)
+    {
+        try {
+            // Get all materies for this matkul ordered by id
+            $allMateri = Materi::where('id_matkul', $matkulId)
+                ->orderBy('id_materi', 'asc')
+                ->get();
+
+            if ($allMateri->isEmpty()) {
+                return false;
+            }
+
+            // Find current materi by ID (convert to ensure same type)
+            $currentIndex = null;
+            foreach ($allMateri as $idx => $m) {
+                if ((int)$m->id_materi === (int)$materiId) {
+                    $currentIndex = $idx;
+                    break;
+                }
+            }
+
+            // If not found, it doesn't exist
+            if ($currentIndex === null) {
+                return false;
+            }
+
+            // First materi is always unlocked
+            if ($currentIndex === 0) {
+                return true;
+            }
+
+            // For other materies, check if all previous materies are completed
+            $previousMateri = $allMateri->slice(0, $currentIndex);
+            $previousMateriIds = $previousMateri->pluck('id_materi')->toArray();
+
+            $previousCompleted = UserMateriProgress::where('id_user', $userId)
+                ->whereIn('id_materi', $previousMateriIds)
+                ->where('quiz_passed', true)
+                ->count();
+
+            // All previous materies must be completed
+            return $previousCompleted === count($previousMateriIds);
+        } catch (\Exception $e) {
+            // If there's any error, log it and return false for safety
+            \Log::error('Error checking materi unlock', ['error' => $e->getMessage()]);
+            return false;
+        }
     }
 
     /**
@@ -122,9 +208,8 @@ class MediaController extends Controller
         ]);
     }
 
-    /**
-     * Show materi listing page (legacy)
-     */
+    // Legacy/Mock methods kept for compatibility if needed,
+    // but typically these should be removed in production if unused.
     public function materi()
     {
         return view('materi', ['materi' => [
@@ -134,9 +219,6 @@ class MediaController extends Controller
         ]]);
     }
 
-    /**
-     * Show video listing page (legacy)
-     */
     public function video()
     {
         return view('video', ['video' => [
@@ -148,12 +230,8 @@ class MediaController extends Controller
         ]]);
     }
 
-    /**
-     * Show an image/material by id (for /media/image/{id})
-     */
     public function showImage($id)
     {
-        // Mock data for the specific material
         $materi = [
             'id' => $id,
             'title' => 'Kupas Tuntas Rumus Kalkulus Dasar: Limit (ID: ' . $id . ')',
@@ -162,12 +240,8 @@ class MediaController extends Controller
         return view('materi', ['materi' => $materi]);
     }
 
-    /**
-     * Show a video by id (for /media/video/{id})
-     */
     public function showVideo($id)
     {
-        // Mock data for the specific video
         $video = [
             'id' => $id,
             'title' => 'Limit (Video ' . $id . ')',

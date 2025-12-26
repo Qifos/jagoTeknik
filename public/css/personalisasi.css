@@ -235,7 +235,7 @@ body {
 #notifikasi .notif-label{
     color: #fff;
     font-weight: 400;
-    cursor: pointer; /* biar enak diklik */
+    cursor: pointer;
 }
 
 
@@ -453,25 +453,55 @@ body {
             color: #888 !important;
         }
 
-/* Styling untuk password field */
-#privasi .custom-input {
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid #444; /* Menjaga garis bawah tetap ada */
+/* =========================
+   PRIVASI TAB (scoped)
+   ========================= */
+#privasi .privasi-title{
     color: #fff;
-    padding: 0.75rem 0;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    transition: border-color 0.3s ease;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
 }
 
-#privasi .custom-input:focus {
-    border-bottom-color: #8b5cf6;
-    color: #fff;
+#privasi .privasi-list{
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* jarak antar item */
 }
 
-#privasi .custom-input::placeholder {
-    color: #555;
+#privasi .privasi-row{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding-left: 0; /* hilangkan indent form-check */
+}
+
+/* ukuran switch */
+#privasi .privasi-switch{
+    width: 46px;
+    height: 24px;
+    margin-left: 0;
+    cursor: pointer;
+    border: 1px solid #3a3a3a;
+    background-color: #1a1a1a;
+}
+
+/* warna ON (ungu) */
+#privasi .privasi-switch:checked{
+    background-color: #8b5cf6;
+    border-color: #8b5cf6;
+}
+
+/* fokus (klik/tab) */
+#privasi .privasi-switch:focus{
+    box-shadow: 0 0 0 .2rem rgba(139, 92, 246, .25);
+    border-color: #8b5cf6;
+}
+
+#privasi .privasi-label{
+    color: #fff;
+    font-weight: 400;
+    cursor: pointer;
 }
 
 /* Styling untuk Password Field */

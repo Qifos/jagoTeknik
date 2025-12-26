@@ -1,13 +1,21 @@
-/**
- * Author : Sinta Dewi Rahmawati (NRP 5026231231)
- * Desc   : homepage.css
-*/
+/* Bagian Sinta Dewi Rahmawati (5026231231)*/
 
 :root {
     --primary-color: #8b5cf6;
     --dark-bg: #0a0a0a;
     --card-bg: #1a1a1a;
     --panel-purple: #6b2fa0;
+    --brand-1: #b784f5;
+    --brand-2: #6e41e2;
+    --brand-3: #d4c0ff;
+    --brand-4: #d145ed;
+    --brand-5: #e8d1eb;
+    --brand-6: #a3039e;
+    --surface: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.16);
+    --text: #e9e9ee;
+    --muted: #b6b6c6;
+    --bg: #000000;
 }
 
 body {
@@ -18,15 +26,48 @@ body {
     overflow-x: hidden;
 }
 
+/* ===================== HERO ===================== */
+.landing-hero-hp {
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    background: url('/image/circle.png') no-repeat center center
+}
+
+.landing-hero-hp {
+    position: relative;
+    background: url("/image/circle.png") no-repeat top center;
+    background-size: contain;
+    z-index: 1;
+    margin-top: -190px;
+    margin-bottom: -220px;
+    padding-top: -90px;
+}
+
+.landing-hero-hp::before {
+    content: "";
+    position: absoluthe;
+    inset: -20%;
+    z-index: 0;
+    background: radial-gradient(50rem 50rem at 70% 50%,
+            rgba(110, 65, 226, 0.15),
+            transparent 45%),
+        radial-gradient(35rem 35rem at 20% 30%,
+            rgba(183, 132, 245, 0.12),
+            transparent 40%);
+    animation: glowShift 12s ease-in-out infinite alternate;
+}
+
 .hero-section {
     position: relative;
-    padding: 4rem 0 2rem;
     overflow: hidden;
 }
+
 .hero-content {
     position: relative;
     z-index: 2;
 }
+
 .hero {
     padding: 56px 0 24px;
     position: relative;
@@ -34,21 +75,26 @@ body {
 
 .hero__title {
     font-size: 3.6rem;
-    font-weight: 600;
+    font-weight: 900;
+    letter-spacing: 0.5px;
     line-height: 1.05;
-    margin-bottom: 0.4rem;
 }
+
 @media (min-width: 1200px) {
     .hero__title {
         font-size: 4.2rem;
+        margin-top: 0;
     }
 }
+
 .hero__title .accent {
-    background: linear-gradient(135deg, #c4b5fd, #a78bfa, #8b5cf6);
+    background: var(--brand-3);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    margin-top: 0;
 }
+
 .hero__subtitle {
     color: #fff !important;
     opacity: 0.95;
@@ -62,15 +108,14 @@ body {
     width: 360px;
     height: 360px;
     border-radius: 50%;
-    background: radial-gradient(
-        closest-side,
-        rgba(139, 92, 246, 0.18),
-        transparent 60%
-    );
+    background: radial-gradient(closest-side,
+            rgba(139, 92, 246, 0.18),
+            transparent 60%);
     filter: drop-shadow(0 12px 40px rgba(139, 92, 246, 0.2));
     pointer-events: none;
     z-index: 1;
 }
+
 .hero__orbit::before {
     content: "";
     position: absolute;
@@ -78,6 +123,7 @@ body {
     border-radius: 50%;
     border: 2px solid rgba(139, 92, 246, 0.22);
 }
+
 .hero__orbit::after {
     content: "";
     position: absolute;
@@ -85,6 +131,7 @@ body {
     border-radius: 50%;
     border: 2px solid rgba(139, 92, 246, 0.14);
 }
+
 @media (max-width: 992px) {
     .hero__orbit {
         display: none;
@@ -99,6 +146,7 @@ body {
     align-items: flex-start;
     justify-content: flex-end;
 }
+
 .bubble {
     display: flex;
     flex-direction: column;
@@ -109,11 +157,9 @@ body {
     width: 128px;
     height: 128px;
     border-radius: 50%;
-    background: radial-gradient(
-            circle at 32% 30%,
+    background: radial-gradient(circle at 32% 30%,
             rgba(255, 255, 255, 0.18),
-            rgba(255, 255, 255, 0) 60%
-        ),
+            rgba(255, 255, 255, 0) 60%),
         linear-gradient(135deg, #8b5cf6, #6d28d9);
     position: relative;
     display: flex;
@@ -122,9 +168,11 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     transition: transform 0.25s ease;
 }
+
 .bubble__ring:hover {
     transform: translateY(-4px);
 }
+
 .bubble__ring::before {
     content: "";
     position: absolute;
@@ -132,6 +180,7 @@ body {
     border-radius: 50%;
     border: 1.6px solid rgba(139, 92, 246, 0.28);
 }
+
 .bubble__ring::after {
     content: "";
     position: absolute;
@@ -150,6 +199,7 @@ body {
     justify-content: center;
     font-size: 1.3rem;
 }
+
 .bubble__dot {
     position: absolute;
     top: 8px;
@@ -165,12 +215,14 @@ body {
     margin-top: 0.55rem;
     text-align: center;
 }
+
 .bubble__title {
     font-size: 1rem;
     font-weight: 600;
     color: #fff;
     line-height: 1.2;
 }
+
 .bubble__time {
     font-size: 0.92rem;
     color: #fff;
@@ -182,6 +234,7 @@ body {
         width: 118px;
         height: 118px;
     }
+
     .bubble__icon {
         width: 48px;
         height: 48px;
@@ -192,11 +245,13 @@ body {
 .bubbles {
     gap: 100px;
 }
+
 @media (min-width: 1200px) {
     .bubbles {
         gap: 80px;
     }
 }
+
 @media (max-width: 576px) {
     .bubbles {
         gap: 18px;
@@ -224,25 +279,18 @@ body {
 .hero__subtitle {
     margin-bottom: 40px !important;
 }
+
 .hero .section-title {
     margin-top: 10px;
 }
 
 .section-courses {
-    margin-top: 60px;
+    margin-top: 0px;
 }
 
-/*=========================================================
-   ✅ Section: Jelajahi Kelas Kamu (IMPROVED - SESUAI GAMBAR)
-   ====================================================== */
-
-/* =========================================================
-   ✅ Section: Jelajahi Kelas Kamu (SESUAI GAMBAR KIRI)
-   ====================================================== */
-
 .section-explore-classes {
-    margin-top: 80px;
-    margin-bottom: 60px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .section-header-with-link {
@@ -258,7 +306,7 @@ body {
 }
 
 .view-more-link {
-    color: #a78bfa;
+    color: #fff;
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
@@ -274,7 +322,7 @@ body {
 
 .explore-classes-container {
     position: relative;
-    margin-bottom: 2rem;
+    margin-bottom: 0px;
 }
 
 .explore-classes-scroll {
@@ -292,7 +340,6 @@ body {
     display: none;
 }
 
-/* ✅ CARD - SESUAI GAMBAR KIRI */
 .explore-card-final {
     flex: 0 0 260px;
     min-width: 260px;
@@ -312,7 +359,6 @@ body {
     box-shadow: 0 16px 48px rgba(139, 92, 246, 0.4);
 }
 
-/* ✅ IMAGE WRAPPER dengan LABEL KATEGORI */
 .explore-card-final__image-wrapper {
     position: relative;
     width: 100%;
@@ -328,7 +374,6 @@ body {
     display: block;
 }
 
-/* ✅ KATEGORI LABEL */
 .explore-card-final__category {
     position: absolute;
     top: 1rem;
@@ -344,7 +389,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* ✅ CONTENT SECTION */
 .explore-card-final__content {
     padding: 1.5rem;
     display: flex;
@@ -353,55 +397,62 @@ body {
     flex: 1;
 }
 
-/* ✅ TITLE */
 .explore-card-final__title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin: 0;
+    font-size: 0.9rem;
     line-height: 1.3;
     color: #fff;
     letter-spacing: -0.3px;
+    margin-bottom: -12px;
 }
 
-/* ✅ SUBTITLE */
 .explore-card-final__subtitle {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    font-weight: 700;
     color: rgba(255, 255, 255, 0.9);
     margin: 0;
     font-weight: 500;
 }
 
-/* ✅ MENTOR */
 .explore-card-final__mentor {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    flex-direction: row !important;
+    gap: 10px;
     font-size: 0.9rem;
     color: rgba(255, 255, 255, 0.85);
     margin: 0.5rem 0 0 0;
+    margin-top: 18px;
+    margin-bottom: -12px;
+    flex-wrap: nowrap;
 }
 
-.explore-card-final__dot {
-    width: 8px;
-    height: 8px;
+.explore-card-final__mentor-avatar {
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.8);
-    flex-shrink: 0;
+    object-fit: cover;
+    flex: 0 0 24px;
 }
 
-/* ✅ PROGRESS TEXT */
+.explore-card-final__mentor-name {
+    display: inline-block;
+    line-height: 1;
+    margin: 0;
+}
+
+
+
 .explore-card-final__progress {
     font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.7);
     margin-top: 0.3rem;
 }
 
-/* ✅ NAVIGATION BUTTONS */
 .explore-classes-nav-final {
     display: flex;
     gap: 0.75rem;
     justify-content: flex-end;
-    margin-top: 1.5rem;
+    margin-top: 0.5rem;
 }
 
 .explore-nav-btn-final {
@@ -432,7 +483,6 @@ body {
     cursor: not-allowed;
 }
 
-/* ✅ EMPTY STATE */
 .empty-state-final {
     text-align: center;
     padding: 4rem 2rem;
@@ -447,7 +497,6 @@ body {
     margin: 0;
 }
 
-/* ✅ RESPONSIVE */
 @media (max-width: 768px) {
     .section-header-with-link {
         flex-direction: column;
@@ -517,110 +566,104 @@ body {
     }
 }
 
-/* =========================================================
+/* Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
    Section: Kelas yang cocok buat kamu
    ====================================================== */
 
 .section-match {
-  margin-top: 100px;
+    margin-top: 20px;
 }
 
 .match-card {
-  background: linear-gradient(0deg,#60376B 0%, #AB00C1 100%);
-  border-radius: 24px;
-  padding: 1.5rem;
-  color: #fff;
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(0deg, #60376B 0%, #AB00C1 100%);
+    border-radius: 24px;
+    padding: 1.5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 40px rgba(0, 0, 0, 0.4);
 }
 
 .match-card__top {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
-  opacity: 0.9;
-  margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    opacity: 0.9;
+    margin-bottom: 0.75rem;
 }
 
 .match-card__image-wrapper {
-  border-radius: 18px;
-  overflow: hidden;
-  margin-bottom: 1rem;
-  background: rgba(0, 0, 0, 0.25);
-  min-height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    border-radius: 18px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background: rgba(0, 0, 0, 0.25);
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .match-card__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .placeholder-image {
-  width: 100%;
-  height: 100%;
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.7;
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
 }
 
 .match-card__body {
-  margin-bottom: 1rem;
+    margin-bottom: 1rem;
 }
 
 .match-card__title {
-  font-size: 1.05rem;
-  margin-bottom: 0.35rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
 }
 
 .match-card__desc {
-  font-size: 0.85rem;
-  color: #f9fafb;
-  opacity: 0.85;
+    font-size: 0.85rem;
+    color: #f9fafb;
+    opacity: 0.85;
 }
 
 .match-card__footer {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.85rem;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
 }
 
 .match-card__mentor {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .match-card__mentor-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.8);
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .match-card__price {
-  font-weight: 600;
+    font-weight: 600;
 }
 
 @media (max-width: 767.98px) {
-  .section-match {
-    margin-top: 48px;
-  }
+    .section-match {
+        margin-top: 48px;
+    }
 }
-
-/* Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-/* =========================================================
-   Section: Kelas yang cocok buat kamu
-   ====================================================== */
-

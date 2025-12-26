@@ -32,7 +32,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{route('homepage')}}">Beranda</a>
+                        <a class="nav-link active" href="{{ route('homepage') }}">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('kelas.semua') }}">Kelas</a>
@@ -43,11 +43,13 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
+                    <li class="nav-item d-none d-lg-block">
+                        <form class="d-flex" role="search" onsubmit="return false;">
+                            <div class="input-group">
+                                <input class="form-control border-start-1" type="search"
+                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
+                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
+                                        class="bi bi-search"></i></span>
                             </div>
                         </form>
                     </li>
@@ -62,231 +64,222 @@
         </div>
     </nav>
 
-            <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+    <!-- Bagian Ni Kadek Adelia Paramita Putri (5026231196)
             =========================================================
             Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
             ====================================================== -->
 
-            @php
-                use Illuminate\Support\Facades\Auth;
-                use Illuminate\Support\Facades\DB;
-                use Carbon\Carbon;
+    @php
+        use Illuminate\Support\Facades\Auth;
+        use Illuminate\Support\Facades\DB;
+        use Carbon\Carbon;
 
+        $user = Auth::user();
+        $jadwalTerdekatHome = collect();
+
+        if ($user) {
+            $userId = $user->id_user ?? $user->id;
+            $now = Carbon::now();
+            $today = $now->toDateString();
+            $currentTime = $now->format('H:i:s');
+
+            $jadwalTerdekatHome = DB::table('jadwal as j')
+                ->join('kelas as k', 'j.id_kelas', '=', 'k.id_kelas')
+                ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
+                ->join('beli_matkul as bm', function ($join) use ($userId) {
+                    $join->on('bm.id_matkul', '=', 'm.id_matkul')->where('bm.id_user', '=', $userId);
+                })
+                // jadwal yang masih di depan waktu sekarang
+                ->where(function ($q) use ($today, $currentTime) {
+                    $q->where('j.tanggal', '>', $today)->orWhere(function ($q2) use ($today, $currentTime) {
+                        $q2->where('j.tanggal', '=', $today)->where('j.jam_mulai', '>=', $currentTime);
+                    });
+                })
+                ->orderBy('j.tanggal')
+                ->orderBy('j.jam_mulai')
+                ->limit(2)
+                ->select('j.tanggal', 'j.jam_mulai', 'j.jam_selesai', 'm.nama_matkul')
+                ->get();
+        }
+    @endphp
+
+    <header class="landing-hero-hp pt-9">
+        <div class="container position-relative" style="z-index: 1">
+            <div class="row align-items-center min-vh-100 pb-5 pb-lg-0 pt-5 pt-lg-0">
+
+                <!-- Kiri: sapaan & judul kelas yang akan datang -->
+                <div class="col-lg-6 mt-0 mt-lg-0 pt-lg-0">
+                    <h1 class="hero__title mb-3">
+                        Halo <span class="accent">{{ Auth::user()->username }}</span>!
+                    </h1>
+                    <p class="hero__subtitle fs-5">Mau belajar apa hari ini?</p>
+                    <h2 class="section-title mb-0">Kelas yang akan datang</h2>
+                </div>
+
+                <!-- Kanan: dua bubble jadwal terdekat -->
+                <div class="col-lg-6 mt-1 mt-lg-0">
+                    <div class="bubbles">
+                        @forelse ($jadwalTerdekatHome as $index => $jadwal)
+                            <div class="bubble">
+                                <div class="bubble__ring">
+                                    {{-- icon beda sedikit untuk bubble pertama & kedua --}}
+                                    <div class="bubble__icon">
+                                        <i class="bi {{ $index === 0 ? 'bi-clock' : 'bi-book' }}"></i>
+                                    </div>
+                                    @if ($index === 1)
+                                        <span class="bubble__dot"></span>
+                                    @endif
+                                </div>
+                                <div class="bubble__label">
+                                    <div class="bubble__title">{{ $jadwal->nama_matkul }}</div>
+                                    <div class="bubble__time">
+                                        {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}
+                                        – {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}
+                                    </div>
+                                    <div class="bubble__tanggal text-secondary mb-2">
+                                        {{ $jadwal->tanggal ?? '-' }}
+                                    </div>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="text-muted mb-0">
+                                Belum ada jadwal kelas terdekat.
+                            </p>
+                        @endforelse
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
+            =========================================================
+            Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
+            ====================================================== -->
+
+    <section class="py-5 section-explore-classes">
+        <div class="container">
+            <div class="section-header-with-link">
+                <h2 class="section-title">Jelajahi kelas kamu</h2>
+                <a href="{{ route('kelas.semua') }}" class="view-more-link">Lihat lebih banyak</a>
+            </div>
+
+            @php
+                $userClasses = collect();
                 $user = Auth::user();
-                $jadwalTerdekatHome = collect();
 
                 if ($user) {
                     $userId = $user->id_user ?? $user->id;
-                    $now = Carbon::now();
-                    $today = $now->toDateString();
-                    $currentTime = $now->format('H:i:s');
 
-                    $jadwalTerdekatHome = DB::table('jadwal as j')
-                        ->join('kelas as k', 'j.id_kelas', '=', 'k.id_kelas')
-                        ->join('matkul as m', 'k.id_matkul', '=', 'm.id_matkul')
-                        ->join('beli_matkul as bm', function ($join) use ($userId) {
-                            $join->on('bm.id_matkul', '=', 'm.id_matkul')
-                                 ->where('bm.id_user', '=', $userId);
+                    $userClasses = DB::table('beli_matkul as bm')
+                        ->join('matkul as m', 'bm.id_matkul', '=', 'm.id_matkul')
+                        ->join('mentor as mt', 'm.id_mentor', '=', 'mt.id_mentor')
+                        ->join('kelas as k', 'k.id_matkul', '=', 'm.id_matkul')
+                        ->leftJoin('user_matkul_progress as ump', function ($join) use ($userId) {
+                            $join->on('ump.id_matkul', '=', 'm.id_matkul')->where('ump.id_user', '=', $userId);
                         })
-                        // jadwal yang masih di depan waktu sekarang
-                        ->where(function ($q) use ($today, $currentTime) {
-                            $q->where('j.tanggal', '>', $today)
-                              ->orWhere(function ($q2) use ($today, $currentTime) {
-                                  $q2->where('j.tanggal', '=', $today)
-                                     ->where('j.jam_mulai', '>=', $currentTime);
-                              });
-                        })
-                        ->orderBy('j.tanggal')
-                        ->orderBy('j.jam_mulai')
-                        ->limit(2)  // ambil 2 jadwal terdekat
+                        ->where('bm.id_user', '=', $userId)
+                        ->orderByDesc('ump.last_accessed_at')
+                        ->orderByDesc('bm.created_at')
                         ->select(
-                            'j.tanggal',
-                            'j.jam_mulai',
-                            'j.jam_selesai',
-                            'm.nama_matkul'
+                            'm.id_matkul',
+                            'k.id_kelas',
+                            'm.nama_matkul',
+                            'k.image_path',
+                            'mt.nama as mentor_name',
+                            'mt.image_mentor',
+                            'ump.progress_percentage',
+                            'ump.last_accessed_at',
                         )
+                        ->limit(10)
                         ->get();
                 }
             @endphp
 
-            <section class="hero-section">
-                <div class="container">
-                    <div class="row align-items-center g-4">
-                        <!-- Kiri: salam + judul & subjudul -->
-                        <div class="col-lg-6">
-                            <h1 class="hero__title">
-                                Halo <span class="accent">{{ Auth::user()->username }}</span>!
-                            </h1>
-                            <p class="hero__subtitle fs-5">Mau belajar apa hari ini?</p>
-                            <h2 class="section-title mb-0">Kelas yang akan datang</h2>
-                        </div>
 
-                        <!-- Kanan: dua bubble jadwal terdekat -->
-                        <div class="col-lg-6 mt-4 mt-lg-0">
-                            <div class="bubbles">
-                                @forelse ($jadwalTerdekatHome as $index => $jadwal)
-                                    <div class="bubble">
-                                        <div class="bubble__ring">
-                                            {{-- icon beda sedikit untuk bubble pertama & kedua --}}
-                                            <div class="bubble__icon">
-                                                <i class="bi {{ $index === 0 ? 'bi-clock' : 'bi-book' }}"></i>
-                                            </div>
-                                            @if($index === 1)
-                                                <span class="bubble__dot"></span>
-                                            @endif
-                                        </div>
-                                        <div class="bubble__label">
-                                            <div class="bubble__title">{{ $jadwal->nama_matkul }}</div>
-                                            <div class="bubble__time">
-                                                {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}
-                                                – {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}
-                                            </div>
-                                            <div class="bubble__tanggal text-secondary mb-2">
-                                                {{ $jadwal->tanggal ?? '-' }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <p class="text-muted mb-0">
-                                        Belum ada jadwal kelas terdekat.
+            @if ($userClasses->count() > 0)
+                <div class="explore-classes-container">
+                    <div class="explore-classes-scroll" id="exploreClassesScroll">
+                        @foreach ($userClasses as $kelas)
+                            <a href="{{ route('media.materi', $kelas->id_matkul) }}" class="explore-card-final">
+                                <div class="explore-card-final__image-wrapper">
+                                    <img src="{{ $kelas->image_path ? asset($kelas->image_path) : asset('images/kelas/default.jpg') }}"
+                                        alt="{{ $kelas->nama_matkul }}"
+                                        onerror="this.src='{{ asset('images/kelas/default.jpg') }}'">
+                                    <span
+                                        class="explore-card-final__category">{{ $kelas->nama_jurusan ?? 'Teknik' }}</span>
+                                </div>
+
+                                <!-- CONTENT SECTION -->
+                                <div class="explore-card-final__content">
+                                    <h4 class="explore-card-final__title">{{ $kelas->nama_matkul }}</h4>
+                                    <p class="explore-card-final__subtitle">
+                                        @php
+                                            $chapterNum = intval(($kelas->progress_percentage ?? 0) / 14.28) + 1;
+                                        @endphp
+                                        Bagian {{ $chapterNum }} - Pembelajaran
                                     </p>
-                                @endforelse
-                            </div>
-                        </div>
+
+                                    <!-- Mentor Info -->
+                                    <div class="explore-card-final__mentor">
+                                        <img src="{{ $kelas->image_mentor ? asset($kelas->image_mentor) : asset('images/default-mentor.jpg') }}"
+                                            alt="{{ $kelas->mentor_name ?? 'Mentor' }}"
+                                            class="explore-card-final__mentor-avatar"
+                                            onerror="this.src='{{ asset('images/default-mentor.jpg') }}'">
+                                        <span
+                                            class="explore-card-final__mentor-name">{{ $kelas->mentor_name ?? 'Mentor' }}</span>
+                                    </div>
+
+
+                                    <!-- Progress -->
+                                    <div class="explore-card-final__progress">
+                                        Lesson
+                                        {{ $kelas->progress_percentage ? intval($kelas->progress_percentage / 14.28) : 0 }}
+                                        of 7
+                                    </div>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <div class="explore-classes-nav-final">
+                        <button class="explore-nav-btn-final explore-nav-prev-final" id="explorePrevBtn"
+                            aria-label="Sebelumnya">
+                            <i class="bi bi-chevron-left"></i>
+                        </button>
+                        <button class="explore-nav-btn-final explore-nav-next-final" id="exploreNextBtn"
+                            aria-label="Berikutnya">
+                            <i class="bi bi-chevron-right"></i>
+                        </button>
                     </div>
                 </div>
-            </section>
-
-            <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-            =========================================================
-            Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
-            ====================================================== -->
-
-           <!-- ✅ JELAJAHI KELAS KAMU SECTION - SESUAI GAMBAR KIRI -->
-<section class="py-5 section-explore-classes">
-    <div class="container">
-        <div class="section-header-with-link">
-            <h2 class="section-title">Jelajahi kelas kamu</h2>
-            <a href="{{ route('kelas.semua') }}" class="view-more-link">Lihat lebih banyak</a>
+            @else
+                <div class="empty-state-final">
+                    <i class="bi bi-book" style="font-size: 3rem; color: #6c757d; margin-bottom: 1rem;"></i>
+                    <p class="empty-state-final__text">Belum ada kelas yang diikuti</p>
+                    <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-3">Jelajahi Kelas</a>
+                </div>
+            @endif
         </div>
-
-            @php
-            $userClasses = collect();
-            $user = Auth::user();
-
-            if ($user) {
-                $userId = $user->id_user ?? $user->id;
-
-                // Get all classes owned by user, ordered by last accessed
-                $userClasses = DB::table('beli_matkul as bm')
-                    ->join('matkul as m', 'bm.id_matkul', '=', 'm.id_matkul')
-                    ->join('mentor as mt', 'm.id_mentor', '=', 'mt.id_mentor')
-                    ->join('kelas as k', 'k.id_matkul', '=', 'm.id_matkul')
-                    ->leftJoin('user_matkul_progress as ump', function($join) use ($userId) {
-                        $join->on('ump.id_matkul', '=', 'm.id_matkul')
-                            ->where('ump.id_user', '=', $userId);
-                    })
-                    ->where('bm.id_user', '=', $userId)
-                    ->orderByDesc('ump.last_accessed_at')
-                    ->orderByDesc('bm.created_at')
-                    ->select(
-                        'm.id_matkul',
-                        'k.id_kelas',
-                        'm.nama_matkul',
-                        'k.image_path',
-                        'mt.nama as mentor_name',
-                        'ump.progress_percentage',
-                        'ump.last_accessed_at'
-                    )
-                    ->limit(10)
-                    ->get();
-            }
-        @endphp
-
-
-        @if($userClasses->count() > 0)
-            <div class="explore-classes-container">
-                <!-- Scroll Container -->
-                <div class="explore-classes-scroll" id="exploreClassesScroll">
-                    @foreach($userClasses as $kelas)
-                        <a href="{{ route('media.materi', $kelas->id_matkul) }}" class="explore-card-final">
-                            <!-- IMAGE SECTION dengan LABEL KATEGORI -->
-                            <div class="explore-card-final__image-wrapper">
-                                <img
-                                    src="{{ $kelas->image_path ? asset($kelas->image_path) : asset('images/kelas/default.jpg') }}"
-                                    alt="{{ $kelas->nama_matkul }}"
-                                    onerror="this.src='{{ asset('images/kelas/default.jpg') }}'"
-                                >
-                                <!-- Label Kategori -->
-                                <span class="explore-card-final__category">{{ $kelas->nama_jurusan ?? 'Teknik' }}</span>
-                            </div>
-
-                            <!-- CONTENT SECTION -->
-                            <div class="explore-card-final__content">
-                                <!-- Kelas Name -->
-                                <h4 class="explore-card-final__title">{{ $kelas->nama_matkul }}</h4>
-
-                                <!-- Subtitle/Chapter Info -->
-                                <p class="explore-card-final__subtitle">
-                                    @php
-                                        $chapterNum = intval(($kelas->progress_percentage ?? 0) / 14.28) + 1;
-                                    @endphp
-                                    Bagian {{ $chapterNum }} - Pembelajaran
-                                </p>
-
-                                <!-- Mentor Info -->
-                                <div class="explore-card-final__mentor">
-                                    <span class="explore-card-final__dot"></span>
-                                    <span>{{ $kelas->mentor_name ?? 'Mentor' }}</span>
-                                </div>
-
-                                <!-- Progress -->
-                                <div class="explore-card-final__progress">
-                                    Lesson {{ $kelas->progress_percentage ? intval($kelas->progress_percentage / 14.28) : 0 }} of 7
-                                </div>
-                            </div>
-                        </a>
-                    @endforeach
-                </div>
-
-                <!-- Navigation Arrows -->
-                <div class="explore-classes-nav-final">
-                    <button class="explore-nav-btn-final explore-nav-prev-final" id="explorePrevBtn" aria-label="Sebelumnya">
-                        <i class="bi bi-chevron-left"></i>
-                    </button>
-                    <button class="explore-nav-btn-final explore-nav-next-final" id="exploreNextBtn" aria-label="Berikutnya">
-                        <i class="bi bi-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-        @else
-            <div class="empty-state-final">
-                <i class="bi bi-book" style="font-size: 3rem; color: #6c757d; margin-bottom: 1rem;"></i>
-                <p class="empty-state-final__text">Belum ada kelas yang diikuti</p>
-                <a href="{{ route('kelas.semua') }}" class="btn btn-primary mt-3">Jelajahi Kelas</a>
-            </div>
-        @endif
-    </div>
-</section>
-<!-- ✅ AKHIR JELAJAHI KELAS KAMU -->
+    </section>
 
     <!--Bagian Ni Kadek Adelia Paramita Putri (5026231196)-->
     <!-- Rekomendasi: Kelas yang cocok buat kamu -->
     <section class="py-5 section-match">
         <div class="container">
-            <h2 class="section-title">Kelas yang cocok buat kamu</h2>
+            <h2 class="section-title mb-5">Kelas yang cocok buat kamu</h2>
 
-            @if(isset($recommendations) && $recommendations->count())
+            @if (isset($recommendations) && $recommendations->count())
                 <div class="row g-4">
-                    @foreach($recommendations as $index => $kelas)
+                    @foreach ($recommendations as $index => $kelas)
                         <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
-                           class="col-md-4 text-decoration-none d-block">
+                            class="col-md-4 text-decoration-none d-block">
                             <div class="match-card">
                                 {{-- Top label: kategori & durasi --}}
                                 <div class="match-card__top">
                                     <span class="match-card__category">
-                                        {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan
-                                            ?? 'Kelas Teknik' }}
+                                        {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan ?? 'Kelas Teknik' }}
                                     </span>
                                     <span class="match-card__duration">3 Bulan</span>
                                 </div>
@@ -301,11 +294,9 @@
                                 @endphp
 
                                 <div class="match-card__image-wrapper">
-                                    <img
-                                        src="{{ asset($foto) }}"
+                                    <img src="{{ asset($foto) }}"
                                         alt="{{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}"
-                                        class="match-card__image"
-                                    >
+                                        class="match-card__image">
                                 </div>
 
                                 <div class="match-card__body">
@@ -313,9 +304,8 @@
                                         {{ optional($kelas->matkul)->nama_matkul ?? 'Kelas JagoTeknik' }}
                                     </h4>
                                     <p class="match-card__desc">
-                                        {{ $kelas->deskripsi
-                                            ?? optional($kelas->matkul)->deskripsi
-                                            ?? 'Belajar materi teknik dengan cara yang mudah dipahami.' }}
+                                        {{ $kelas->deskripsi ??
+                                            (optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.') }}
                                     </p>
                                 </div>
 
@@ -327,7 +317,7 @@
                                         </span>
                                     </div>
                                     <div class="match-card__price">
-                                        @if(!is_null($kelas->harga))
+                                        @if (!is_null($kelas->harga))
                                             Rp {{ number_format($kelas->harga, 0, ',', '.') }}
                                         @else
                                             Gratis
@@ -346,7 +336,6 @@
         </div>
     </section>
     </section>
-    <!-- Batas Rekomendasi -->
 
     <!-- Menampilkan Pesan Sukses -->
     @if (session('success'))
@@ -415,7 +404,6 @@
         <div class="container text-left text-white">
             <div class="row align-items-left">
 
-                <!-- Jago Teknik Logo and Tagline (Left side) -->
                 <div class="col-md-2 text-md-left">
                     <div class="footer-logo">
                         <img src="image/jagoteknik.png" alt="Jago Teknik Logo" class="footer-logo-img" />
@@ -423,7 +411,6 @@
                     </div>
                 </div>
 
-                <!-- Jurusan, Ikuti Kami, Legal, Kontak Kami (Horizontal Row) -->
                 <div class="col-md-10">
                     <div class="row text-md-left">
                         <!-- Jurusan Section -->
@@ -476,13 +463,11 @@
             <div class="container mt-4">
                 <div class="row d-flex align-items-center justify-content-between">
 
-                    <!-- Left side: Copyright Text -->
                     <div class="col-12 col-md-6 text-md-left">
                         <p class="mb-0" style="text-align: left">© <span id="year"></span> Jago Teknik. All
                             rights reserved.</p>
                     </div>
 
-                    <!-- Right side: Social Media Icons -->
                     <div class="col-12 col-md-6 text-md-right">
                         <div class="social-icons">
                             <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
@@ -499,25 +484,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Initialize scroll navigation for "Jelajahi Kelas Kamu" section
         document.addEventListener('DOMContentLoaded', function() {
             const scrollContainer = document.getElementById('exploreClassesScroll');
             const prevBtn = document.getElementById('explorePrevBtn');
             const nextBtn = document.getElementById('exploreNextBtn');
 
             if (!scrollContainer || !prevBtn || !nextBtn) {
-                return; // Exit if elements not found
+                return;
             }
 
             const updateButtonStates = () => {
                 const isAtStart = scrollContainer.scrollLeft <= 0;
-                const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 10;
+                const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer
+                    .scrollWidth - 10;
 
                 prevBtn.disabled = isAtStart;
                 nextBtn.disabled = isAtEnd;
             };
 
-            const scrollAmount = 250; // pixels to scroll
+            const scrollAmount = 250;
 
             prevBtn.addEventListener('click', () => {
                 scrollContainer.scrollBy({
@@ -534,15 +519,10 @@
                 });
                 setTimeout(updateButtonStates, 300);
             });
-
-            // Update button states on scroll
             scrollContainer.addEventListener('scroll', updateButtonStates);
-
-            // Initial button state
             updateButtonStates();
         });
 
-        // Set current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
     </script>
 </body>
