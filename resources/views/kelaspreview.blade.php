@@ -26,10 +26,6 @@
     <header class="bg-transparent">
         <!-- Navbar (SAMA seperti homepage/jadwal) -->
         <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             <div class="container-fluid px-4">
                 <a class="navbar-brand ms-2 ms-lg-3" href="#">
                     <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
@@ -74,54 +70,6 @@
     </header>
 
 
-    <main class="flex-grow-1">
-        <div class="container-fluid px-lg-5 py-4">
-            <div class="mb-3">
-                <a href="{{ route('jadwal.index') }}" class="back-btn">&lt; Kembali</a>
-        <div class="container-fluid px-4">
-            <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('kelas.semua') }}">Kelas</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('jadwal.index') }}">Jadwal</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
-                    </li>
-                    <li class="nav-item d-none d-lg-block">
-                        <form class="d-flex" role="search" onsubmit="return false;">
-                            <div class="input-group">
-                                <input class="form-control border-start-1" type="search"
-                                    placeholder="Cari di JagoTeknik" aria-label="Cari" />
-                                <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
-                                    class="bi bi-search"></i></span>
-                            </div>
-                        </form>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
-                            <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
-                            <span class="ms-2">Profil</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-    </header>
-
-
     <main class="flex-grow-1 text-white">
         <div class="container-fluid px-lg-5 py-4">
             <div class="mb-3">
@@ -142,8 +90,6 @@
                         </div>
 
                         <!-- Class Info -->
-                        <p class="small text-muted mb-1">Jadwal Kelas</p>
-                        <p class="small text-white-50 mb-1">Jadwal Kelas</p>
                         <p class="small text-white-50 mb-1">Jadwal Kelas</p>
                         <h2 class="h3 text-white fw-bold">
                             {{ $kelas->nama_matkul }}
@@ -168,8 +114,6 @@
 
                         <!-- Description -->
                         <h5 class="text-white mb-3">Deskripsi Kelas</h5>
-                        <p class="text-muted">
-                        <p class="text-white-50">
                         <p class="text-white-50">
                             {{ $kelas->deskripsi ?? 'Deskripsi kelas tidak tersedia.' }}
                         </p>
@@ -206,8 +150,6 @@
 
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
-                                        <p class="text-white-50 mb-1">
                                         <p class="text-white-50 mb-1">
                                             <i class="bi bi-calendar-event me-2"></i>Tanggal
                                         </p>
@@ -216,8 +158,6 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
-                                        <p class="text-white-50 mb-1">
                                         <p class="text-white-50 mb-1">
                                             <i class="bi bi-clock me-2"></i>Durasi Kelas
                                         </p>
@@ -234,8 +174,6 @@
 
                                 <div class="row mb-4">
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
-                                        <p class="text-white-50 mb-1">
                                         <p class="text-white-50 mb-1">
                                             <i class="bi bi-geo-alt me-2"></i>Tempat
                                         </p>
@@ -244,8 +182,6 @@
                                         </p>
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <p class="text-muted mb-1">
-                                        <p class="text-white-50 mb-1">
                                         <p class="text-white-50 mb-1">
                                             <i class="bi bi-bookmark me-2"></i>Kategori
                                         </p>
@@ -265,9 +201,6 @@
                                             class="rounded-circle me-3" alt="{{ $matkul->mentor->nama ?? 'Mentor' }}"
                                             width="50" height="50">
                                         <div>
-                                            <p class="text-white fw-bold mb-0">{{ $matkul->mentor->nama ?? 'Mentor' }}</p>
-                                            <small class="text-muted">Instruktur</small>
-                                            <small class="text-white-50">Instruktur</small>
                                             <p class="text-white fw-bold mb-0">{{ $matkul->mentor->nama ?? 'Mentor' }}
                                             </p>
                                             <small class="text-white-50">Instruktur</small>

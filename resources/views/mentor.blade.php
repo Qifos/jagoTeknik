@@ -12,147 +12,15 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     {{-- Navbar homepage --}}
     <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
     <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
     <link rel="stylesheet" href="{{ asset('css/personalisasi.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 
-    <style>
-        body {
-            background: #000;
-            color: #fff;
-        }
-
-        .mentor-wrap {
-            padding: 42px 0 56px;
-        }
-
-        .back-btn {
-            background: #fff;
-            color: #111;
-            border: 0;
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-weight: 600;
-        }
-
-        .search-label {
-            color: #cfcfcf;
-            font-size: .9rem;
-            margin-bottom: 8px;
-        }
-
-        .search-box-mentor {
-            background: #8f89c5;
-            border: 1px solid rgba(255, 255, 255, .25);
-            border-radius: 0;
-            height: 44px;
-            color: #fff;
-            padding-left: 44px;
-        }
-
-        .search-ico {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #fff;
-            opacity: .9;
-        }
-
-        .mentor-title {
-            text-align: center;
-            font-weight: 700;
-            letter-spacing: .2px;
-            margin: 14px 0 18px;
-        }
-
-        .filters-row .form-select {
-            background: transparent;
-            color: #fff;
-            border: 0;
-            border-bottom: 1px solid rgba(255, 255, 255, .35);
-            border-radius: 0;
-            padding-left: 0;
-        }
-
-        .filters-row label {
-            color: #cfcfcf;
-            font-size: .85rem;
-        }
-
-        /* Card Tutor */
-        .tutor-card {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, .10);
-            overflow: hidden;
-        }
-
-        .tutor-photo {
-            width: 100%;
-            aspect-ratio: 4/4.2;
-            object-fit: cover;
-            background: #111;
-        }
-
-        .tutor-mid {
-            background: #5b3a6b;
-            padding: 14px 12px 12px;
-            text-align: center;
-        }
-
-        .tutor-name {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin: 0;
-        }
-
-        .tutor-dept {
-            opacity: .9;
-            margin: 0;
-            font-size: .9rem;
-        }
-
-        .tutor-stats {
-            background: #4c2f5a;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 12px;
-            font-size: .9rem;
-            border-top: 1px solid rgba(255, 255, 255, .10);
-        }
-
-        .tutor-stats i {
-            margin-right: 6px;
-        }
-
-        .tutor-btn {
-            width: 100%;
-            border-radius: 0;
-            background: #9a93cf;
-            color: #fff;
-            border: 0;
-            padding: 10px 12px;
-            font-weight: 600;
-        }
-
-        .tutor-btn:hover {
-            filter: brightness(1.05);
-        }
-
-        .pagination .page-link {
-            background: transparent;
-            color: #fff;
-            border-color: rgba(255, 255, 255, .15);
-        }
-
-        .pagination .active>.page-link {
-            background: #5b3a6b;
-            border-color: #5b3a6b;
-        }
-    </style>
+    {{-- CSS khusus mentor list --}}
+    <link rel="stylesheet" href="{{ asset('css/mentor.css') }}">
 </head>
 
 <body>

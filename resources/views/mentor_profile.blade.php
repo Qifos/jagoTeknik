@@ -12,173 +12,15 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
     {{-- Navbar homepage --}}
     <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
     <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
     <link rel="stylesheet" href="{{ asset('css/personalisasi.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
 
-    <style>
-        body {
-            background: #000;
-            color: #fff;
-        }
-
-        .wrap {
-            padding: 40px 0 64px;
-        }
-
-        .back-btn {
-            background: #fff;
-            color: #111;
-            border: 0;
-            border-radius: 8px;
-            padding: 10px 18px;
-            font-weight: 600;
-        }
-
-        .hero {
-            background: #5f5aa9;
-            border-radius: 0;
-            padding: 34px 36px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            margin-top: 22px;
-        }
-
-        .hero-left {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .avatar {
-            width: 84px;
-            height: 84px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid rgba(255, 255, 255, .65);
-            background: #111;
-        }
-
-        .hero-name {
-            font-weight: 800;
-            font-size: 1.6rem;
-            margin: 0;
-        }
-
-        .hero-role {
-            margin: 4px 0 0;
-            opacity: .9;
-        }
-
-        .hero-btn {
-            background: #e6dbf4;
-            color: #5b3a6b;
-            border: 0;
-            padding: 14px 22px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            min-width: 260px;
-            justify-content: center;
-        }
-
-        .hero-btn i {
-            font-size: 1.1rem;
-        }
-
-        .section-title {
-            font-size: 1.7rem;
-            font-weight: 800;
-            margin: 26px 0 18px;
-        }
-
-        .stat-card {
-            background: #5f5aa9;
-            border: 0;
-            padding: 18px 18px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            height: 92px;
-        }
-
-        .stat-ico {
-            width: 54px;
-            height: 54px;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #5f5aa9;
-            font-size: 1.3rem;
-        }
-
-        .stat-num {
-            font-size: 1.35rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .stat-label {
-            opacity: .9;
-            margin-top: 6px;
-        }
-
-        .course-card {
-            height: 240px;
-            background: #3f2a86;
-            border: 0;
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .course-card:before {
-            content: "";
-            position: absolute;
-            inset: -40px -40px auto auto;
-            width: 220px;
-            height: 220px;
-            background: rgba(255, 255, 255, .13);
-            transform: rotate(25deg);
-            filter: blur(0.2px);
-        }
-
-        .course-title {
-            position: relative;
-            font-weight: 900;
-            letter-spacing: .8px;
-            text-transform: uppercase;
-            font-size: 1.35rem;
-            margin: 0;
-        }
-
-        .course-sub {
-            position: relative;
-            opacity: .85;
-            margin-top: 8px;
-            font-size: .95rem;
-        }
-
-        /* Override: avatar mentor di halaman profile harus bulat (bukan card photo) */
-        .hero-left .tutor-photo {
-            width: 96px !important;
-            height: 96px !important;
-            aspect-ratio: 1 / 1 !important;
-            border-radius: 50% !important;
-            object-fit: cover !important;
-            background: #111;
-            border: 2px solid rgba(255, 255, 255, .25);
-            flex: 0 0 96px;
-        }
-    </style>
+    {{-- CSS khusus halaman mentor profile --}}
+    <link rel="stylesheet" href="{{ asset('css/profilementor.css') }}">
 </head>
 
 <body>
@@ -288,7 +130,7 @@
                 </div>
             </div>
 
-            {{-- Course grid bawah (mirip kartu besar di prototype) --}}
+            {{-- Course grid bawah --}}
             <div class="row g-4 mt-3">
                 @php($courses = $courses ?? collect())
                 @forelse($courses->take(4) as $c)

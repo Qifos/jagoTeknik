@@ -28,20 +28,7 @@
 </head>
 
 <body>
-<<<<<<< HEAD
     <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-                <div class="container-fluid px-4">
-                    <a class="navbar-brand ms-2 ms-lg-3" href="#">
-                        <img src="image/jagoteknik.png" alt="Jago Teknik" class="brand-logo">
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto align-items-center">
-=======
-    <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
         <div class="container-fluid px-4">
             <a class="navbar-brand ms-2 ms-lg-3" href="#">
@@ -52,7 +39,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('homepage') }}">Beranda</a>
                     </li>
@@ -65,13 +51,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('chat.index') }}">Chat</a>
                     </li>
-<<<<<<< HEAD
-                    <li class="nav-item">
-                        <form class="d-flex mx-3">
-                            <div class="search-box">
-                                <input class="form-control" type="search" placeholder="Cari di JagoTeknik">
-                                <i class="bi bi-search"></i>
-=======
                     <li class="nav-item d-none d-lg-block">
                         <form class="d-flex" role="search" onsubmit="return false;">
                             <div class="input-group">
@@ -79,19 +58,12 @@
                                     placeholder="Cari di JagoTeknik" aria-label="Cari" />
                                 <span class="input-group-text bg-transparent border-end-0 text-secondary"><i
                                         class="bi bi-search"></i></span>
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                             </div>
                         </form>
                     </li>
-
                     <li class="nav-item">
-<<<<<<< HEAD
-                        <a class="nav-link d-flex align-items-center" href="{{ url('/personalisasi') }}">
-                            <img src="profile.jpg" alt="Profile" class="profile-img">
-=======
                         <a class="nav-link d-flex align-items-center" href="{{ route('personalisasi.view') }}">
                             <img src="{{ asset('image/profile.jpg') }}" alt="Profile" class="profile-img">
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                             <span class="ms-2">Profil</span>
                         </a>
                     </li>
@@ -314,39 +286,6 @@
                                                 </p>
                                             </div>
                                         </div>
-<<<<<<< HEAD
-=======
-                                        <div class="course-info">
-                                            <h3 class="course-title">{{ $item->nama_matkul }}</h3>
-                                            @if ($item->status_kelas === 'completed')
-                                                <!-- Tampilkan progress bar untuk kelas yang sudah dibeli -->
-                                                @php
-                                                    $progress = app(
-                                                        App\Http\Controllers\KelasController::class,
-                                                    )->getProgressKelas($item->id_kelas);
-                                                @endphp
-                                                <div class="progress mb-2"
-                                                    style="height: 6px; background-color: #e9ecef;">
-                                                    <div class="progress-bar" role="progressbar"
-                                                        style="width: {{ $progress }}%; background-color: #6b4fa0;"
-                                                        aria-valuenow="{{ $progress }}" aria-valuemin="0"
-                                                        aria-valuemax="100">
-                                                    </div>
-                                                </div>
-                                                <p class="course-progress" style="font-size: 0.85rem; color: #666;">
-                                                    Progress: {{ $progress }}%
-                                                </p>
-                                            @elseif($item->status_kelas === 'wishlist')
-                                                <!-- Tampilkan status wishlist -->
-                                                <p class="course-progress">Dalam wishlist</p>
-                                            @else
-                                                <!-- Tampilkan harga untuk kelas yang belum dibeli -->
-                                                <p class="course-progress">Rp
-                                                    {{ number_format($item->harga_asli, 0, ',', '.') }}</p>
-                                            @endif
-                                        </div>
-                                    </div>
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                                     </a>
                                 </div>
                             @endforeach

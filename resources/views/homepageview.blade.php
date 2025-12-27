@@ -197,39 +197,6 @@
             @endphp
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        <!-- Kanan: dua bubble jadwal terdekat -->
-                        <div class="col-lg-6 mt-4 mt-lg-0">
-                            <div class="bubbles">
-                                @forelse ($jadwalTerdekatHome as $index => $jadwal)
-                                    <div class="bubble">
-                                        <div class="bubble__ring">
-                                            {{-- icon beda sedikit untuk bubble pertama & kedua --}}
-                                            <div class="bubble__icon">
-                                                <i class="bi {{ $index === 0 ? 'bi-clock' : 'bi-book' }}"></i>
-                                            </div>
-                                            @if($index === 1)
-                                                <span class="bubble__dot"></span>
-                                            @endif
-                                        </div>
-                                        <div class="bubble__label">
-                                            <div class="bubble__title">{{ $jadwal->nama_matkul }}</div>
-                                            <div class="bubble__time">
-                                                {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('H:i') }}
-                                                – {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('H:i') }}
-                                            </div>
-                                            <div class="bubble__tanggal text-secondary mb-2">
-                                                {{ $jadwal->tanggal ?? '-' }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                @empty
-                                    <p class="text-muted mb-0">
-                                        Belum ada jadwal kelas terdekat.
-=======
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
             @if ($userClasses->count() > 0)
                 <div class="explore-classes-container">
                     <div class="explore-classes-scroll" id="exploreClassesScroll">
@@ -251,10 +218,6 @@
                                             $chapterNum = intval(($kelas->progress_percentage ?? 0) / 14.28) + 1;
                                         @endphp
                                         Bagian {{ $chapterNum }} - Pembelajaran
-<<<<<<< HEAD
->>>>>>> 008e2df50e114cd6f15e972ab9f157700f9bd9b0
-=======
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
                                     </p>
 
                                     <!-- Mentor Info -->
@@ -291,19 +254,6 @@
                         </button>
                     </div>
                 </div>
-            </section>
-
-            <!-- Batas Bagian Ni Kadek Adelia Paramita Putri (5026231196)
-            =========================================================
-            Section: Jadwal Kelas Terdekat - Homepage (2 Kelas Terdekat)
-            ====================================================== -->
-
-           <!-- ✅ JELAJAHI KELAS KAMU SECTION - SESUAI GAMBAR KIRI -->
-<section class="py-5 section-explore-classes">
-    <div class="container">
-        <div class="section-header-with-link">
-            <h2 class="section-title">Jelajahi kelas kamu</h2>
-            <a href="{{ route('kelas.semua') }}" class="view-more-link">Lihat lebih banyak</a>
             @else
                 <div class="empty-state-final">
                     <i class="bi bi-book" style="font-size: 3rem; color: #6c757d; margin-bottom: 1rem;"></i>
@@ -322,26 +272,11 @@
 
             @if (isset($recommendations) && $recommendations->count())
                 <div class="row g-4">
-                    @foreach($recommendations as $index => $kelas)
-                        <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
-                           class="col-md-4 text-decoration-none d-block">
-                    @foreach ($recommendations as $index => $kelas)
-                        <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
-                            class="col-md-4 text-decoration-none d-block">
-                            <div class="match-card">
-                                {{-- Top label: kategori & durasi --}}
-                                <div class="match-card__top">
-                                    <span class="match-card__category">
-                                        {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan
-                                            ?? 'Kelas Teknik' }}
-                                        {{ optional(optional($kelas->matkul)->jurusan)->nama_jurusan ?? 'Kelas Teknik' }}
-                                    </span>
-                                    <span class="match-card__duration">3 Bulan</span>
-                                </div>
                     @foreach ($recommendations as $kelas)
                         <a href="{{ route('kelas.beli', $kelas->id_kelas) }}"
                             class="col-md-4 text-decoration-none d-block match-card-link">
                             <div class="match-card">
+
                                 @php
                                     // ✅ Gambar kelas dari DB (kelas.image_path)
                                     $fotoKelas = $kelas->image_path ?? null;
@@ -375,11 +310,6 @@
                                     </h4>
 
                                     <p class="match-card__desc">
-                                        {{ $kelas->deskripsi
-                                            ?? optional($kelas->matkul)->deskripsi
-                                            ?? 'Belajar materi teknik dengan cara yang mudah dipahami.' }}
-                                        {{ $kelas->deskripsi ??
-                                            (optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.') }}
                                         {{ $kelas->deskripsi ??
                                             (optional($kelas->matkul)->deskripsi ?? 'Belajar materi teknik dengan cara yang mudah dipahami.') }}
                                     </p>
@@ -417,8 +347,7 @@
             @endif
         </div>
     </section>
-    </section>
-    <!-- Batas Rekomendasi -->
+
     <!-- Menampilkan Pesan Sukses -->
     @if (session('success'))
         <div class="alert alert-success" role="alert">
@@ -566,33 +495,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Initialize scroll navigation for "Jelajahi Kelas Kamu" section
         document.addEventListener('DOMContentLoaded', function() {
             const scrollContainer = document.getElementById('exploreClassesScroll');
             const prevBtn = document.getElementById('explorePrevBtn');
             const nextBtn = document.getElementById('exploreNextBtn');
 
             if (!scrollContainer || !prevBtn || !nextBtn) {
-                return; // Exit if elements not found
-                return;
                 return;
             }
 
             const updateButtonStates = () => {
                 const isAtStart = scrollContainer.scrollLeft <= 0;
-                const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 10;
                 const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer
                     .scrollWidth - 10;
-                const isAtEnd = scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer
-                    .scrollWidth - 10;
+
                 prevBtn.disabled = isAtStart;
                 nextBtn.disabled = isAtEnd;
             };
 
-            const scrollAmount = 250; // pixels to scroll
             const scrollAmount = 250;
-            const scrollAmount = 250;
->>>>>>> 04178d1b4cda36a2a838469edd267471fd3d5375
 
             prevBtn.addEventListener('click', () => {
                 scrollContainer.scrollBy({
@@ -609,15 +530,6 @@
                 });
                 setTimeout(updateButtonStates, 300);
             });
-
-            // Update button states on scroll
-            scrollContainer.addEventListener('scroll', updateButtonStates);
-
-            // Initial button state
-            updateButtonStates();
-        });
-
-        // Set current year in footer
             scrollContainer.addEventListener('scroll', updateButtonStates);
             updateButtonStates();
         });
