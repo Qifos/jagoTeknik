@@ -104,6 +104,7 @@
                                         : false);
                             @endphp
 
+
                             @if ($isMateriUnlocked)
                                 <a href="{{ route('media.materi', ['id' => $item['id']]) }}"
                                     class="text-decoration-none">
@@ -121,9 +122,13 @@
 
                                         <div style="padding: 0 12px;">
                                             <div class="card-title mb-2">{{ $item['title'] }}</div>
-                                            <div class="instructor mb-2">
-                                                <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
-                                                <span>{{ $item['instructor'] }}</span>
+                                            <div class="explore-card-final__mentor">
+                                                <img src="{{ $item['mentor_image'] ? asset($item['mentor_image']) : asset('images/default-mentor.jpg') }}"
+                                                    alt="{{ $kelas->mentor_name ?? 'Mentor' }}"
+                                                    class="explore-card-final__mentor-avatar"
+                                                    onerror="this.src='{{ asset('images/default-mentor.jpg') }}'">
+                                                <span
+                                                    class="explore-card-final__mentor-name">{{ $item['instructor'] }}</span>
                                             </div>
 
                                             <div class="custom-progress mt-auto">
@@ -161,8 +166,14 @@
                                         <div style="padding: 0 12px;">
                                             <div class="card-title mb-2">{{ $item['title'] }}</div>
                                             <div class="instructor mb-2">
-                                                <img src="https://placehold.co/24x24/eee/333?text=N" alt="instructor">
-                                                <span>{{ $item['instructor'] }}</span>
+                                                 <div class="explore-card-final__mentor">
+                                                <img src="{{ $item['mentor_image'] ? asset($item['mentor_image']) : asset('images/default-mentor.jpg') }}"
+                                                    alt="{{ $kelas->mentor_name ?? 'Mentor' }}"
+                                                    class="explore-card-final__mentor-avatar"
+                                                    onerror="this.src='{{ asset('images/default-mentor.jpg') }}'">
+                                                <span
+                                                    class="explore-card-final__mentor-name">{{ $item['instructor'] }}</span>
+                                            </div>
                                             </div>
 
                                             <div class="custom-progress mt-auto">
@@ -208,11 +219,17 @@
                                         @endif
                                     </div>
 
-                                    <div style="padding: 0 12px; display: flex; flex-direction: column; flex: 1;">
+                                    <div style="padding: 0 12px">
                                         <div class="card-title mb-2">{{ $video['title'] }}</div>
                                         <div class="instructor mb-2">
-                                            <img src="https://placehold.co/24x24/eee/333?text=I" alt="instructor">
-                                            <span>{{ $video['instructor'] }}</span>
+                                             <div class="explore-card-final__mentor">
+                                                <img src="{{ $item['mentor_image'] ? asset($item['mentor_image']) : asset('images/default-mentor.jpg') }}"
+                                                    alt="{{ $kelas->mentor_name ?? 'Mentor' }}"
+                                                    class="explore-card-final__mentor-avatar"
+                                                    onerror="this.src='{{ asset('images/default-mentor.jpg') }}'">
+                                                <span
+                                                    class="explore-card-final__mentor-name">{{ $item['instructor'] }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

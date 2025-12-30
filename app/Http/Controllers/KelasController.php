@@ -128,6 +128,7 @@ class KelasController extends Controller
                 'tag' => $materi->tipe ?? 'Teori',
                 'thumb' => $materi->thumbnail_path ?? 'https://placehold.co/600x400/0284c7/white?text=' . urlencode($materi->nama_materi),
                 'instructor' => $matkul->mentor->nama ?? 'Instruktur',
+                'mentor_image' => $matkul->mentor->image_mentor ?? null,
                 'progress' => $progressValue,
                 'progress_text' => $statusText,
                 'is_completed' => $isCompleted,

@@ -92,13 +92,15 @@
   border-radius: 50%;
   object-fit: cover;
   flex: 0 0 24px;
+  margin-bottom: 18px;
 }
 
 .explore-card-final__mentor-name{
   display: inline-block;
   line-height: 1;
-  margin: 0;
+  margin-bottom: 18px;
 }
+
   .custom-progress {
     height: 4px;
     background: rgba(255, 255, 255, 0.2);
